@@ -1,0 +1,151 @@
+<app-header [item]="'inscripcion'"></app-header>
+
+<div role="main" class="main">
+    <section class="page-header page-header-classic page-header-sm" style="margin: 0px;background-color: #FE423D;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                    <h1 data-title-border>Planilla de Inscripción</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-2">
+
+        <div class="row">
+            <div class="col-lg-2 order-2 order-lg-1">
+
+            </div>
+            <div class="col-lg-8 order-1 order-lg-1">
+
+                <div class="overflow-hidden mb-1">
+                    <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz</strong>
+                        2020</h2>
+                </div>
+                <div class="overflow-hidden mb-4">
+                    <p class="mb-0">Ven y participa en nuestra modalidad de Sprint y Olímpico</p>
+                </div>
+
+                <form role="form" class="needs-validation">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Nombre</label>
+                            <input type="text" value="" data-msg-required="Ingresa tu nombre." maxlength="100"
+                                class="form-control" name="name" id="name" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Apellido</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu apellido." maxlength="100"
+                                class="form-control" name="lastname" id="lastname" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Cédula de Identidad</label>
+                            <input type="text" value="" data-msg-required="Ingresa tu cédula." maxlength="100"
+                                class="form-control" name="dni" id="dni" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Correo Electrónico</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu correo electrónico."
+                                maxlength="100" class="form-control" name="email" id="email" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Teléfono</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu teléfono." maxlength="100"
+                                class="form-control" name="telephone" id="telephone" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de Nacimiento</label>
+                            <input type="text" value="" data-msg-required="Ingresa tu fecha de nacimiento."
+                                maxlength="100" class="form-control" name="bornDate" id="bornDate" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Sexo</label>
+                            <select id="sex" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Tipo de Inscripción</label>
+                            <select id="type" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                                <option value="S">Sprint</option>
+                                <option value="O">Olímpico</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Categoría</label>
+                            <select id="category" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);">
+                                <option value="elite">Elite</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Banco</label>
+                            <select id="bank" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                                <option value="mercantil">Mercantil</option>
+                                <option value="mercantil">Mercantil</option>
+                                <option value="mercantil">Mercantil</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Número de Comprobante</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu teléfono." maxlength="100"
+                                class="form-control" name="telephone" id="telephone" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Monto Transferido</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu teléfono." maxlength="100"
+                                class="form-control" name="telephone" id="telephone" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Ciudad de Procedencia</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu teléfono." maxlength="100"
+                                class="form-control" name="telephone" id="telephone" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold text-dark text-2 mb-0">Club al que pertenece</label>
+                            <input type="email" value="" data-msg-required="Ingresa tu teléfono." maxlength="100"
+                                class="form-control" name="telephone" id="telephone" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Talla de Franela</label>
+                            <select id="bank" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                                <option value="s">S</option>
+                                <option value="m">M</option>
+                                <option value="l">L</option>
+                                <option value="xl">XL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-lg-9">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <input type="submit" value="Inscribirse" class="btn btn-primary btn-modern float-right"
+                                data-loading-text="Loading...">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-footer></app-footer>
