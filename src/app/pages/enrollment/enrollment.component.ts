@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EnrollmentService } from '../../_services/enrollment.service';
+import { Enrollment } from '../../_models/enrollment.model';
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-enrollment',
@@ -7,9 +10,69 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EnrollmentComponent implements OnInit {
 
-  constructor() { }
+  enrollments: Enrollment[];
+  enrollment: Enrollment;
+
+  constructor(private enrollmentService: EnrollmentService) { }
 
   ngOnInit(): void {
+    // this.getEnrollments();
+    (<any>$('#ibirthdate')).datetimepicker({
+      icons: {
+        time: "icon-clock",
+        date: "icon-calendar",
+        up: "icon-angle-up",
+        down: "icon-angle-down"
+      },
+      locale: 'es',
+      format: 'DD-MM-YYYY'
+    });
   }
 
+  getEnrollments(): void {
+    this.enrollmentService.getEnrollments()
+      .pipe()
+      .subscribe(
+        response => {
+          // this.enrollments = response;
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  onSaveForm(): void {
+    let validations = true;
+    if (this.enrollment.name == '') { $("#name").addClass("border-red"); }
+    if (this.enrollment.lastname == '') { $("#lastname").addClass("border-red"); }
+    if (this.enrollment.dni == '') { $("#dni").addClass("border-red"); }
+    if (this.enrollment.email == '') { $("#email").addClass("border-red"); }
+    if (this.enrollment.telephone == '') { $("#telephone").addClass("border-red"); }
+    if (this.enrollment.sex == '') { $("#sex").addClass("border-red"); }
+    if (this.enrollment.type == '') { $("#type").addClass("border-red"); }
+    if (this.enrollment.category == '') { $("#category").addClass("border-red"); }
+    if (this.enrollment.paymentType == '') { $("#paymentType").addClass("border-red"); }
+    if (this.enrollment.bank == '') { $("#bank").addClass("border-red"); }
+    if (this.enrollment.bankNumber == '') { $("#bankNumber").addClass("border-red"); }
+    if (this.enrollment.amount == '') { $("#amount").addClass("border-red"); }
+    if (this.enrollment.cityName == '') { $("#cityName").addClass("border-red"); }
+    if (this.enrollment.clubName == '') { $("#clubName").addClass("border-red"); }
+    if (this.enrollment.shirtSize == '') { $("#shirtSize").addClass("border-red"); }
+    this.enrollment.birthdate = $("#ibirthdate").val();
+
+    if (validations == true) {
+      this.enrollmentService.postEnrollment(this.enrollment)
+        .pipe()
+        .subscribe(
+          response => {
+            // this.enrollments = response;
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          });
+    }
+
+  }
 }
