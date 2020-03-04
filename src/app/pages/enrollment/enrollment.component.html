@@ -32,36 +32,35 @@
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Nombre</label>
                             <input type="text" value="" data-msg-required="Ingresa tu nombre." maxlength="20"
-                                class="form-control" name="name" id="name" required>
+                                class="form-control" name="name" id="name" [(ngModel)]="enrollment.name">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Apellido</label>
                             <input type="text" value="" data-msg-required="Ingresa tu apellido." maxlength="20"
-                                class="form-control" name="lastname" id="lastname" required>
+                                class="form-control" name="lastname" id="lastname" [(ngModel)]="enrollment.lastname">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Cédula de Identidad</label>
                             <input type="text" value="" data-msg-required="Ingresa tu cédula." maxlength="10"
-                                class="form-control" name="dni" id="dni" required>
+                                class="form-control" name="dni" id="dni" [(ngModel)]="enrollment.dni">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Correo Electrónico</label>
                             <input type="email" value="" data-msg-required="Ingresa tu correo electrónico."
-                                maxlength="50" class="form-control" name="email" id="email" required>
+                                maxlength="50" class="form-control" name="email" id="email"
+                                [(ngModel)]="enrollment.email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Teléfono</label>
                             <input type="text" value="" data-msg-required="Ingresa tu teléfono." maxlength="20"
-                                class="form-control" name="telephone" id="telephone" required>
+                                class="form-control" name="telephone" id="telephone" [(ngModel)]="enrollment.telephone">
                         </div>
-                        <div class="form-group col-lg-6">
+                        <!-- <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de Nacimiento</label>
-                            <!-- <input type="text" value="" data-msg-required="Ingresa tu fecha de nacimiento."
-                                maxlength="100" class="form-control" name="birthdate" id="birthdate" required> -->
                             <div class="input-group date" id="birthdate">
                                 <input type='text' class="form-control" id="ibirthdate" name="birthdate" />
                                 <div class="input-group-append">
@@ -70,19 +69,23 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Sexo</label>
-                            <select id="sex" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                            <select id="sex" name="sex" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.sex">
+                                <option value="">Seleccionar</option>
                                 <option value="M">Masculino</option>
                                 <option value="F">Femenino</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Tipo de Inscripción</label>
-                            <select id="type" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                            <select id="type" name="type" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.type">
+                                <option value="">Seleccionar</option>
                                 <option value="S">Sprint</option>
                                 <option value="O">Olímpico</option>
                             </select>
@@ -91,14 +94,17 @@
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Categoría</label>
-                            <select id="category" class="form-control" size="0"
-                                style="height: calc(1.5em + .75rem + 2px);">
+                            <select id="category" name="category" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category">
+                                <option value="">Seleccionar</option>
                                 <option value="elite">Elite</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Banco</label>
-                            <select id="bank" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);">
+                            <select id="bank" name="bank" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.bank">
+                                <option value="">Seleccionar</option>
                                 <option value="mercantil">Mercantil</option>
                                 <option value="mercantil">Banco Venezuela</option>
                                 <option value="mercantil">Mercantil</option>
@@ -109,31 +115,35 @@
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Número de Comprobante</label>
                             <input type="text" value="" data-msg-required="Ingresa tu número de comprobante."
-                                maxlength="30" class="form-control" name="bankNumber" id="bankNumber" required>
+                                maxlength="30" class="form-control" name="bankNumber" id="bankNumber"
+                                [(ngModel)]="enrollment.bankNumber">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Monto Transferido</label>
                             <input type="text" value="" data-msg-required="Ingresa tu monto transferido." maxlength="50"
-                                class="form-control" name="amount" id="amount" required>
+                                class="form-control" name="amount" id="amount" [(ngModel)]="enrollment.amount">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Ciudad de Procedencia</label>
                             <input type="text" value="" data-msg-required="Ingresa tu ciudad de procedencia."
-                                maxlength="50" class="form-control" name="cityName" id="cityName" required>
+                                maxlength="50" class="form-control" name="cityName" id="cityName"
+                                [(ngModel)]="enrollment.cityName">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="font-weight-bold text-dark text-2 mb-0">Club al que pertenece</label>
                             <input type="text" value="" data-msg-required="Ingresa tu club de procedencia."
-                                maxlength="30" class="form-control" name="clubName" id="clubName">
+                                maxlength="30" class="form-control" name="clubName" id="clubName"
+                                [(ngModel)]="enrollment.clubName">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Talla de Franela</label>
-                            <select id="shirtSize" class="form-control" size="0"
-                                style="height: calc(1.5em + .75rem + 2px);">
+                            <select id="shirtSize" name="shirtSize" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.shirtSize">
+                                <option value="">Seleccionar</option>
                                 <option value="s">S</option>
                                 <option value="m">M</option>
                                 <option value="l">L</option>
@@ -145,8 +155,10 @@
                         <div class="form-group col-lg-9">
                         </div>
                         <div class="form-group col-lg-3">
-                            <input type="submit" value="Inscribirse" class="btn btn-primary btn-modern float-right"
-                                data-loading-text="Loading...">
+                            <button id="enrollmentId" type="button" class="btn btn-primary btn-modern float-right"
+                                (click)="onSaveForm()">
+                                Inscribirse
+                            </button>
                         </div>
                     </div>
                 </form>
