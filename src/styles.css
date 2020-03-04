@@ -1,0 +1,4 @@
+@media (min-width: 992px)
+#header .header-nav.header-nav-links nav > ul:not(:hover) > li > a.active {
+    color: #51A7AF;
+}
