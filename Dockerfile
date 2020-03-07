@@ -1,5 +1,5 @@
 # base image
-FROM node:9.11.2
+FROM node:12.0
 
 # set working directory
 RUN mkdir /src
