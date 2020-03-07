@@ -1,7 +1,7 @@
 <app-header [item]="'inscripcion'"></app-header>
 
 <div role="main" class="main">
-    <section class="page-header page-header-classic page-header-sm" style="margin: 0px;background-color: #F38832;">
+    <section class="page-header page-header-classic page-header-sm" style="margin: 0px;background-color: #51A7AF;">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
@@ -25,7 +25,8 @@
                 </div>
                 <div class="overflow-hidden mb-4">
                     <p class="mb-0">Ven y participa en nuestra modalidad de Sprint y Olímpico.</p>
-                    <p>El precio actual de inscripción es de Bs xxx.xxx.xxx para el día {{currentDate}}.</p>
+                    <p>Para el día {{currentDate}} el precio actual de inscripción es de Bs xxx.xxx.xxx, este precio
+                        esta sujeto a cambios.</p>
                 </div>
 
                 <form role="form" class="needs-validation">
@@ -153,11 +154,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 10px;">
                         <div class="form-group col-lg-12">
                             <input type="radio" id="terms" name="terms" value="terms">
-                            <label class="text-2 mb-0">Acepta los <a>Términos y Condiciones </a>del Evento 12vo de
-                                Trianz</label>
+                            <label class="text-2 mb-0" style="margin-left: 10px;">Acepta los <a>Términos y Condiciones
+                                </a>del Evento 12vo de
+                                Trianz.</label>
                         </div>
                     </div>
 
