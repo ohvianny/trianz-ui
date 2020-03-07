@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-about',
@@ -10,6 +11,16 @@ export class AboutComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      margin: 10,
+      animateOut: 'fadeOut',
+      responsiveClass: true,
+      autoplay: true,
+      autoplayTimeout: 6000,
+      loop: true
+    });
+
   }
 
 

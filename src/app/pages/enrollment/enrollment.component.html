@@ -24,7 +24,8 @@
                         2020</h2>
                 </div>
                 <div class="overflow-hidden mb-4">
-                    <p class="mb-0">Ven y participa en nuestra modalidad de Sprint y Olímpico</p>
+                    <p class="mb-0">Ven y participa en nuestra modalidad de Sprint y Olímpico.</p>
+                    <p>El precio actual de inscripción es de Bs xxx.xxx.xxx para el día {{currentDate}}.</p>
                 </div>
 
                 <form role="form" class="needs-validation">
@@ -59,26 +60,26 @@
                             <input type="text" value="" data-msg-required="Ingresa tu teléfono." maxlength="20"
                                 class="form-control" name="telephone" id="telephone" [(ngModel)]="enrollment.telephone">
                         </div>
-                        <!-- <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de Nacimiento</label>
-                            <div class="input-group date" id="birthdate">
-                                <input type='text' class="form-control" id="ibirthdate" name="birthdate" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <span class="fa fa-calendar-o"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div> -->
+                        <div class="form-group col-lg-6">
+                            <label class="font-weight-bold text-dark text-2 mb-0">Fecha de
+                                Nacimiento</label>
+                            <mat-form-field style="display: block;">
+                                <input matInput [matDatepicker]="picker" [(ngModel)]="enrollment.birthdate"
+                                    id="birthdate" name="birthdate" (ngModelChange)="onChangeDate()">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: -20px;">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Sexo</label>
                             <select id="sex" name="sex" class="form-control" size="0"
-                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.sex">
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.sex"
+                                (change)="onChangeSex()">
                                 <option value="">Seleccionar</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
@@ -97,7 +98,8 @@
                             <select id="category" name="category" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category">
                                 <option value="">Seleccionar</option>
-                                <option value="elite">Elite</option>
+                                <option value="elite">Elite {{sex}}</option>
+                                <option value="category">Categoría {{category}}</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
@@ -151,6 +153,14 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <input type="radio" id="terms" name="terms" value="terms">
+                            <label class="text-2 mb-0">Acepta los <a>Términos y Condiciones </a>del Evento 12vo de
+                                Trianz</label>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <div class="form-group col-lg-9">
                         </div>

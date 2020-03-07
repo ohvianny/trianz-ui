@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as $ from "jquery";
+// declare var $: any;
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    $("#" + this.item).toggleClass('active');
+    $('#' + this.item).toggleClass('active');
   }
 
 }

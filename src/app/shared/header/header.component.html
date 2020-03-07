@@ -21,30 +21,32 @@
                                 <nav class="collapse">
                                     <ul class="nav nav-pills" id="mainNav">
                                         <li class="dropdown active">
-                                            <a id="home" class="dropdown-item dropdown-toggle" routerLink="/">
+                                            <a [ngClass]="{'active': 'home' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/">
                                                 Inicio
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a id="about" class="dropdown-item dropdown-toggle" routerLink="/about-us">
+                                            <a [ngClass]="{'active': 'about' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/about-us">
                                                 Nosotros
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a id="portafolio" class="dropdown-item dropdown-toggle"
-                                                routerLink="/portafolio">
+                                            <a [ngClass]="{'active': 'portafolio' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/portafolio">
                                                 Portafolio
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a id="inscripcion" class="dropdown-item dropdown-toggle"
-                                                routerLink="/inscripcion">
+                                            <a [ngClass]="{'active': 'inscripcion' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/inscripcion">
                                                 Inscripción
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a id="contact-us" class="dropdown-item dropdown-toggle"
-                                                routerLink="/contact-us">
+                                            <a [ngClass]="{'active': 'contact-us' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/contact-us">
                                                 Contáctanos
                                             </a>
                                         </li>
