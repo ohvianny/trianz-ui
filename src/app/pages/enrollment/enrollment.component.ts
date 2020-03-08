@@ -50,43 +50,28 @@ export class EnrollmentComponent implements OnInit {
     switch (true) {
       case (birthYear <= (currentYear - 50)):
         this.category = '50+';
-        console.log('50+');
         break;
       case (birthYear >= (currentYear - 49) && birthYear <= (currentYear - 45)):
         this.category = '45 - 49';
-        console.log('45 - 49');
         break;
       case (birthYear >= (currentYear - 44) && birthYear <= (currentYear - 40)):
         this.category = '40 - 44';
-        console.log('40 - 44');
         break;
       case (birthYear >= (currentYear - 39) && birthYear <= (currentYear - 35)):
-        this.category = '39 - 35';
-        console.log('39 - 35');
+        this.category = '35 - 39';
         break;
       case (birthYear >= (currentYear - 34) && birthYear <= (currentYear - 30)):
-        this.category = '34 - 30';
-        console.log('34 - 30');
+        this.category = '30 - 34';
         break;
       case (birthYear >= (currentYear - 29) && birthYear <= (currentYear - 25)):
-        this.category = '29 - 25';
-        console.log('29 - 25');
+        this.category = '25 - 29';
         break;
       case (birthYear >= (currentYear - 24) && birthYear <= (currentYear - 18)):
-        this.category = '24 - 18';
-        console.log('24 - 18');
+        this.category = '18 - 24';
         break;
       default:
         console.log('invalid numbers');
     }
-    // if (birthYear <= (currentYear - 50)) this.category = '50+';
-    // if (birthYear >= (currentYear - 49) && birthYear <= (currentYear - 45)) this.category = '45 - 49';
-    // if (birthYear >= (currentYear - 44) && birthYear <= (currentYear - 40)) this.category = '40 - 44';
-    // if (birthYear >= (currentYear - 39) && birthYear <= (currentYear - 35)) this.category = '35 - 39';
-    // if (birthYear >= (currentYear - 34) && birthYear <= (currentYear - 30)) this.category = '30 - 34';
-    // if (birthYear >= (currentYear - 29) && birthYear <= (currentYear - 25)) this.category = '25 - 29';
-    // if (birthYear >= (currentYear - 24) && birthYear <= (currentYear - 18)) this.category = '18 - 24';
-
   }
 
   getEnrollments(): void {

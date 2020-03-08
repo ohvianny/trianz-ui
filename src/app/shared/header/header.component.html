@@ -20,7 +20,7 @@
                                 class="header-nav-main header-nav-main-square header-nav-main-effect-2 header-nav-main-sub-effect-1">
                                 <nav class="collapse">
                                     <ul class="nav nav-pills" id="mainNav">
-                                        <li class="dropdown active">
+                                        <li class="dropdown">
                                             <a [ngClass]="{'active': 'home' === item}"
                                                 class="dropdown-item dropdown-toggle" routerLink="/">
                                                 Inicio
@@ -52,7 +52,12 @@
                                         </li>
                                     </ul>
                                 </nav>
+
                             </div>
+                            <button class="btn header-btn-collapse-nav" data-toggle="collapse"
+                                data-target=".header-nav-main nav">
+                                <i class="icon-menu icons"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

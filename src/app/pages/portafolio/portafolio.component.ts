@@ -8,9 +8,27 @@ import * as $ from "jquery";
 })
 export class PortafolioComponent implements OnInit {
 
+  edition: boolean = false;
+  team: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onAll(): void {
+    this.edition = false;
+    this.team = false;
+  }
+
+  on11(): void {
+    this.edition = false;
+    this.team = true;
+  }
+
+  onTeam(): void {
+    this.edition = true;
+    this.team = false;
   }
 
 }

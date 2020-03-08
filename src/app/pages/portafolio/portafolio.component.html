@@ -13,23 +13,17 @@
     </section>
 
     <div class="container py-2">
-
         <ul class="nav nav-pills sort-source sort-source-style-3 justify-content-center" data-sort-id="portfolio"
             data-option-key="filter" data-plugin-options="{'layoutMode': 'fitRows', 'filter': '*'}">
-            <li class="nav-item active" data-option-value="*"><a class="nav-link text-1 text-uppercase active">Mostrar
+            <li class="nav-item active"><a class="nav-link text-1 text-uppercase active" (click)="onAll()">Mostrar
                     todos</a></li>
-            <li class="nav-item" data-option-value=".11"><a class="nav-link text-1 text-uppercase">Edición
-                    11</a></li>
-            <li class="nav-item" data-option-value=".team"><a class="nav-link text-1 text-uppercase">Equipo</a>
-            </li>
-            <li class="nav-item" data-option-value=".hogar"><a class="nav-link text-1 text-uppercase">Hogar
-                    Sonrisas</a></li>
+            <li class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="on11()">Edición 11</a></li>
+            <li class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="onTeam()">Equipo</a></li>
+            <li class="nav-item"><a class="nav-link text-1 text-uppercase">Hogar Sonrisas</a></li>
         </ul>
-
         <div class="mt-4 pt-2">
             <div class="row portfolio-list">
-
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -39,8 +33,7 @@
                         </span>
                     </div>
                 </div>
-
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -50,7 +43,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -60,7 +53,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -70,7 +63,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -80,7 +73,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -90,7 +83,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -100,7 +93,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -110,17 +103,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-centered-info border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="../../../assets/img/portafolio/p2.jpg" class="img-fluid border-radius-0"
-                                    alt="">
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -130,7 +113,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -140,7 +123,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -150,7 +133,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -160,7 +143,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item team">
+                <div class="col-sm-6 col-lg-2 isotope-item team" [hidden]="team">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -170,7 +153,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -180,7 +163,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -190,7 +173,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -200,7 +183,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -210,7 +193,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -220,7 +203,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -230,7 +213,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-sm-6 col-lg-2 isotope-item 11">
+                <div class="col-sm-6 col-lg-2 isotope-item 11" [hidden]="edition">
                     <div class="portfolio-item">
                         <span class="thumb-info thumb-info-centered-info border-radius-0">
                             <span class="thumb-info-wrapper border-radius-0">
@@ -245,3 +228,5 @@
     </div>
 
 </div>
+
+<app-footer></app-footer>

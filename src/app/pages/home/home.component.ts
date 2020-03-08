@@ -23,7 +23,9 @@ export class HomeComponent implements OnInit {
             animateOut: 'fadeOut',
             autoplay: true,
             autoplayTimeout: 6000,
-            loop: true
+            loop: true,
+            dots: false,
+            nav: true
         });
 
     }
