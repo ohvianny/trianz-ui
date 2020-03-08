@@ -7,8 +7,8 @@ import {
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { EnrollmentService } from '../../_services/enrollment.service';
 import { Enrollment } from '../../_models/enrollment.model';
-import * as $ from "jquery";
-
+import * as $ from 'jquery';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-enrollment',
@@ -26,6 +26,7 @@ import * as $ from "jquery";
 })
 export class EnrollmentComponent implements OnInit {
 
+  terms: boolean = false;
   currentDate: string;
   sex: string = '';
   category: string = '';
@@ -45,7 +46,7 @@ export class EnrollmentComponent implements OnInit {
 
   onChangeDate(): void {
     const currentYear = new Date().getFullYear();
-    const birthYear = $("#birthdate").val().split("/")[2];
+    const birthYear = $('#birthdate').val().split('/')[2];
 
     switch (true) {
       case (birthYear <= (currentYear - 50)):
@@ -89,15 +90,15 @@ export class EnrollmentComponent implements OnInit {
 
   validate(field: string, id: string): void {
     if (field == '') {
-      $("#" + id).addClass("border-red");
+      $('#' + id).addClass('border-red');
     } else {
-      $("#" + id).removeClass("border-red");
+      $('#' + id).removeClass('border-red');
     }
   }
 
   onSaveForm(): void {
     let validations = true;
-    var parts = $("#birthdate").val().split("/");
+    var parts = $('#birthdate').val().split('/');
 
     this.validate(this.enrollment.name, 'name');
     this.validate(this.enrollment.lastname, 'lastname');
@@ -122,19 +123,26 @@ export class EnrollmentComponent implements OnInit {
       validations = false;
     }
 
+    if (this.terms == false && validations == true) {
+      validations = false;
+      Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
+    }
 
     if (validations == true) {
       this.enrollmentService.postEnrollment(this.enrollment)
         .pipe()
         .subscribe(
           response => {
-            // this.enrollments = response;
-            console.log(response);
+            Swal.fire('success', 'Inscripción realizada con éxito. Le llegará un correo electrónico con su confirmación', 'success');
           },
           error => {
-            console.log(error);
+            if (error.statusText == 'Unknown Error') {
+              Swal.fire('Error', 'No se puede realizar inscripción. Intente más tarde', 'error');
+            } else {
+              Swal.fire('Error', error.message, 'error');
+            }
           });
     }
-
   }
+
 }
