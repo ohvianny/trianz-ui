@@ -1,5 +1,5 @@
 # base image
-FROM node:12.0
+FROM node:12.0-alpine AS BUILD_IMAGE
 
 # set working directory
 RUN mkdir /src
