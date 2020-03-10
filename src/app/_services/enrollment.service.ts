@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Enrollment } from '../_models/enrollment.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EnrollmentService {
 
-    baseUrl: string = 'http://127.0.0.1:3000/enrollments';
-    // baseUrl: string = environment.baseUrl;
+    baseUrl: string = environment.baseUrl + '/enrollments';
 
     getEnrollments() {
         return this.http.get(this.baseUrl + "/");
