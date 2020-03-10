@@ -147,6 +147,7 @@
                             <select id="shirtSize" name="shirtSize" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.shirtSize">
                                 <option value="">Seleccionar</option>
+                                <option value="na">Sin Franela</option>
                                 <option value="s">S</option>
                                 <option value="m">M</option>
                                 <option value="l">L</option>
@@ -157,7 +158,7 @@
                     <div class="row" style="margin-top: 10px;">
                         <div class="form-group col-lg-12">
                             <input type="radio" id="terms" name="terms" value="true" [(ngModel)]="terms">
-                            <label class="text-2 mb-0" style="margin-left: 10px;">Acepta los
+                            <label class="text-2 mb-0" style="margin-left: 10px;">He leído y acepto los
                                 <a href="../../../assets/img/blank.gif" download>Términos y
                                     Condiciones </a>
                                 del Evento 12vo de Trianz.</label>

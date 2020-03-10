@@ -15,11 +15,11 @@
     <div class="container py-2">
         <ul class="nav nav-pills sort-source sort-source-style-3 justify-content-center" data-sort-id="portfolio"
             data-option-key="filter" data-plugin-options="{'layoutMode': 'fitRows', 'filter': '*'}">
-            <li class="nav-item active"><a class="nav-link text-1 text-uppercase active" (click)="onAll()">Mostrar
+            <li id="all" class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="onAll()">Mostrar
                     todos</a></li>
-            <li class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="on11()">Edición 11</a></li>
-            <li class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="onTeam()">Equipo</a></li>
-            <li class="nav-item"><a class="nav-link text-1 text-uppercase">Hogar Sonrisas</a></li>
+            <li id="11" class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="on11()">Edición 11</a></li>
+            <li id="team" class="nav-item"><a class="nav-link text-1 text-uppercase" (click)="onTeam()">Equipo</a></li>
+            <li id="hogar" class="nav-item"><a class="nav-link text-1 text-uppercase">Hogar Sonrisas</a></li>
         </ul>
         <div class="mt-4 pt-2">
             <div class="row portfolio-list">
