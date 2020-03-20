@@ -1,0 +1,39 @@
+<app-header [item]="'login'"></app-header>
+<div role="main" class="main">
+    <app-page-header [item]="'Inicio de sesión'"></app-page-header>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="featured-box featured-box-primary text-left mt-5">
+                <div class="box-content">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">TRIANZ - Inicio de sesión
+                    </h4>
+                    <form class="needs-validation">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label class="font-weight-bold text-dark text-2">Correo electrónico</label>
+                                <input type="text" id="email" name="email" class="form-control form-control-lg"
+                                    [(ngModel)]="user.email">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label class="font-weight-bold text-dark text-2">Contraseña</label>
+                                <input type="password" value="" id="password" name="password"
+                                    class="form-control form-control-lg" [(ngModel)]="user.password">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <button id="login" type="button" class="btn btn-primary btn-modern float-right"
+                                    (click)="onLogin()">
+                                    Iniciar sesión
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -50,6 +50,12 @@
                                                 Contáctanos
                                             </a>
                                         </li>
+                                        <li *ngIf="'login' === item">
+                                            <a [ngClass]="{'active': 'login' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/login">
+                                                Login
+                                            </a>
+                                        </li>
                                     </ul>
                                 </nav>
 

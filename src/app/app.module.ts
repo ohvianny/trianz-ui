@@ -15,7 +15,9 @@ import { HeaderComponent } from './shared/header/header.component';
 import { PortafolioComponent } from './pages/portafolio/portafolio.component';
 import { EnrollmentComponent } from './pages/enrollment/enrollment.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { LoginComponent } from './pages/login/login.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { PageHeaderComponent } from './shared/page-header/page-header.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { FooterComponent } from './shared/footer/footer.component';
     PortafolioComponent,
     EnrollmentComponent,
     ContactComponent,
-    FooterComponent
+    LoginComponent,
+    FooterComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,
