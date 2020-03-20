@@ -15,6 +15,7 @@ export class Enrollment {
         public amount: string,
         public cityName: string,
         public clubName: string,
+        public trianzEvent: string,
         public shirtSize: string
     ) { }
 

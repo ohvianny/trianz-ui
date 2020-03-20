@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-} from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { EnrollmentService } from '../../_services/enrollment.service';
-import { Enrollment } from '../../_models/enrollment.model';
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
+
+import { EnrollmentService } from '../../_services/enrollment.service';
+import { EventService } from '../../_services/event.service';
+import { Enrollment } from '../../_models/enrollment.model';
+import { Event } from '../../_models/event.model';
+
 
 @Component({
   selector: 'app-enrollment',
@@ -26,16 +26,18 @@ import Swal from 'sweetalert2';
 })
 export class EnrollmentComponent implements OnInit {
 
+  event = new Event('', '', '');
   terms: boolean = false;
   currentDate: string;
   sex: string = '';
   category: string = '';
-  enrollments: Enrollment[];
-  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
-  constructor(private enrollmentService: EnrollmentService) { }
+  constructor(private enrollmentService: EnrollmentService,
+    private eventService: EventService) { }
 
   ngOnInit(): void {
+    this.getLastEvent();
     const dd = new Date();
     this.currentDate = dd.getDate() + '/' + (dd.getMonth() + 1) + '/' + dd.getFullYear();
   }
@@ -75,17 +77,16 @@ export class EnrollmentComponent implements OnInit {
     }
   }
 
-  getEnrollments(): void {
-    this.enrollmentService.getEnrollments()
-      .pipe()
+  getLastEvent(): void {
+    this.eventService.getLastEvent()
       .subscribe(
-        response => {
-          // this.enrollments = response;
-          console.log(response);
+        data => {
+          this.event = data.event;
         },
         error => {
           console.log(error);
-        });
+        }
+      );
   }
 
   validate(field: string, id: string): void {
@@ -98,7 +99,6 @@ export class EnrollmentComponent implements OnInit {
 
   onSaveForm(): void {
     let validations = true;
-    var parts = $('#birthdate').val().split('/');
 
     this.validate(this.enrollment.name, 'name');
     this.validate(this.enrollment.lastname, 'lastname');
@@ -119,16 +119,22 @@ export class EnrollmentComponent implements OnInit {
       this.enrollment.email == '' || this.enrollment.telephone == '' || this.enrollment.sex == '' ||
       this.enrollment.type == '' || this.enrollment.category == '' || this.enrollment.bank == '' ||
       this.enrollment.bankNumber == '' || this.enrollment.amount == '' || this.enrollment.cityName == '' ||
-      this.enrollment.clubName == '' || this.enrollment.shirtSize == '' || this.enrollment.birthdate == '') {
+      this.enrollment.shirtSize == '' || this.enrollment.birthdate == '') {
       validations = false;
     }
 
-    if (this.terms == false && validations == true) {
-      validations = false;
-      Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
-    }
+    // if (this.terms == false && validations == true) {
+    //   validations = false;
+    //   Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
+    // }
 
     if (validations == true) {
+      if (this.enrollment.category == 'Elite') {
+        this.enrollment.category = this.enrollment.category + ' ' + this.sex;
+      } else {
+        this.enrollment.category = this.enrollment.category + ' ' + this.category;
+      }
+      this.enrollment.trianzEvent = this.event.number;
       this.enrollmentService.postEnrollment(this.enrollment)
         .pipe()
         .subscribe(
@@ -139,7 +145,7 @@ export class EnrollmentComponent implements OnInit {
             if (error.statusText == 'Unknown Error') {
               Swal.fire('Error', 'No se puede realizar inscripción. Intente más tarde', 'error');
             } else {
-              Swal.fire('Error', error.message, 'error');
+              Swal.fire('Error', error.error.message, 'error');
             }
           });
     }

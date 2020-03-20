@@ -20,13 +20,17 @@
             <div class="col-lg-8 order-1 order-lg-1">
 
                 <div class="overflow-hidden mb-1">
-                    <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz</strong>
-                        2020</h2>
+                    <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz
+                            2020</strong> - Edición Nro. {{event.number}} </h2>
                 </div>
                 <div class="overflow-hidden mb-4">
-                    <p class="mb-0">Ven y participa en nuestra modalidad de Sprint y Olímpico.</p>
-                    <p>Para el día {{currentDate}} el precio actual de inscripción es de Bs xxx.xxx.xxx, este precio
-                        esta sujeto a cambios.</p>
+                    <p class="mb-0">Información General del Evento:
+                        <a href="../../../assets/doc/INFORMACIÓN-GENERAL-2020.docx" download>Descargar </a>
+                    </p>
+                    <p class="mb-0">Planilla de Liberación de Responsabilidad:
+                        <a href="../../../assets/doc/LIBERACIÓN-RESPONSABILIDAD-2020.docx" download>Descargar </a>
+                    </p>
+                    <p>Para el día {{currentDate}}, el precio actual de inscripción es de Bs {{event.price}}.</p>
                 </div>
 
                 <form role="form" class="needs-validation">
@@ -88,8 +92,8 @@
                             <select id="type" name="type" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.type">
                                 <option value="">Seleccionar</option>
-                                <option value="S">Sprint</option>
-                                <option value="O">Olímpico</option>
+                                <option value="Sprint">Sprint</option>
+                                <option value="Olimpico">Olímpico</option>
                             </select>
                         </div>
                     </div>
@@ -99,8 +103,8 @@
                             <select id="category" name="category" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category">
                                 <option value="">Seleccionar</option>
-                                <option value="elite">Elite {{sex}}</option>
-                                <option value="category">Categoría {{category}}</option>
+                                <option value="Elite">Elite {{sex}}</option>
+                                <option value="Categoria">Categoría {{category}}</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
@@ -108,9 +112,17 @@
                             <select id="bank" name="bank" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.bank">
                                 <option value="">Seleccionar</option>
-                                <option value="mercantil">Mercantil</option>
-                                <option value="mercantil">Banco Venezuela</option>
-                                <option value="mercantil">Mercantil</option>
+                                <option value="Mercantil">Mercantil</option>
+                                <option value="Banco de Venezuela">Banco de Venezuela</option>
+                                <option value="Banco Occidental de Descuento">Banco Occidental de Descuento</option>
+                                <option value="Banesco">Banesco</option>
+                                <option value="Banco Universal">Banco Universal</option>
+                                <option value="Banco Bicentenario">Banco Bicentenario</option>
+                                <option value="Banco del Tesoro">Banco del Tesoro</option>
+                                <option value="Banco Plaza">Banco Plaza</option>
+                                <option value="Banco Delsur">Banco Delsur</option>
+                                <option value="Banco Exterior">Banco Exterior</option>
+                                <option value="Otros">Otros</option>
                             </select>
                         </div>
                     </div>
@@ -147,15 +159,15 @@
                             <select id="shirtSize" name="shirtSize" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.shirtSize">
                                 <option value="">Seleccionar</option>
-                                <option value="na">Sin Franela</option>
-                                <option value="s">S</option>
-                                <option value="m">M</option>
-                                <option value="l">L</option>
-                                <option value="xl">XL</option>
+                                <option value="Sin Franela">Sin Franela</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
                             </select>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 10px;">
+                    <!-- <div class="row" style="margin-top: 10px;">
                         <div class="form-group col-lg-12">
                             <input type="radio" id="terms" name="terms" value="true" [(ngModel)]="terms">
                             <label class="text-2 mb-0" style="margin-left: 10px;">He leído y acepto los
@@ -163,7 +175,7 @@
                                     Condiciones </a>
                                 del Evento 12vo de Trianz.</label>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group row">
                         <div class="form-group col-lg-9">
