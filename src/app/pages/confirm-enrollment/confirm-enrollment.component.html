@@ -1,0 +1,45 @@
+<app-private-header [item]="'confirm-enrollment'"></app-private-header>
+
+<div role="main" class="main">
+    <app-page-header [item]="'Confirmar Inscripción'"></app-page-header>
+    <div class="row">
+        <div class="col-md-8 offset-md-2 mt-3">
+            <div class="overflow-hidden mb-1">
+                <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3" style="text-align: center;">
+                    Listado de Solicitudes de Inscripción</h4>
+            </div>
+            <table id="tenrollments" class="table table-striped table-bordered zero-configuration">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo Electrónico</th>
+                        <th>Cédula</th>
+                        <th>Tipo</th>
+                        <th>Categoría</th>
+                        <th>Banco</th>
+                        <th>Transacción</th>
+                        <th>Monto</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let enrollment of enrollments">
+                        <td>{{enrollment.name}} {{enrollment.lastname}}</td>
+                        <td>{{enrollment.email}}</td>
+                        <td>{{enrollment.dni}}</td>
+                        <td>{{enrollment.type}}</td>
+                        <td>{{enrollment.category}}</td>
+                        <td>{{enrollment.bank}}</td>
+                        <td>{{enrollment.bankNumber}}</td>
+                        <td>{{enrollment.amount}}</td>
+                        <td style="text-align: center;">
+                            <i class="icon-check icons" (click)="acceptEnrollment(enrollment._id)"></i>
+                            <i class="icon-close icons" (click)="cancelEnrollment(enrollment._id)"
+                                style="margin-left: 10px;"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

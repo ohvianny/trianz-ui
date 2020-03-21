@@ -3,6 +3,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPT
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 import { EnrollmentService } from '../../_services/enrollment.service';
 import { EventService } from '../../_services/event.service';
@@ -33,7 +34,7 @@ export class EnrollmentComponent implements OnInit {
   category: string = '';
   enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
-  constructor(private enrollmentService: EnrollmentService,
+  constructor(private router: Router, private enrollmentService: EnrollmentService,
     private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -82,6 +83,8 @@ export class EnrollmentComponent implements OnInit {
       .subscribe(
         data => {
           this.event = data.event;
+          if (this.event.active == '0')
+            this.router.navigate(['/']);
         },
         error => {
           console.log(error);

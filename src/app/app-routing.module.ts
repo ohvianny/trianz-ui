@@ -6,6 +6,8 @@ import { PortafolioComponent } from './pages/portafolio/portafolio.component';
 import { EnrollmentComponent } from './pages/enrollment/enrollment.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ConfirmEnrollmentComponent } from './pages/confirm-enrollment/confirm-enrollment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'portafolio', component: PortafolioComponent },
   { path: 'inscripcion', component: EnrollmentComponent },
   { path: 'contact-us', component: ContactComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'confirm-enrollment', component: ConfirmEnrollmentComponent }
 ];
 
 @NgModule({

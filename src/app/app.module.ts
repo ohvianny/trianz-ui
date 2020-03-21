@@ -18,6 +18,9 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { PageHeaderComponent } from './shared/page-header/page-header.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ConfirmEnrollmentComponent } from './pages/confirm-enrollment/confirm-enrollment.component';
+import { PrivateHeaderComponent } from './shared/private-header/private-header.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { PageHeaderComponent } from './shared/page-header/page-header.component'
     ContactComponent,
     LoginComponent,
     FooterComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    DashboardComponent,
+    ConfirmEnrollmentComponent,
+    PrivateHeaderComponent
   ],
   imports: [
     BrowserModule,

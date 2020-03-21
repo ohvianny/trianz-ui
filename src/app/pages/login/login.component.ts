@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { User } from '../../_models/user.model';
 import { LoginService } from '../../_services/login.service';
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   user = new User('', '');
 
-  constructor(private loginService: LoginService) { }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
   }
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
       .pipe()
       .subscribe(
         response => {
-          console.log(response);
+          localStorage.setItem("token", response.token);
+          this.router.navigate(['dashboard']);
         },
         error => {
           if (error.statusText == 'Unknown Error') {
