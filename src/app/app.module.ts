@@ -21,6 +21,7 @@ import { PageHeaderComponent } from './shared/page-header/page-header.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ConfirmEnrollmentComponent } from './pages/confirm-enrollment/confirm-enrollment.component';
 import { PrivateHeaderComponent } from './shared/private-header/private-header.component';
+import { EventComponent } from './pages/event/event.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PrivateHeaderComponent } from './shared/private-header/private-header.c
     PageHeaderComponent,
     DashboardComponent,
     ConfirmEnrollmentComponent,
-    PrivateHeaderComponent
+    PrivateHeaderComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

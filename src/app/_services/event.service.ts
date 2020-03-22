@@ -20,6 +20,10 @@ export class EventService {
         return this.http.get<any>(this.baseUrl + '/', { headers: this.httpHeaders });
     }
 
+    saveEvent(event: Event) {
+        return this.http.post(this.baseUrl + '/register', event, { headers: this.httpHeaders });
+    }
+
     updateEvent(event: Event) {
         return this.http.put(this.baseUrl + '/update', event, { headers: this.httpHeaders });
     }

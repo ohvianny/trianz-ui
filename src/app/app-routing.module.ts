@@ -8,6 +8,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ConfirmEnrollmentComponent } from './pages/confirm-enrollment/confirm-enrollment.component';
+import { EventComponent } from './pages/event/event.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'contact-us', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'confirm-enrollment', component: ConfirmEnrollmentComponent }
+  { path: 'confirm-enrollment', component: ConfirmEnrollmentComponent },
+  { path: 'event', component: EventComponent }
 ];
 
 @NgModule({

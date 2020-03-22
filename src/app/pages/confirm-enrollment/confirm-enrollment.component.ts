@@ -58,7 +58,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
       showCancelButton: true
     }).then((result) => {
       if (result.value) {
-        this.enrollmentService.updateConfirmEnrollment(enrollmentId, 'Aceptado')
+        this.enrollmentService.updateConfirmEnrollment(enrollmentId, 'Aprobado')
           .subscribe(
             response => {
               Swal.fire('success', 'Inscripción aceptada con éxito.', 'success');
