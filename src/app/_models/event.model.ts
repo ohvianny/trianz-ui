@@ -1,9 +1,10 @@
 export class Event {
 
     constructor(
-        public number: string,
+        public num: string,
         public price: string,
-        public active: string
+        public active: number,
+        public date: string
     ) { }
 
 }

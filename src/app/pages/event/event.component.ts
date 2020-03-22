@@ -11,7 +11,7 @@ import { EventService } from '../../_services/event.service';
 })
 export class EventComponent implements OnInit {
 
-  event = new Event('', '', '');
+  event = new Event('', '', 0, '');
   events: Event[];
 
   constructor(private eventService: EventService) { }
@@ -39,10 +39,10 @@ export class EventComponent implements OnInit {
         response => {
           Swal.fire('success', 'Evento creado con éxito', 'success');
           this.getEvents();
-          this.event = new Event('', '', '1');
+          this.event = new Event('', '', 1, '');
         },
         error => {
-          if (error.statusText == 'Unknown Error') {
+          if (error.statusText === 'Unknown Error') {
             Swal.fire('Error', 'No se puede crear el evento. Intente más tarde', 'error');
           } else {
             Swal.fire('Error', error.error.message, 'error');

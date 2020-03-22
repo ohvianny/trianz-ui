@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from "jquery";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-portafolio',
@@ -8,12 +8,14 @@ import * as $ from "jquery";
 })
 export class PortafolioComponent implements OnInit {
 
-  edition: boolean = false;
-  team: boolean = false;
+  edition: boolean;
+  team: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.edition = false;
+    this.team = false;
     $('#all').addClass('active');
   }
 

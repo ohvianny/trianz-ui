@@ -24,11 +24,11 @@ export class LoginComponent implements OnInit {
       .pipe()
       .subscribe(
         response => {
-          localStorage.setItem("token", response.token);
+          localStorage.setItem('token', response.token);
           this.router.navigate(['dashboard']);
         },
         error => {
-          if (error.statusText == 'Unknown Error') {
+          if (error.statusText === 'Unknown Error') {
             Swal.fire('Error', 'No se puede hacer login. Intente más tarde', 'error');
           } else {
             Swal.fire('Error', error.error.message, 'error');

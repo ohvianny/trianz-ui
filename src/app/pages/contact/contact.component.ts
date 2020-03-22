@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   }
 
   validate(field: string, id: string): void {
-    if (field == '') {
+    if (field === '') {
       $('#' + id).addClass('border-red');
     } else {
       $('#' + id).removeClass('border-red');
@@ -36,12 +36,12 @@ export class ContactComponent implements OnInit {
     this.validate(this.email.subject, 'subject');
     this.validate(this.email.message, 'message');
 
-    if (this.email.name == '' || this.email.email == '' ||
-      this.email.subject == '' || this.email.message == '') {
+    if (this.email.name === '' || this.email.email === '' ||
+      this.email.subject === '' || this.email.message === '') {
       validations = false;
     }
 
-    if (validations == true) {
+    if (validations === true) {
       this.emailService.postEmail(this.email)
         .pipe()
         .subscribe(
@@ -49,7 +49,7 @@ export class ContactComponent implements OnInit {
             Swal.fire('success', 'Correo electrónico enviado con éxito', 'success');
           },
           error => {
-            if (error.statusText == 'Unknown Error') {
+            if (error.statusText === 'Unknown Error') {
               Swal.fire('Error', 'No se puede enviar correo. Intente más tarde', 'error');
             } else {
               Swal.fire('Error', error.message, 'error');

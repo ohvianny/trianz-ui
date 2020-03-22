@@ -9,27 +9,48 @@
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">Crear Nuevo Evento</h4>
                     <form class="needs-validation">
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label class="font-weight-bold text-dark text-2">Número</label>
-                                <input type="text" value="" id="number" name="number" class="form-control"
-                                    [(ngModel)]="event.number">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2">Número</label>
+                                        <input type="text" value="" id="number" name="number" class="form-control"
+                                            [(ngModel)]="event.num">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <label class="font-weight-bold text-dark text-2"
-                                    style="margin-right: 5px;">Estado</label>
-                                <input type="checkbox" id="active" name="active" [(ngModel)]="event.active">
-                                <span *ngIf="event.active == '0'"> Inactivo </span>
-                                <span *ngIf="event.active == '1'"> Activo</span>
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2"
+                                            style="margin-right: 5px;">Estado</label>
+                                        <input type="checkbox" id="active" name="active" [(ngModel)]="event.active">
+                                        <span *ngIf="event.active == 0"> Inactivo </span>
+                                        <span *ngIf="event.active == 1"> Activo</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col">
-                                <label class="font-weight-bold text-dark text-2">Precio</label>
-                                <input type="text" value="" id="price" name="price" class="form-control"
-                                    [(ngModel)]="event.price">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2">Precio</label>
+                                        <input type="text" value="" id="price" name="price" class="form-control"
+                                            [(ngModel)]="event.price">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2">Fecha del evento</label>
+                                        <mat-form-field style="display: block;">
+                                            <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" id="date"
+                                                name="date">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -55,16 +76,18 @@
                                 <th>Edición</th>
                                 <th>Activo</th>
                                 <th>Precio</th>
+                                <th>Fecha Evento</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let event of events">
-                                <td>{{event.number}}</td>
+                                <td>{{event.num}}</td>
                                 <td>
-                                    <span *ngIf="event.active == '0'"> Inactivo </span>
-                                    <span *ngIf="event.active == '1'"> Activo</span>
+                                    <span *ngIf="event.active == 0"> Inactivo </span>
+                                    <span *ngIf="event.active == 1"> Activo</span>
                                 </td>
                                 <td>{{event.price}}</td>
+                                <td>{{event.date | date:'mediumDate'}}</td>
                             </tr>
                         </tbody>
                     </table>

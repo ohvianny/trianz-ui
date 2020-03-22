@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as $ from "jquery";
+import * as $ from 'jquery';
 
 import { EventService } from '../../_services/event.service';
 import { Event } from '../../_models/event.model';
@@ -12,7 +12,7 @@ import { Event } from '../../_models/event.model';
 export class HeaderComponent implements OnInit {
 
   @Input() item: string;
-  event = new Event('', '', '');
+  event = new Event('', '', 0, '');
 
   constructor(private eventService: EventService) { }
 

@@ -27,24 +27,25 @@ import { Event } from '../../_models/event.model';
 })
 export class EnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '');
-  terms: boolean = false;
+  event = new Event('', '', 0, '');
+  // terms: boolean = false;
   currentDate: string;
-  sex: string = '';
-  category: string = '';
+  sex: string;
+  category: string;
   enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
-  constructor(private router: Router, private enrollmentService: EnrollmentService,
-    private eventService: EventService) { }
+  constructor(private router: Router, private enrollmentService: EnrollmentService, private eventService: EventService) { }
 
   ngOnInit(): void {
+    this.sex = '';
+    this.category = '';
     this.getLastEvent();
     const dd = new Date();
     this.currentDate = dd.getDate() + '/' + (dd.getMonth() + 1) + '/' + dd.getFullYear();
   }
 
   onChangeSex(): void {
-    this.enrollment.sex == 'Masculino' ? this.sex = 'Masculino' : this.sex = 'Femenino';
+    this.enrollment.sex === 'Masculino' ? this.sex = 'Masculino' : this.sex = 'Femenino';
   }
 
   onChangeDate(): void {
@@ -83,8 +84,9 @@ export class EnrollmentComponent implements OnInit {
       .subscribe(
         data => {
           this.event = data.event;
-          if (this.event.active == '0')
+          if (this.event.active === 0) {
             this.router.navigate(['/']);
+          }
         },
         error => {
           console.log(error);
@@ -93,7 +95,7 @@ export class EnrollmentComponent implements OnInit {
   }
 
   validate(field: string, id: string): void {
-    if (field == '') {
+    if (field === '') {
       $('#' + id).addClass('border-red');
     } else {
       $('#' + id).removeClass('border-red');
@@ -118,11 +120,11 @@ export class EnrollmentComponent implements OnInit {
     this.validate(this.enrollment.category, 'category');
     this.validate(this.enrollment.birthdate, 'birthdate');
 
-    if (this.enrollment.name == '' || this.enrollment.lastname == '' || this.enrollment.dni == '' ||
-      this.enrollment.email == '' || this.enrollment.telephone == '' || this.enrollment.sex == '' ||
-      this.enrollment.type == '' || this.enrollment.category == '' || this.enrollment.bank == '' ||
-      this.enrollment.bankNumber == '' || this.enrollment.amount == '' || this.enrollment.cityName == '' ||
-      this.enrollment.shirtSize == '' || this.enrollment.birthdate == '') {
+    if (this.enrollment.name === '' || this.enrollment.lastname === '' || this.enrollment.dni === '' ||
+      this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
+      this.enrollment.type === '' || this.enrollment.category === '' || this.enrollment.bank === '' ||
+      this.enrollment.bankNumber === '' || this.enrollment.amount === '' || this.enrollment.cityName === '' ||
+      this.enrollment.shirtSize === '' || this.enrollment.birthdate === '') {
       validations = false;
     }
 
@@ -131,13 +133,13 @@ export class EnrollmentComponent implements OnInit {
     //   Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
     // }
 
-    if (validations == true) {
-      if (this.enrollment.category == 'Elite') {
+    if (validations === true) {
+      if (this.enrollment.category === 'Elite') {
         this.enrollment.category = this.enrollment.category + ' ' + this.sex;
       } else {
         this.enrollment.category = this.enrollment.category + ' ' + this.category;
       }
-      this.enrollment.trianzEvent = this.event.number;
+      this.enrollment.trianzEvent = this.event.num;
       this.enrollmentService.postEnrollment(this.enrollment)
         .pipe()
         .subscribe(
@@ -145,7 +147,7 @@ export class EnrollmentComponent implements OnInit {
             Swal.fire('success', 'Inscripción realizada con éxito. Le llegará un correo electrónico con su confirmación', 'success');
           },
           error => {
-            if (error.statusText == 'Unknown Error') {
+            if (error.statusText === 'Unknown Error') {
               Swal.fire('Error', 'No se puede realizar inscripción. Intente más tarde', 'error');
             } else {
               Swal.fire('Error', error.error.message, 'error');

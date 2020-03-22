@@ -13,11 +13,11 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ConfirmEnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '');
+  event = new Event('', '', 0, '');
   enrollments: Enrollment[];
+  active = 1;
 
-  constructor(private eventService: EventService,
-    private enrollmentService: EnrollmentService) { }
+  constructor(private eventService: EventService, private enrollmentService: EnrollmentService) { }
 
   ngOnInit(): void {
     this.getLastEvent();
@@ -37,7 +37,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
   }
 
   getEnrollmentsByEventId(): void {
-    this.enrollmentService.getEnrollmentsInProgress(this.event.number)
+    this.enrollmentService.getEnrollmentsInProgress(this.event.num)
       .subscribe(
         response => {
           this.enrollments = response.data;
@@ -69,7 +69,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
             }
           );
       }
-    })
+    });
   }
 
   cancelEnrollment(enrollmentId: string): void {
@@ -92,7 +92,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
             }
           );
       }
-    })
+    });
   }
 
 }

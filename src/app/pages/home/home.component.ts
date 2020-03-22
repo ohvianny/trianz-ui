@@ -11,8 +11,8 @@ export class HomeComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        let images = document.querySelectorAll(".img-fluid");
-        $("img.lazy").lazyload(images);
+        const images = document.querySelectorAll('.img-fluid');
+        $('img.lazy').lazyload(images);
         $('.owl-carousel-2').owlCarousel({
             items: 4,
             animateOut: 'fadeOut',
@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
             dots: false,
             nav: true
         });
-
     }
 
 }

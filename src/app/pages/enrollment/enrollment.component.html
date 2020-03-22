@@ -21,7 +21,7 @@
 
                 <div class="overflow-hidden mb-1">
                     <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz
-                            2020</strong> - Edición Nro. {{event.number}} </h2>
+                            2020</strong> - Edición Nro. {{event.num}} </h2>
                 </div>
                 <div class="overflow-hidden mb-4">
                     <p class="mb-0">Información General del Evento:
@@ -70,7 +70,7 @@
                                 Nacimiento</label>
                             <mat-form-field style="display: block;">
                                 <input matInput [matDatepicker]="picker" [(ngModel)]="enrollment.birthdate"
-                                    id="birthdate" name="birthdate" (ngModelChange)="onChangeDate()">
+                                    id="birthdate" name="birthdate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
