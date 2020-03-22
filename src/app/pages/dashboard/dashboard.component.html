@@ -43,7 +43,7 @@
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">Inscripciones</h4>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="flip-content my-4">
                                 <h4 style="text-align: center;">
                                     <strong
@@ -52,7 +52,7 @@
                                 <h4 style="color: #F38832 !important;text-align: center;">TOTAL</h4>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="flip-content my-4">
                                 <h4 style="text-align: center;">
                                     <strong
@@ -61,13 +61,22 @@
                                 <h4 style="text-align: center;">CONFIRMADOS</h4>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="flip-content my-4">
                                 <h4 style="text-align: center;">
                                     <strong
                                         class="text-4 text-color-dark line-height-1 mb-3 d-inline-block">{{enrollmentInProgress}}</strong>
                                 </h4>
                                 <h4 style="color: #999 !important;text-align: center;">POR CONFIRMAR</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="flip-content my-4">
+                                <h4 style="text-align: center;">
+                                    <strong
+                                        class="text-4 text-color-dark line-height-1 mb-3 d-inline-block">{{rejectedEnrollment}}</strong>
+                                </h4>
+                                <h4 style="color: #DC353C !important;text-align: center;">RECHAZADOS</h4>
                             </div>
                         </div>
                     </div>
@@ -80,7 +89,7 @@
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">Lista de Inscritos</h4>
                     <div class="row">
-                        <div class="form-group col-lg-12" style="margin-top: 8px;">
+                        <div class="form-group col-lg-12">
                             <label class="font-weight-bold text-dark text-2 mb-0">Evento</label>
                             <select id="event" name="event" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);">

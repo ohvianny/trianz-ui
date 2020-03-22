@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   confirmEnrollment: string;
   enrollmentInProgress: string;
   totalEnrollment: string;
+  rejectedEnrollment: string;
 
   constructor(private eventService: EventService,
     private enrollmentService: EnrollmentService) { }
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
           this.getConfirmEnrollments();
           this.getEnrollmentsInProgress();
           this.getTotalEnrollments();
+          this.getRejectedEnrollments();
         },
         error => {
           Swal.fire('Error', error.error.message, 'error');
@@ -86,6 +88,18 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         response => {
           this.enrollmentInProgress = response.data.length;
+        },
+        error => {
+          Swal.fire('Error', error.error.message, 'error');
+        }
+      );
+  }
+
+  getRejectedEnrollments(): void {
+    this.enrollmentService.getRejectedEnrollments(this.event.number)
+      .subscribe(
+        response => {
+          this.rejectedEnrollment = response.data.length;
         },
         error => {
           Swal.fire('Error', error.error.message, 'error');

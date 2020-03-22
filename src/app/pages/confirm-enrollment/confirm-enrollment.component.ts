@@ -37,7 +37,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
   }
 
   getEnrollmentsByEventId(): void {
-    this.enrollmentService.getTotalEnrollments(this.event.number)
+    this.enrollmentService.getEnrollmentsInProgress(this.event.number)
       .subscribe(
         response => {
           this.enrollments = response.data;
@@ -49,11 +49,50 @@ export class ConfirmEnrollmentComponent implements OnInit {
   }
 
   acceptEnrollment(enrollmentId: string): void {
-
+    Swal.fire({
+      title: 'Confirmar inscripción',
+      text: '¿Seguro que aprueba esta inscripción?',
+      icon: 'warning',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then((result) => {
+      if (result.value) {
+        this.enrollmentService.updateConfirmEnrollment(enrollmentId, 'Aceptado')
+          .subscribe(
+            response => {
+              Swal.fire('success', 'Inscripción aceptada con éxito.', 'success');
+              this.getEnrollmentsByEventId();
+            },
+            error => {
+              Swal.fire('Error', error.error.message, 'error');
+            }
+          );
+      }
+    })
   }
 
   cancelEnrollment(enrollmentId: string): void {
-
+    Swal.fire({
+      title: 'Rechazar inscripción',
+      text: '¿Seguro que desea rechazar esta inscripción?',
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true
+    }).then((result) => {
+      if (result.value) {
+        this.enrollmentService.updateConfirmEnrollment(enrollmentId, 'Rechazado')
+          .subscribe(
+            response => {
+              Swal.fire('success', 'Inscripción rechazada.', 'success');
+            },
+            error => {
+              Swal.fire('Error', error.error.message, 'error');
+            }
+          );
+      }
+    })
   }
 
 }
