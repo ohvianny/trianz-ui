@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+declare var $: any;
+
+@Component({
+  selector: 'app-about',
+  templateUrl: './about.component.html',
+  styleUrls: ['./about.component.css']
+})
+export class AboutComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      margin: 10,
+      animateOut: 'fadeOut',
+      responsiveClass: true,
+      autoplay: true,
+      autoplayTimeout: 6000,
+      loop: true
+    });
+
+  }
+
+
+
+}

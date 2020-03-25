@@ -1,0 +1,120 @@
+<app-private-header [item]="'dashboard'"></app-private-header>
+
+<div role="main" class="main">
+    <app-page-header [item]="'Dashboard'"></app-page-header>
+    <div class="row">
+        <div class="col-md-3 offset-md-1">
+            <div class="featured-box featured-box-primary text-left mt-5">
+                <div class="box-content">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">Evento Nro. {{event.num}}</h4>
+                    <form class="needs-validation">
+                        <div class="form-row">
+                            <div class="col">
+                                <label class="font-weight-bold text-dark text-2"
+                                    style="margin-right: 5px;">Estado</label>
+                                <input type="checkbox" id="active" name="active" [(ngModel)]="event.active">
+                                <span *ngIf="event.active == 0"> Inactivo </span>
+                                <span *ngIf="event.active == 1"> Activo</span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label class="font-weight-bold text-dark text-2">Precio</label>
+                                <input type="text" value="" id="price" name="price" class="form-control"
+                                    [(ngModel)]="event.price">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label class="font-weight-bold text-dark text-2">Fecha del evento</label>
+                                <mat-form-field style="display: block;">
+                                    <input matInput [matDatepicker]="picker" [(ngModel)]="event.date" id="date"
+                                        name="date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <button id="eventId" type="button" class="btn btn-primary btn-modern float-right"
+                                    (click)="onUpdateForm()">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="featured-box featured-box-primary text-left mt-5">
+                <div class="box-content">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">Inscripciones</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="flip-content my-4">
+                                <h4 style="text-align: center;">
+                                    <strong
+                                        class="text-4 text-color-dark line-height-1 mb-3 d-inline-block">{{totalEnrollment}}</strong>
+                                </h4>
+                                <h4 style="color: #F38832 !important;text-align: center;">TOTAL</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="flip-content my-4">
+                                <h4 style="text-align: center;">
+                                    <strong
+                                        class="text-4 text-color-dark line-height-1 mb-3 d-inline-block">{{confirmEnrollment}}</strong>
+                                </h4>
+                                <h4 style="text-align: center;">CONFIRMADOS</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="flip-content my-4">
+                                <h4 style="text-align: center;">
+                                    <strong
+                                        class="text-4 text-color-dark line-height-1 mb-3 d-inline-block">{{enrollmentInProgress}}</strong>
+                                </h4>
+                                <h4 style="color: #999 !important;text-align: center;">POR CONFIRMAR</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="flip-content my-4">
+                                <h4 style="text-align: center;">
+                                    <strong
+                                        class="text-4 text-color-dark line-height-1 mb-3 d-inline-block">{{rejectedEnrollment}}</strong>
+                                </h4>
+                                <h4 style="color: #DC353C !important;text-align: center;">RECHAZADOS</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="featured-box featured-box-primary text-left mt-5">
+                <div class="box-content">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">Lista de Inscritos</h4>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label class="font-weight-bold text-dark text-2 mb-0">Evento</label>
+                            <select id="event" name="event" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);">
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <button id="downloadId" type="button" class="btn btn-primary btn-modern float-right"
+                                (click)="onDownload()">
+                                Descargar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

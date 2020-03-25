@@ -1,0 +1,11 @@
+@media (max-width: 991px) {
+    .portfolio-list img {
+        height: 200px;
+    }
+}
+
+@media (min-width: 992px) {
+    .portfolio-list img {
+        height: 100px;
+    }
+}

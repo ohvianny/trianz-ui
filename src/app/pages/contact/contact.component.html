@@ -1,0 +1,49 @@
+<app-header [item]="'contact-us'"></app-header>
+
+<div role="main" class="main">
+
+    <app-page-header [item]="'Contáctanos'"></app-page-header>
+
+    <div class="container py-4">
+        <div class="row mb-5">
+            <div class="col">
+                <form id="contactForm" class="contact-form-recaptcha-v3">
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2">Nombre completo</label>
+                            <input type="text" maxlength="100" class="form-control" name="name" id="name"
+                                [(ngModel)]="email.name">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2">Correo electrónico</label>
+                            <input type="email" maxlength="50" class="form-control" name="email" id="email"
+                                [(ngModel)]="email.email">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="required font-weight-bold text-dark text-2">Título</label>
+                            <input type="text" maxlength="100" class="form-control" name="subject" id="subject"
+                                [(ngModel)]="email.subject">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label class="required font-weight-bold text-dark text-2">Mensaje</label>
+                            <textarea maxlength="5000" rows="5" class="form-control" name="message" id="message"
+                                [(ngModel)]="email.message"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <input type="submit" value="Enviar mensaje" class="btn btn-primary btn-modern"
+                                (click)="onSaveForm()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

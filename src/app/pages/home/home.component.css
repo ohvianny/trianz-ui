@@ -1,0 +1,15 @@
+@media (min-width: 992px) {
+    .cauchos-img {
+        width: 200px;
+        margin-top: 37px;
+        margin-left: 36px;
+    }
+}
+
+/* @media (max-width: 991px) {
+    .cauchos-img {
+        width: 200px;
+        margin-top: 37px;
+        margin-left: 36px;
+    }
+} */
