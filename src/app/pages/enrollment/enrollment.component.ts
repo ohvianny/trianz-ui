@@ -14,20 +14,11 @@ import { Event } from '../../_models/event.model';
 @Component({
   selector: 'app-enrollment',
   templateUrl: './enrollment.component.html',
-  styleUrls: ['./enrollment.component.css'],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-  ]
+  styleUrls: ['./enrollment.component.css']
 })
 export class EnrollmentComponent implements OnInit {
 
-  event = new Event('', '', 0, '');
+  event = new Event('', '', '', '', '', '', '');
   // terms: boolean = false;
   currentDate: string;
   sex: string;
@@ -84,7 +75,7 @@ export class EnrollmentComponent implements OnInit {
       .subscribe(
         data => {
           this.event = data.event;
-          if (this.event.active === 0) {
+          if (this.event.state === 'Inactivo') {
             this.router.navigate(['/']);
           }
         },
@@ -116,7 +107,7 @@ export class EnrollmentComponent implements OnInit {
     this.validate(this.enrollment.bankNumber, 'bankNumber');
     this.validate(this.enrollment.amount, 'amount');
     this.validate(this.enrollment.cityName, 'cityName');
-    this.validate(this.enrollment.shirtSize, 'shirtSize');
+    //this.validate(this.enrollment.shirtSize, 'shirtSize');
     this.validate(this.enrollment.category, 'category');
     this.validate(this.enrollment.birthdate, 'birthdate');
 
@@ -124,7 +115,7 @@ export class EnrollmentComponent implements OnInit {
       this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
       this.enrollment.type === '' || this.enrollment.category === '' || this.enrollment.bank === '' ||
       this.enrollment.bankNumber === '' || this.enrollment.amount === '' || this.enrollment.cityName === '' ||
-      this.enrollment.shirtSize === '' || this.enrollment.birthdate === '') {
+      this.enrollment.birthdate === '') {
       validations = false;
     }
 
@@ -139,7 +130,7 @@ export class EnrollmentComponent implements OnInit {
       } else {
         this.enrollment.category = this.enrollment.category + ' ' + this.category;
       }
-      this.enrollment.trianzEvent = this.event.num;
+      this.enrollment.trianzEvent = this.event._id;
       this.enrollmentService.postEnrollment(this.enrollment)
         .pipe()
         .subscribe(
@@ -153,6 +144,8 @@ export class EnrollmentComponent implements OnInit {
               Swal.fire('Error', error.error.message, 'error');
             }
           });
+    } else {
+      Swal.fire('Error', 'Debe completar todos los campos', 'error');
     }
   }
 

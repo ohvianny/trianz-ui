@@ -38,10 +38,16 @@
                                                 Portafolio
                                             </a>
                                         </li>
-                                        <li class="dropdown" *ngIf="event.active === 1">
+                                        <li class="dropdown" *ngIf="event.state === 'Activo'">
                                             <a [ngClass]="{'active': 'inscripcion' === item}"
                                                 class="dropdown-item dropdown-toggle" routerLink="/inscripcion">
                                                 Inscripción
+                                            </a>
+                                        </li>
+                                        <li class="dropdown" *ngIf="event.state === 'Resultado'">
+                                            <a [ngClass]="{'active': 'inscripcion' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/inscripcion">
+                                                Resultados
                                             </a>
                                         </li>
                                         <li class="dropdown">

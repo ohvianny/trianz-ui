@@ -13,7 +13,7 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ConfirmEnrollmentComponent implements OnInit {
 
-  event = new Event('', '', 0, '');
+  event = new Event('', '', '', '', '', '', '');
   enrollments: Enrollment[];
   active = 1;
 
@@ -37,7 +37,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
   }
 
   getEnrollmentsByEventId(): void {
-    this.enrollmentService.getEnrollmentsInProgress(this.event.num)
+    this.enrollmentService.getEnrollmentsInProgress(this.event._id)
       .subscribe(
         response => {
           this.enrollments = response.data;
