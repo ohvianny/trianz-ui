@@ -25,11 +25,11 @@
                 </div>
                 <div class="overflow-hidden mb-4">
                     <p class="mb-0">Información General del Evento:
-                        <a href="../../../assets/doc/INFORMACIÓN-GENERAL-2020.docx" download>Descargar </a>
+                        <a href={{event.infoFile}} target="_blank" download>Descargar</a>
                     </p>
-                    <!--<p class="mb-0">Planilla de Liberación de Responsabilidad:
-                        <a href="../../../assets/doc/LIBERACIÓN-RESPONSABILIDAD-2020.docx" download>Descargar </a>
-                    </p>-->
+                    <p *ngIf="event.type != 'Virtual'" class="mb-0">Planilla de Liberación de Responsabilidad:
+                        <a href={{event.genFile}} target="_blank" download>Descargar </a>
+                    </p>
                     <p>Para el día <b>{{currentDate}}</b>, el precio actual de inscripción es de <b>Bs
                             {{event.price}}</b>.</p>
                 </div>
@@ -38,39 +38,38 @@
                     <div class="row" style="margin-top: -20px;">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Nombre</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu nombre." maxlength="20"
-                                class="form-control" name="name" id="name" [(ngModel)]="enrollment.name">
+                            <input type="text" maxlength="20" class="form-control" name="name" id="name"
+                                [(ngModel)]="enrollment.name">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Apellido</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu apellido." maxlength="20"
-                                class="form-control" name="lastname" id="lastname" [(ngModel)]="enrollment.lastname">
+                            <input type="text" maxlength="20" class="form-control" name="lastname" id="lastname"
+                                [(ngModel)]="enrollment.lastname">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Cédula de Identidad</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu cédula." maxlength="10"
-                                class="form-control" name="dni" id="dni" [(ngModel)]="enrollment.dni">
+                            <input type="text" maxlength="10" class="form-control" name="dni" id="dni"
+                                [(ngModel)]="enrollment.dni">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Correo Electrónico</label>
-                            <input type="email" value="" data-msg-required="Ingresa tu correo electrónico."
-                                maxlength="50" class="form-control" name="email" id="email"
+                            <input type="email" maxlength="50" class="form-control" name="email" id="email"
                                 [(ngModel)]="enrollment.email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Teléfono</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu teléfono." maxlength="20"
-                                class="form-control" name="telephone" id="telephone" [(ngModel)]="enrollment.telephone">
+                            <input type="text" maxlength="20" class="form-control" name="telephone" id="telephone"
+                                [(ngModel)]="enrollment.telephone">
                         </div>
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de
                                 Nacimiento </label>
-                            <input type="date" name="birthdate" id="birthdate" max="3000-12-31" min="1000-01-01"
-                                class="form-control" [(ngModel)]="enrollment.birthdate">
+                            <input type="date" name="birthdate" id="birthdate" max="2010-12-31" min="1900-01-01"
+                                class="form-control" [(ngModel)]="enrollment.birthdate" (change)="onChangeDate()">
                         </div>
                     </div>
                     <div class="row">
@@ -91,6 +90,7 @@
                                 <option value="">Seleccionar</option>
                                 <option value="Sprint">Sprint</option>
                                 <option value="Olimpico">Olímpico</option>
+                                <option value="Equipo">Por Equipo</option>
                             </select>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category">
                                 <option value="">Seleccionar</option>
                                 <option value="Elite">Elite {{sex}}</option>
-                                <option value="Categoria">Categoría {{category}}</option>
+                                <option value="Por Edades">Por Edades {{category}}</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
@@ -150,7 +150,7 @@
                                 [(ngModel)]="enrollment.clubName">
                         </div>
                     </div>
-                    <!--<div class="row">
+                    <div class="row" *ngIf="event.type != 'Virtual'">
                         <div class="form-group col-lg-6">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Talla de Franela</label>
                             <select id="shirtSize" name="shirtSize" class="form-control" size="0"
@@ -163,8 +163,8 @@
                                 <option value="XL">XL</option>
                             </select>
                         </div>
-                    </div>-->
-                    <!-- <div class="row" style="margin-top: 10px;">
+                    </div>
+                    <!--<div class="row" style="margin-top: 10px;">
                         <div class="form-group col-lg-12">
                             <input type="radio" id="terms" name="terms" value="true" [(ngModel)]="terms">
                             <label class="text-2 mb-0" style="margin-left: 10px;">He leído y acepto los
@@ -172,7 +172,7 @@
                                     Condiciones </a>
                                 del Evento 12vo de Trianz.</label>
                         </div>
-                    </div> -->
+                    </div>-->
 
                     <div class="form-group row">
                         <div class="form-group col-lg-9">

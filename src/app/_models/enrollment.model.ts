@@ -16,6 +16,12 @@ export class Enrollment {
         public cityName: string,
         public clubName: string,
         public trianzEvent: string,
+        public posGen: string,
+        public posCat: string,
+        public totalTime: string,
+        public swimmingTime: string,
+        public bikeTime: string,
+        public walkTime: string,
         public shirtSize: string
     ) { }
 

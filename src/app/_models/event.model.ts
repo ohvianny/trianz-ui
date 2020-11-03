@@ -7,7 +7,10 @@ export class Event {
         public num: string,
         public price: string,
         public state: string,
-        public date: string
+        public infoFile: string,
+        public genFile: string,
+        public date: string,
+        public date2: string
     ) { }
 
 }

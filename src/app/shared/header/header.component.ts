@@ -12,7 +12,7 @@ import { Event } from '../../_models/event.model';
 export class HeaderComponent implements OnInit {
 
   @Input() item: string;
-  event = new Event('', '', '', '', '', '', '');
+  event = new Event('', '', '', '', '', '', '', '', '', '');
 
   constructor(private eventService: EventService) { }
 

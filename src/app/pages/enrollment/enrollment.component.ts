@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -18,12 +16,12 @@ import { Event } from '../../_models/event.model';
 })
 export class EnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '');
-  // terms: boolean = false;
+  event = new Event('', '', '', '', '', '', '', '', '', '');
+  terms: boolean = false;
   currentDate: string;
   sex: string;
   category: string;
-  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
   constructor(private router: Router, private enrollmentService: EnrollmentService, private eventService: EventService) { }
 
@@ -41,7 +39,7 @@ export class EnrollmentComponent implements OnInit {
 
   onChangeDate(): void {
     const currentYear = new Date().getFullYear();
-    const birthYear = $('#birthdate').val().split('/')[2];
+    const birthYear = $('#birthdate').val().split('-')[0];
 
     switch (true) {
       case (birthYear <= (currentYear - 50)):
@@ -75,9 +73,7 @@ export class EnrollmentComponent implements OnInit {
       .subscribe(
         data => {
           this.event = data.event;
-          if (this.event.state === 'Inactivo') {
-            this.router.navigate(['/']);
-          }
+          if (this.event.state != 'Activo') this.router.navigate(['/']);
         },
         error => {
           console.log(error);
@@ -107,7 +103,6 @@ export class EnrollmentComponent implements OnInit {
     this.validate(this.enrollment.bankNumber, 'bankNumber');
     this.validate(this.enrollment.amount, 'amount');
     this.validate(this.enrollment.cityName, 'cityName');
-    //this.validate(this.enrollment.shirtSize, 'shirtSize');
     this.validate(this.enrollment.category, 'category');
     this.validate(this.enrollment.birthdate, 'birthdate');
 
@@ -122,7 +117,15 @@ export class EnrollmentComponent implements OnInit {
     // if (this.terms == false && validations == true) {
     //   validations = false;
     //   Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
+    //   this.validate(this.enrollment.shirtSize, 'shirtSize');
     // }
+
+    if (this.event.type != 'Virtual') {
+      this.validate(this.enrollment.shirtSize, 'shirtSize');
+      if (this.enrollment.shirtSize === '') {
+        validations = false;
+      }
+    }
 
     if (validations === true) {
       if (this.enrollment.category === 'Elite') {

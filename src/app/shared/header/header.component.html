@@ -32,12 +32,12 @@
                                                 Nosotros
                                             </a>
                                         </li>
-                                        <li class="dropdown">
+                                        <!--<li class="dropdown">
                                             <a [ngClass]="{'active': 'portafolio' === item}"
                                                 class="dropdown-item dropdown-toggle" routerLink="/portafolio">
                                                 Portafolio
                                             </a>
-                                        </li>
+                                        </li>-->
                                         <li class="dropdown" *ngIf="event.state === 'Activo'">
                                             <a [ngClass]="{'active': 'inscripcion' === item}"
                                                 class="dropdown-item dropdown-toggle" routerLink="/inscripcion">
@@ -45,8 +45,8 @@
                                             </a>
                                         </li>
                                         <li class="dropdown" *ngIf="event.state === 'Resultado'">
-                                            <a [ngClass]="{'active': 'inscripcion' === item}"
-                                                class="dropdown-item dropdown-toggle" routerLink="/inscripcion">
+                                            <a [ngClass]="{'active': 'resultados' === item}"
+                                                class="dropdown-item dropdown-toggle" routerLink="/resultados">
                                                 Resultados
                                             </a>
                                         </li>

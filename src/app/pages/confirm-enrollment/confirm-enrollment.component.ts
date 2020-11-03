@@ -13,7 +13,7 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ConfirmEnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '');
+  event = new Event('', '', '', '', '', '', '', '', '', '');
   enrollments: Enrollment[];
   active = 1;
 

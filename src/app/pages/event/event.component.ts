@@ -11,7 +11,7 @@ import { EventService } from '../../_services/event.service';
 })
 export class EventComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '');
+  event = new Event('', '', '', '', '', '', '', '', '', '');
   events: Event[];
   newOrModify = 'Nuevo';
 
@@ -39,8 +39,7 @@ export class EventComponent implements OnInit {
         .pipe().subscribe(
           response => {
             Swal.fire('success', 'Evento creado con éxito', 'success');
-            this.getEvents();
-            this.event = new Event('', '', '', '', '', '', '');
+            this.event = new Event('', '', '', '', '', '', '', '', '', '');
           },
           error => {
             if (error.statusText === 'Unknown Error') {
@@ -62,15 +61,14 @@ export class EventComponent implements OnInit {
               Swal.fire('Error', error.error.message, 'error');
             }
           });
-      this.getEvents();
-      this.event = new Event('', '', '', '', '', '', '');
+      this.event = new Event('', '', '', '', '', '', '', '', '', '');
       this.newOrModify = 'Nuevo';
     }
+    this.getEvents();
   }
 
   onEditClick(event: Event): void {
-    const event2 = new Event(event._id, event.type, event.title, event.num, event.price, event.state, event.date);
-
+    const event2 = new Event(event._id, event.type, event.title, event.num, event.price, event.state, event.infoFile, event.genFile, event.date, event.date2);
     this.event = event2;
     this.newOrModify = 'Modificar';
   }

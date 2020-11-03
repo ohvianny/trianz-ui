@@ -1,0 +1,211 @@
+<app-header [item]="'resultados'"></app-header>
+
+<div role="main" class="main">
+
+    <app-page-header [item]="'Resultados'"></app-page-header>
+
+    <div class="container py-2">
+
+        <div class="row">
+            <div class="col-md-8 offset-md-4">
+                <div class="overflow-hidden mb-1">
+                    <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz</strong>
+                        - {{event.title}} </h2>
+                </div>
+                <div class="overflow-hidden mb-3">
+                    <p>Tendrás hasta el día dd/mm/yyyy para registrar tus tiempos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="overflow-hidden">
+                            <h5 style="text-align: center;">Búsqueda General</h5>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-10">
+                        <label class="font-weight-bold text-dark text-2 mb-0">Categoría</label>
+                        <select id="category" name="category" class="form-control" size="0"
+                            style="height: calc(1.5em + .75rem + 2px);">
+                            <option value="">Seleccionar</option>
+                            <option value="all">Todos</option>
+                            <option value="Elite Femenino">Elite Femenino</option>
+                            <option value="Elite Masculino">Elite Masculino</option>
+                            <option value="Categoria">Categoría </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1" style="border-left: 2px solid #9999;"></div>
+
+            <div class="col-md-4">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="overflow-hidden">
+                                <h5 style="text-align: center;">Búsqueda individual</h5>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label class="font-weight-bold text-dark text-2 mb-0">Nro. Inscripción</label>
+                            <input type="text" maxlength="7" class="form-control" id="enrollmentId"
+                                [(ngModel)]="enrollmentId" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <!-- <div class="form-group col-md-3">
+                            <label class="font-weight-bold text-dark text-2 mb-0">C.I.</label>
+                            <input type="text" class="form-control" name="dni" id="dni" maxlength="2">
+                        </div>-->
+                        <div class="form-group col-md-4">
+                            <button type="button" class="btn btn-primary btn-modern" (click)="onSearchEnrollment()"
+                                style="margin-top: 20px;">
+                                Buscar
+                            </button>
+                        </div>
+                        <!--<div class="form-group col-md-8" style="margin-top: -15px;">
+                            <p>*** 2 primeros dígitos de la cédula.</p>
+                        </div>-->
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-1" style="border-left: 2px solid #9999;"></div>
+
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="overflow-hidden">
+                            <h5 style="text-align: center;">Registrar tiempo</h5>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <button type="button" class="btn btn-primary btn-modern" style="margin-top: 15px;"
+                            (click)="onRegisterTime()">
+                            Registrar Nuevo Tiempo
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mt-4">
+
+                <div class="overflow-hidden mb-1">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">
+                        Lista de Resultados </h4>
+                </div>
+
+                <table id="tenrollments" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Pos. Gen.</th>
+                            <th>Pos. Cat.</th>
+                            <th>Nro. Inscripción</th>
+                            <th>Nombre/Apellido</th>
+                            <th>Categoría</th>
+                            <th>T. Total</th>
+                            <th>T. Natación</th>
+                            <th>T. Bicicleta</th>
+                            <th>T. Trote</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrollment of enrollments">
+                            <td>{{enrollment.posGen}}</td>
+                            <td>{{enrollment.posCat}}</td>
+                            <td>{{enrollment.enrollmentId}}</td>
+                            <td>{{enrollment.name}} {{enrollment.lastname}}</td>
+                            <td>{{enrollment.category}}</td>
+                            <td>{{enrollment.totalTime}}</td>
+                            <td>{{enrollment.swimmingTime}}</td>
+                            <td>{{enrollment.bikeTime}}</td>
+                            <td>{{enrollment.walkTime}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="enrollments.length === 0">
+                    <p class="color-primary" style="text-align: center;">No hay información</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="swal01-container swal2-center swal01-backdrop-show" *ngIf="!showModal">
+        <div class="swal01-popup swal01-modal" role="dialog" style="display: flex;">
+            <div class="swal01-header">
+                <h2 class="swal01-title">Registrar Nuevo Tiempo</h2>
+            </div>
+            <br>
+            <div class="swal01-content">
+                <div class="row">
+                    <form role="form">
+                        <div class="row">
+                            <div class="form-group col-md-5 offset-md-3">
+                                <label class="font-weight-bold text-dark text-2 mb-0">Nro. Inscripción</label>
+                                <input type="text" maxlength="7" class="form-control" id="enrollmentId"
+                                    [(ngModel)]="enrollmentId" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="font-weight-bold text-dark text-2 mb-0">C.I.</label>
+                                <input type="text" class="form-control" name="dni" id="dni" maxlength="2">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <table id="tenrollments" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Tiempos</th>
+                                            <th>Horas</th>
+                                            <th>Minutos</th>
+                                            <th>Segundos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Natación</td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bicicleta</td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Trote</td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                            <td><input type="number" min="0" max="60" class="form-control"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="swal01-actions">
+                <button type="button" class="btn btn-primary btn-modern" style="margin-right: 15px;">Guardar</button>
+                <button type="button" class="btn btn-secondary btn-modern" (click)="closeModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <app-footer></app-footer>

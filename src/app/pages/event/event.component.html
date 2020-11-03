@@ -18,7 +18,7 @@
                                             style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="event.type">
                                             <option value="">Seleccionar</option>
                                             <option value="Presencial">Presencial</option>
-                                            <option value="Online">Online</option>
+                                            <option value="Virtual">Virtual</option>
                                         </select>
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="form-row">
                                     <div class="form-group col">
                                         <label class="font-weight-bold text-dark text-2">Número</label>
@@ -40,7 +40,7 @@
                                             [(ngModel)]="event.num">
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <div class="form-group col">
@@ -53,9 +53,18 @@
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <div class="form-group col">
-                                        <label class="font-weight-bold text-dark text-2">Fecha del evento</label>
+                                        <label class="font-weight-bold text-dark text-2">Fecha Inicio</label>
                                         <input type="date" name="date" max="3000-12-31" min="1000-01-01"
                                             class="form-control" [(ngModel)]="event.date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2">Fecha Fin</label>
+                                        <input type="date" name="date2" max="3000-12-31" min="1000-01-01"
+                                            class="form-control" [(ngModel)]="event.date2">
                                     </div>
                                 </div>
                             </div>
@@ -72,6 +81,24 @@
                                             <option value="Resultado">Resultado</option>
                                             <option value="Cerrado">Cerrado</option>
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2">Link Información G.</label>
+                                        <input type="text" id="infoFile" name="infoFile" class="form-control"
+                                            [(ngModel)]="event.infoFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label class="font-weight-bold text-dark text-2">Link Liberación Resp.</label>
+                                        <input type="text" id="genFile" name="genFile" class="form-control"
+                                            [(ngModel)]="event.genFile">
                                     </div>
                                 </div>
                             </div>
@@ -98,10 +125,11 @@
                             <tr>
                                 <th>Tipo</th>
                                 <th>Título</th>
-                                <th>Edición</th>
+                                <!--<th>Edición</th>-->
                                 <th>Estado</th>
                                 <th>Precio</th>
-                                <th>Fecha Evento</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
                                 <th>Editar</th>
                             </tr>
                         </thead>
@@ -109,10 +137,11 @@
                             <tr *ngFor="let event of events">
                                 <td>{{event.type}}</td>
                                 <td>{{event.title}}</td>
-                                <td>{{event.num}}</td>
+                                <!-- <td>{{event.num}}</td>-->
                                 <td>{{event.state}}</td>
                                 <td>{{event.price}}</td>
                                 <td>{{event.date | date:'mediumDate'}}</td>
+                                <td>{{event.date2 | date:'mediumDate'}}</td>
                                 <td><i class="icon-note" (click)="onEditClick(event)"></i></td>
                             </tr>
                         </tbody>
