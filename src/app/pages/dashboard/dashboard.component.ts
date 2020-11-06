@@ -24,7 +24,7 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class DashboardComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '');
+  event = new Event('', '', '', '', '', '', '', '', '', '', '');
   events: Event[];
   confirmEnrollment: string;
   enrollmentInProgress: string;

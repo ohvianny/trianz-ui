@@ -32,15 +32,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-row">
                                     <div class="form-group col">
-                                        <label class="font-weight-bold text-dark text-2">Número</label>
-                                        <input type="text" value="" id="number" name="number" class="form-control"
-                                            [(ngModel)]="event.num">
+                                        <label class="font-weight-bold text-dark text-2">Descripción</label>
+                                        <input type="text" value="" id="description" name="description"
+                                            class="form-control" [(ngModel)]="event.description">
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-row">
                                     <div class="form-group col">
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" *ngIf="event.type != 'Virtual'">
                                 <div class="form-row">
                                     <div class="form-group col">
                                         <label class="font-weight-bold text-dark text-2">Link Liberación Resp.</label>
@@ -125,10 +125,9 @@
                             <tr>
                                 <th>Tipo</th>
                                 <th>Título</th>
-                                <!--<th>Edición</th>-->
                                 <th>Estado</th>
                                 <th>Precio</th>
-                                <th>Fecha Inicio</th>
+                                <th>Fecha Ini.</th>
                                 <th>Fecha Fin</th>
                                 <th>Editar</th>
                             </tr>
@@ -137,7 +136,6 @@
                             <tr *ngFor="let event of events">
                                 <td>{{event.type}}</td>
                                 <td>{{event.title}}</td>
-                                <!-- <td>{{event.num}}</td>-->
                                 <td>{{event.state}}</td>
                                 <td>{{event.price}}</td>
                                 <td>{{event.date | date:'mediumDate'}}</td>

@@ -22,7 +22,10 @@ export class Enrollment {
         public swimmingTime: string,
         public bikeTime: string,
         public walkTime: string,
-        public shirtSize: string
+        public shirtSize: string,
+        public modality: string,
+        public paymentDate: string,
+        public paymentType: string
     ) { }
 
 }

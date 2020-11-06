@@ -16,12 +16,16 @@ import { Event } from '../../_models/event.model';
 })
 export class EnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '');
+  event = new Event('', '', '', '', '', '', '', '', '', '', '');
   terms: boolean = false;
   currentDate: string;
   sex: string;
   category: string;
-  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+
+  modalities = [{ value: '', name: 'Seleccionar' },
+  { value: 'Triatlon', name: 'Triatlón' }
+  ];
 
   constructor(private router: Router, private enrollmentService: EnrollmentService, private eventService: EventService) { }
 
@@ -34,7 +38,11 @@ export class EnrollmentComponent implements OnInit {
   }
 
   onChangeSex(): void {
-    this.enrollment.sex === 'Masculino' ? this.sex = 'Masculino' : this.sex = 'Femenino';
+    if (this.enrollment.sex === 'Masculino') {
+      this.sex = 'Masculino';
+    } else {
+      this.sex = 'Femenino';
+    }
   }
 
   onChangeDate(): void {
@@ -73,6 +81,7 @@ export class EnrollmentComponent implements OnInit {
       .subscribe(
         data => {
           this.event = data.event;
+          if (this.event.type === 'Virtual') this.modalities.push({ value: 'Duatlon', name: 'Duatlón' });
           if (this.event.state != 'Activo') this.router.navigate(['/']);
         },
         error => {
@@ -92,6 +101,9 @@ export class EnrollmentComponent implements OnInit {
   onSaveForm(): void {
     let validations = true;
 
+    this.validate(this.enrollment.modality, 'modality');
+    this.validate(this.enrollment.paymentType, 'paymentType');
+    this.validate(this.enrollment.paymentDate, 'paymentDate');
     this.validate(this.enrollment.name, 'name');
     this.validate(this.enrollment.lastname, 'lastname');
     this.validate(this.enrollment.dni, 'dni');
@@ -99,7 +111,6 @@ export class EnrollmentComponent implements OnInit {
     this.validate(this.enrollment.telephone, 'telephone');
     this.validate(this.enrollment.sex, 'sex');
     this.validate(this.enrollment.type, 'type');
-    this.validate(this.enrollment.bank, 'bank');
     this.validate(this.enrollment.bankNumber, 'bankNumber');
     this.validate(this.enrollment.amount, 'amount');
     this.validate(this.enrollment.cityName, 'cityName');
@@ -108,12 +119,16 @@ export class EnrollmentComponent implements OnInit {
 
     if (this.enrollment.name === '' || this.enrollment.lastname === '' || this.enrollment.dni === '' ||
       this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
-      this.enrollment.type === '' || this.enrollment.category === '' || this.enrollment.bank === '' ||
+      this.enrollment.type === '' || this.enrollment.category === '' || this.enrollment.paymentDate === '' ||
       this.enrollment.bankNumber === '' || this.enrollment.amount === '' || this.enrollment.cityName === '' ||
-      this.enrollment.birthdate === '') {
+      this.enrollment.birthdate === '' || this.enrollment.modality === '' || this.enrollment.paymentType === '') {
       validations = false;
     }
 
+    if (this.enrollment.bank === '' && this.enrollment.paymentType === 'Transferencia') {
+      this.validate(this.enrollment.bank, 'bank');
+      validations = false;
+    }
     // if (this.terms == false && validations == true) {
     //   validations = false;
     //   Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
@@ -128,9 +143,7 @@ export class EnrollmentComponent implements OnInit {
     }
 
     if (validations === true) {
-      if (this.enrollment.category === 'Elite') {
-        this.enrollment.category = this.enrollment.category + ' ' + this.sex;
-      } else {
+      if (this.enrollment.category !== 'Elite') {
         this.enrollment.category = this.enrollment.category + ' ' + this.category;
       }
       this.enrollment.trianzEvent = this.event._id;

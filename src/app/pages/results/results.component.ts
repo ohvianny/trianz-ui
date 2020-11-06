@@ -15,7 +15,7 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ResultsComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '');
+  event = new Event('', '', '', '', '', '', '', '', '', '', '');
   enrollments = [];
   enrollmentId = '';
   enrollTime = Enrollment;

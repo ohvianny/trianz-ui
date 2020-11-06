@@ -10,7 +10,8 @@ export class Event {
         public infoFile: string,
         public genFile: string,
         public date: string,
-        public date2: string
+        public date2: string,
+        public description: string
     ) { }
 
 }
