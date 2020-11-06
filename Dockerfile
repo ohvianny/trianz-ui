@@ -1,20 +1,19 @@
-# base image
-FROM node:12.0-alpine AS BUILD_IMAGE
+# STAGE 1
+FROM node:12.16.1-alpine As builder
 
-#set working directory
-RUN mkdir /src
-WORKDIR /src
+WORKDIR /usr/src/app
+COPY package.json ./
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /src/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /src/package.json
 RUN npm install
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@9.0.4
 
-# add app
-COPY . /src
+COPY . ./
+RUN ng build --prod
 
-# start app
-CMD ng serve --host 0.0.0.0
+
+# STAGE 2
+FROM nginx:1.15.8-alpine
+COPY --from=builder /usr/src/app/dist/trianz-ui /usr/share/nginx/html
+EXPOSE 4200 80
+# run nginx
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

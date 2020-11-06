@@ -20,64 +20,66 @@
             <div class="col-lg-8 order-1 order-lg-1">
 
                 <div class="overflow-hidden mb-1">
-                    <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz
-                            2020</strong> - Edición Nro. {{event.num}} </h2>
+                    <h2 class="font-weight-normal text-7 mb-0"><strong class="font-weight-extra-bold">Trianz</strong>
+                        - {{event.title}} </h2>
                 </div>
-                <div class="overflow-hidden mb-4">
-                    <p class="mb-0">Información General del Evento:
-                        <a href="../../../assets/doc/INFORMACIÓN-GENERAL-2020.docx" download>Descargar </a>
+                <div class="overflow-hidden">
+                    <p class="mb-0"><strong class="font-weight-extra-bold">Descripción:</strong> {{event.description}}
                     </p>
-                    <p class="mb-0">Planilla de Liberación de Responsabilidad:
-                        <a href="../../../assets/doc/LIBERACIÓN-RESPONSABILIDAD-2020.docx" download>Descargar </a>
+                    <p><strong class="font-weight-extra-bold">Información General: </strong>
+                        <a href={{event.infoFile}} target="_blank" download> Descargar</a>
                     </p>
-                    <p>Para el día {{currentDate}}, el precio actual de inscripción es de Bs {{event.price}}.</p>
+                    <p *ngIf="event.type != 'Virtual'">Planilla de Liberación de Responsabilidad:
+                        <a href={{event.genFile}} target="_blank" download> Descargar </a>
+                    </p>
                 </div>
 
                 <form role="form" class="needs-validation">
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Nombre</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu nombre." maxlength="20"
-                                class="form-control" name="name" id="name" [(ngModel)]="enrollment.name">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Apellido</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu apellido." maxlength="20"
-                                class="form-control" name="lastname" id="lastname" [(ngModel)]="enrollment.lastname">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Cédula de Identidad</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu cédula." maxlength="10"
-                                class="form-control" name="dni" id="dni" [(ngModel)]="enrollment.dni">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Correo Electrónico</label>
-                            <input type="email" value="" data-msg-required="Ingresa tu correo electrónico."
-                                maxlength="50" class="form-control" name="email" id="email"
-                                [(ngModel)]="enrollment.email">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Teléfono</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu teléfono." maxlength="20"
-                                class="form-control" name="telephone" id="telephone" [(ngModel)]="enrollment.telephone">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label class="font-weight-bold text-dark text-2 mb-0">Fecha de
-                                Nacimiento</label>
-                            <mat-form-field style="display: block;">
-                                <input matInput [matDatepicker]="picker" [(ngModel)]="enrollment.birthdate"
-                                    id="birthdate" name="birthdate">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                    </div>
                     <div class="row" style="margin-top: -20px;">
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Modalidad</label>
+                            <select id="modality" name="modality" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.modality">
+
+                                <option *ngFor="let modality of modalities" [ngValue]="modality.value">
+                                    {{modality.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Tipo de Inscripción</label>
+                            <select id="type" name="type" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.type">
+                                <option value="">Seleccionar</option>
+                                <option value="Sprint">Sprint</option>
+                                <option value="Olimpico">Olímpico</option>
+                                <option value="Equipo">Por Equipo</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Nombre</label>
+                            <input type="text" maxlength="20" class="form-control" name="name" id="name"
+                                [(ngModel)]="enrollment.name">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Apellido</label>
+                            <input type="text" maxlength="20" class="form-control" name="lastname" id="lastname"
+                                [(ngModel)]="enrollment.lastname">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Cédula de Identidad</label>
+                            <input type="text" maxlength="10" class="form-control" name="dni" id="dni"
+                                [(ngModel)]="enrollment.dni">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de
+                                Nacimiento </label>
+                            <input type="date" name="birthdate" id="birthdate" max="2010-12-31" min="1900-01-01"
+                                class="form-control" [(ngModel)]="enrollment.birthdate" (change)="onChangeDate()">
+                        </div>
+                        <div class="form-group col-lg-3">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Sexo</label>
                             <select id="sex" name="sex" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.sex"
@@ -87,29 +89,62 @@
                                 <option value="Femenino">Femenino</option>
                             </select>
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Tipo de Inscripción</label>
-                            <select id="type" name="type" class="form-control" size="0"
-                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.type">
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Categoría</label>
+                            <select id="category" name="category" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category"
+                                *ngIf="event.type != 'Virtual'">
                                 <option value="">Seleccionar</option>
-                                <option value="Sprint">Sprint</option>
-                                <option value="Olimpico">Olímpico</option>
+                                <option value="Elite">Elite {{sex}}</option>
+                                <option value="Por Edades">Por Edades {{category}}</option>
+                            </select>
+                            <select id="category" name="category" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category"
+                                *ngIf="event.type == 'Virtual'">
+                                <option value="">Seleccionar</option>
+                                <option value="Por Edades">Por Edades {{category}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Categoría</label>
-                            <select id="category" name="category" class="form-control" size="0"
-                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category">
-                                <option value="">Seleccionar</option>
-                                <option value="Elite">Elite {{sex}}</option>
-                                <option value="Categoria">Categoría {{category}}</option>
-                            </select>
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Correo Electrónico</label>
+                            <input type="email" maxlength="50" class="form-control" name="email" id="email"
+                                [(ngModel)]="enrollment.email">
                         </div>
                         <div class="form-group col-lg-6">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Ciudad de Procedencia</label>
+                            <input type="text" value="" data-msg-required="Ingresa tu ciudad de procedencia."
+                                maxlength="50" class="form-control" name="cityName" id="cityName"
+                                [(ngModel)]="enrollment.cityName">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Teléfono</label>
+                            <input type="text" maxlength="20" class="form-control" name="telephone" id="telephone"
+                                [(ngModel)]="enrollment.telephone">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="font-weight-bold text-dark text-2 mb-0">Club al que pertenece</label>
+                            <input type="text" value="" data-msg-required="Ingresa tu club de procedencia."
+                                maxlength="30" class="form-control" name="clubName" id="clubName"
+                                [(ngModel)]="enrollment.clubName">
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Tipo de Pago</label>
+                            <select id="category" name="category" class="form-control" size="0"
+                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.paymentType">
+                                <option value="">Seleccionar</option>
+                                <option value="Transferencia">Transferencia</option>
+                                <option value="PayPal">PayPal</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Banco</label>
                             <select id="bank" name="bank" class="form-control" size="0"
+                                [disabled]="enrollment.paymentType === 'PayPal'"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.bank">
                                 <option value="">Seleccionar</option>
                                 <option value="Mercantil">Mercantil</option>
@@ -133,28 +168,21 @@
                                 maxlength="30" class="form-control" name="bankNumber" id="bankNumber"
                                 [(ngModel)]="enrollment.bankNumber">
                         </div>
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-3">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Monto Transferido</label>
                             <input type="text" value="" data-msg-required="Ingresa tu monto transferido." maxlength="50"
                                 class="form-control" name="amount" id="amount" [(ngModel)]="enrollment.amount">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label class="required font-weight-bold text-dark text-2 mb-0">Ciudad de Procedencia</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu ciudad de procedencia."
-                                maxlength="50" class="form-control" name="cityName" id="cityName"
-                                [(ngModel)]="enrollment.cityName">
+                        <div class="form-group col-lg-3">
+                            <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de
+                                Pago </label>
+                            <input type="date" name="paymentDate" id="paymentDate" max="2020-12-31" min="2020-10-20"
+                                class="form-control" [(ngModel)]="enrollment.paymentDate">
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label class="font-weight-bold text-dark text-2 mb-0">Club al que pertenece</label>
-                            <input type="text" value="" data-msg-required="Ingresa tu club de procedencia."
-                                maxlength="30" class="form-control" name="clubName" id="clubName"
-                                [(ngModel)]="enrollment.clubName">
-                        </div>
+
                     </div>
-                    <div class="row">
-                        <div class="form-group col-lg-6">
+                    <div class="row" *ngIf="event.type != 'Virtual'">
+                        <div class="form-group col-lg-3">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Talla de Franela</label>
                             <select id="shirtSize" name="shirtSize" class="form-control" size="0"
                                 style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.shirtSize">
@@ -167,7 +195,8 @@
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="row" style="margin-top: 10px;">
+
+                    <!--<div class="row" style="margin-top: 10px;">
                         <div class="form-group col-lg-12">
                             <input type="radio" id="terms" name="terms" value="true" [(ngModel)]="terms">
                             <label class="text-2 mb-0" style="margin-left: 10px;">He leído y acepto los
@@ -175,8 +204,12 @@
                                     Condiciones </a>
                                 del Evento 12vo de Trianz.</label>
                         </div>
-                    </div> -->
+                    </div>-->
 
+                    <div class="overflow-hidden">
+                        <p>Para el día <b>{{currentDate}}</b>, el precio actual de inscripción es de <b>Bs
+                                {{event.price}}</b>.</p>
+                    </div>
                     <div class="form-group row">
                         <div class="form-group col-lg-9">
                         </div>
@@ -188,6 +221,7 @@
                         </div>
                     </div>
                 </form>
+
 
             </div>
         </div>

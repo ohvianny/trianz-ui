@@ -24,7 +24,7 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class DashboardComponent implements OnInit {
 
-  event = new Event('', '', 0, '');
+  event = new Event('', '', '', '', '', '', '', '', '', '', '');
   events: Event[];
   confirmEnrollment: string;
   enrollmentInProgress: string;
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
         response => {
           this.events = response.data;
           for (const event of this.events) {
-            $('#event').append('<option value="' + event.num + '">Edición Nro.' + event.num + '</option>');
+            $('#event').append('<option value="' + event._id + '">' + event.type + ' - ' + event.title + '</option>');
           }
         },
         error => {
@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getTotalEnrollments(): void {
-    this.enrollmentService.getTotalEnrollments(this.event.num)
+    this.enrollmentService.getTotalEnrollments(this.event._id)
       .subscribe(
         response => {
           this.totalEnrollment = response.data.length;
@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getConfirmEnrollments(): void {
-    this.enrollmentService.getConfirmEnrollments(this.event.num)
+    this.enrollmentService.getConfirmEnrollments(this.event._id)
       .subscribe(
         response => {
           this.confirmEnrollment = response.data.length;
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getEnrollmentsInProgress(): void {
-    this.enrollmentService.getEnrollmentsInProgress(this.event.num)
+    this.enrollmentService.getEnrollmentsInProgress(this.event._id)
       .subscribe(
         response => {
           this.enrollmentInProgress = response.data.length;
@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getRejectedEnrollments(): void {
-    this.enrollmentService.getRejectedEnrollments(this.event.num)
+    this.enrollmentService.getRejectedEnrollments(this.event._id)
       .subscribe(
         response => {
           this.rejectedEnrollment = response.data.length;
@@ -134,7 +134,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onDownload(): void {
-    this.enrollmentService.getTotalEnrollments(this.event.num)
+    this.enrollmentService.getTotalEnrollments(this.event._id)
       .pipe()
       .subscribe(
         response => {
