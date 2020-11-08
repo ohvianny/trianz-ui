@@ -11,9 +11,12 @@ COPY . ./
 RUN ng build --prod
 
 
+
 # STAGE 2
 FROM nginx:1.15.8-alpine
 COPY --from=builder /usr/src/app/dist/trianz-ui /usr/share/nginx/html
+COPY /nginx-custom.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 4200 80
 # run nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

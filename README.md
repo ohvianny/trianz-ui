@@ -16,4 +16,4 @@ sudo systemctl enable docker
 docker run --name tu2 -idt -v ${PWD}:/usr/src/app/dist/trianz-ui -p 80:80 root/trianz-ui
 
 
-docker run --name tu -idt -v ${PWD}:/usr/src/app/dist/trianz-ui -p 80:80 vimp/trianz-ui:0.3
+docker run --name tu -idt -v ${PWD}:/usr/src/app/dist/trianz-ui -p 80:80 vimp/trianz-ui
