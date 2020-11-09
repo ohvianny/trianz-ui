@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import { Event } from '../../_models/event.model';
 import { EventService } from '../../_services/event.service';
 import { EnrollmentService } from '../../_services/enrollment.service';
+import { ExcelService } from '../../shared/excel.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,9 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class DashboardComponent implements OnInit {
 
+  title = 'exportExcelInAngular';
+  data: any = [];
+
   event = new Event('', '', '', '', '', '', '', '', '', '', '');
   events: Event[];
   confirmEnrollment: string;
@@ -31,7 +35,9 @@ export class DashboardComponent implements OnInit {
   totalEnrollment: string;
   rejectedEnrollment: string;
 
-  constructor(private eventService: EventService, private enrollmentService: EnrollmentService) { }
+  constructor(private eventService: EventService,
+    private enrollmentService: EnrollmentService,
+    private excelService: ExcelService) { }
 
   ngOnInit(): void {
     this.getLastEvent();
@@ -139,6 +145,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response.data);
+          this.excelService.exportAsExcelFile(response.data, 'footballer_data');
         },
         error => {
           if (error.statusText === 'Unknown Error') {

@@ -3,35 +3,43 @@
 <div role="main" class="main">
     <app-page-header [item]="'Inscripciones'"></app-page-header>
     <div class="row">
-        <div class="col-md-10 offset-md-1 mt-3">
+        <div class="col-md-12 mt-3">
             <div class="overflow-hidden mb-1">
                 <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3" style="text-align: center;">
                     Listado de Inscripciones Pendientes </h4>
             </div>
-            <table id="tenrollments" class="table table-striped">
+            <table id="tenrollments" class="table table-striped" style="display: block;overflow: scroll;">
                 <thead>
                     <tr>
+                        <th>Modalidad</th>
                         <th>Nombre</th>
-                        <th>Correo Electrónico</th>
                         <th>Cédula</th>
-                        <th>Tipo</th>
+                        <th>Correo Electrónico</th>
+                        <th>Teléfono</th>
+                        <th>Tipo Ins.</th>
                         <th>Categoría</th>
+                        <th>Tipo Pago</th>
                         <th>Banco</th>
                         <th>Transacción</th>
                         <th>Monto</th>
+                        <th>F. Pago</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let enrollment of enrollments">
+                        <td>{{enrollment.modality}}</td>
                         <td>{{enrollment.name}} {{enrollment.lastname}}</td>
-                        <td>{{enrollment.email}}</td>
                         <td>{{enrollment.dni}}</td>
+                        <td>{{enrollment.email}}</td>
+                        <td>{{enrollment.telephone}}</td>
                         <td>{{enrollment.type}}</td>
                         <td>{{enrollment.category}}</td>
+                        <td>{{enrollment.paymentType}}</td>
                         <td>{{enrollment.bank}}</td>
                         <td>{{enrollment.bankNumber}}</td>
                         <td>{{enrollment.amount}}</td>
+                        <td>{{enrollment.paymentDate}}</td>
                         <td style="text-align: center;">
                             <i class="icon-check icons" style="color: #51A7AF; cursor: pointer;"
                                 (click)="acceptEnrollment(enrollment._id)"></i>

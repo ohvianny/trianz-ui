@@ -110,7 +110,6 @@ export class EnrollmentComponent implements OnInit {
     this.validate(this.enrollment.email, 'email');
     this.validate(this.enrollment.telephone, 'telephone');
     this.validate(this.enrollment.sex, 'sex');
-    this.validate(this.enrollment.type, 'type');
     this.validate(this.enrollment.bankNumber, 'bankNumber');
     this.validate(this.enrollment.amount, 'amount');
     this.validate(this.enrollment.cityName, 'cityName');
@@ -119,7 +118,7 @@ export class EnrollmentComponent implements OnInit {
 
     if (this.enrollment.name === '' || this.enrollment.lastname === '' || this.enrollment.dni === '' ||
       this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
-      this.enrollment.type === '' || this.enrollment.category === '' || this.enrollment.paymentDate === '' ||
+      this.enrollment.category === '' || this.enrollment.paymentDate === '' ||
       this.enrollment.bankNumber === '' || this.enrollment.amount === '' || this.enrollment.cityName === '' ||
       this.enrollment.birthdate === '' || this.enrollment.modality === '' || this.enrollment.paymentType === '') {
       validations = false;
@@ -127,6 +126,11 @@ export class EnrollmentComponent implements OnInit {
 
     if (this.enrollment.bank === '' && this.enrollment.paymentType === 'Transferencia') {
       this.validate(this.enrollment.bank, 'bank');
+      validations = false;
+    }
+
+    if (this.enrollment.type === '' && this.enrollment.modality !== 'Duatlon') {
+      this.validate(this.enrollment.type, 'type');
       validations = false;
     }
     // if (this.terms == false && validations == true) {
@@ -160,6 +164,7 @@ export class EnrollmentComponent implements OnInit {
               Swal.fire('Error', error.error.message, 'error');
             }
           });
+      this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
     } else {
       Swal.fire('Error', 'Debe completar todos los campos', 'error');
     }

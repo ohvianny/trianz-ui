@@ -55,6 +55,9 @@ export class ContactComponent implements OnInit {
               Swal.fire('Error', error.message, 'error');
             }
           });
+      this.email = new Email('', '', '', '');
+    } else {
+      Swal.fire('Error', 'Debe completar todos los campos', 'error');
     }
   }
 }
