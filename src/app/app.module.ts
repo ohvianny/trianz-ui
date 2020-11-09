@@ -23,6 +23,8 @@ import { ConfirmEnrollmentComponent } from './pages/confirm-enrollment/confirm-e
 import { PrivateHeaderComponent } from './shared/private-header/private-header.component';
 import { EventComponent } from './pages/event/event.component';
 import { ResultsComponent } from './pages/results/results.component';
+import { ExcelService } from './shared/excel.service';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +54,7 @@ import { ResultsComponent } from './pages/results/results.component';
     MatMomentDateModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
