@@ -7,3 +7,32 @@ section.section {
     padding: 9px 10px 0px;
     font-size: 15px;
 }
+
+.jorge-foto{
+    height: -webkit-fill-available;
+}
+
+@media (max-width: 991px) {
+	.jorge-foto{
+        height: auto;
+    }
+    .ele-foto{
+        height: auto;
+    }
+}
+@media (min-width: 992px) and (max-width: 1196px) {
+	.jorge-foto{
+        height: 220px;
+    }
+    .ele-foto{
+        height: 220px;
+    }
+}
+@media (min-width: 1200px) {
+	.jorge-foto{
+        height: 275px;
+    }
+    .ele-foto{
+        height: 275px;
+    }
+}
