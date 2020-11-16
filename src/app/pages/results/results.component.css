@@ -92,3 +92,17 @@
     width: 100%;
     margin: 1.25em auto 0;
 }
+.form-control{
+    width: 103%;
+    height: calc(1em + .75rem + 2px);
+    padding: 0px 5px;
+}
+
+.form-group {
+    margin-bottom: 0px;
+}
+
+.border-red {
+    border-color: #F44336; 
+    color: #F44336;
+}

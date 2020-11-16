@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response.data);
-          this.excelService.exportAsExcelFile(response.data, 'footballer_data');
+          this.excelService.exportAsExcelFile(response.data, 'trianz-inscripciones');
         },
         error => {
           if (error.statusText === 'Unknown Error') {
