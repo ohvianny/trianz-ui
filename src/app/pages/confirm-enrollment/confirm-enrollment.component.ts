@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 import { EventService } from '../../_services/event.service';
 import { Enrollment } from '../../_models/enrollment.model';
 import { EnrollmentService } from '../../_services/enrollment.service';
@@ -13,7 +13,7 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ConfirmEnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
   enrollments: Enrollment[];
   active = 1;
 

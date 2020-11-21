@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 import { EventService } from '../../_services/event.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { EventService } from '../../_services/event.service';
 })
 export class EventComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
-  events: Event[];
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
+  events: Eventt[];
   newOrModify = 'Nuevo';
 
   constructor(private eventService: EventService) { }
@@ -40,7 +40,7 @@ export class EventComponent implements OnInit {
           response => {
             this.getEvents();
             Swal.fire('success', 'Evento creado con éxito', 'success');
-            this.event = new Event('', '', '', '', '', '', '', '', '', '', '');
+            this.event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
           },
           error => {
             if (error.statusText === 'Unknown Error') {
@@ -55,7 +55,7 @@ export class EventComponent implements OnInit {
           response => {
             this.getEvents();
             Swal.fire('success', 'Evento modificado con éxito', 'success');
-            this.event = new Event('', '', '', '', '', '', '', '', '', '', '');
+            this.event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
           },
           error => {
             if (error.statusText === 'Unknown Error') {
@@ -64,13 +64,13 @@ export class EventComponent implements OnInit {
               Swal.fire('Error', error.error.message, 'error');
             }
           });
-      this.event = new Event('', '', '', '', '', '', '', '', '', '', '');
+      this.event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
       this.newOrModify = 'Nuevo';
     }
   }
 
-  onEditClick(event: Event): void {
-    const event2 = new Event(event._id, event.type, event.title, event.num, event.price, event.state, event.infoFile, event.genFile, event.date, event.date2, event.description);
+  onEditClick(event: Eventt): void {
+    const event2 = new Eventt(event._id, event.type, event.title, event.num, event.price, event.state, event.infoFile, event.genFile, event.date, event.date2, event.description);
     this.event = event2;
     this.newOrModify = 'Modificar';
   }

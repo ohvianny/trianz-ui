@@ -11,20 +11,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
-import { HeaderComponent } from './shared/header/header.component';
+import { HeaderComponent } from './_shared/header/header.component';
 import { PortafolioComponent } from './pages/portafolio/portafolio.component';
 import { EnrollmentComponent } from './pages/enrollment/enrollment.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { PageHeaderComponent } from './shared/page-header/page-header.component';
+import { FooterComponent } from './_shared/footer/footer.component';
+import { PageHeaderComponent } from './_shared/page-header/page-header.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ConfirmEnrollmentComponent } from './pages/confirm-enrollment/confirm-enrollment.component';
-import { PrivateHeaderComponent } from './shared/private-header/private-header.component';
+import { PrivateHeaderComponent } from './_shared/private-header/private-header.component';
 import { EventComponent } from './pages/event/event.component';
 import { ResultsComponent } from './pages/results/results.component';
-import { ExcelService } from './shared/excel.service';
-
+import { ExcelService } from './_shared/excel.service';
+import { TimeFormatPipe } from './_shared/time-format.pipe';
+import { ModalityFormatPipe } from './_shared/modality-format.pipe';
+import { CategoryFormatPipe } from './_shared/category-format.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,10 @@ import { ExcelService } from './shared/excel.service';
     ConfirmEnrollmentComponent,
     PrivateHeaderComponent,
     EventComponent,
-    ResultsComponent
+    ResultsComponent,
+    TimeFormatPipe,
+    ModalityFormatPipe,
+    CategoryFormatPipe
   ],
   imports: [
     BrowserModule,

@@ -93,7 +93,6 @@
     margin: 1.25em auto 0;
 }
 .form-control{
-    width: 103%;
     height: calc(1em + .75rem + 2px);
     padding: 0px 5px;
 }
@@ -105,4 +104,16 @@
 .border-red {
     border-color: #F44336; 
     color: #F44336;
+}
+
+.cropped {
+    height: 190px;
+    overflow: hidden;
+}
+
+@media (max-width: 442px) {
+    .fix-table {
+        display: block;
+        overflow: scroll;
+    }
 }

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { EnrollmentService } from '../../_services/enrollment.service';
 import { EventService } from '../../_services/event.service';
 import { Enrollment } from '../../_models/enrollment.model';
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 
 
 @Component({
@@ -16,7 +16,7 @@ import { Event } from '../../_models/event.model';
 })
 export class EnrollmentComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
   terms: boolean = false;
   currentDate: string;
   sex: string;
@@ -82,7 +82,10 @@ export class EnrollmentComponent implements OnInit {
         data => {
           this.event = data.event;
           if (this.event.type === 'Virtual') this.modalities.push({ value: 'Duatlon', name: 'Duatlón' });
-          if (this.event.state != 'Activo') this.router.navigate(['/']);
+          if (this.event.state == 'Activo' || this.event.state == 'Resultado') {
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error => {
           console.log(error);

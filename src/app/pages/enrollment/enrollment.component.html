@@ -1,15 +1,14 @@
 <app-header [item]="'inscripcion'"></app-header>
 
 <div role="main" class="main">
-    <section class="page-header page-header-classic page-header-sm" style="margin: 0px;background-color: #51A7AF;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1 data-title-border>Planilla de Inscripción</h1>
-                </div>
-            </div>
+
+    <section class="page-header page-header-classic" style="margin: 0px;background-color: #F38832;padding: 0px;">
+        <div class="cropped">
+            <img src="../../../assets/img/15.jpg" class="img-fluid border-radius-0"
+                style="width: 100%; height: 190px;object-fit: cover;">
         </div>
     </section>
+
 
     <div class="container py-2">
 
@@ -20,22 +19,26 @@
             <div class="col-lg-10 order-1 order-lg-1">
 
                 <div class="overflow-hidden mb-1">
-                    <h2 class="font-weight-normal text-7 mb-0">{{event.title}} </h2>
+                    <h2 class="font-weight-normal text-7 mb-0" style="text-align: center;">{{event.title}} </h2>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <p class="mb-0"><strong class="font-weight-extra-bold">Descripción:</strong>
-                            {{event.description}}
-                        </p>
+                        <div class="overflow-hidden">
+                            <p style="text-align: center;">Para el día <b>{{currentDate}}</b>, el precio actual de
+                                inscripción es de
+                                <b>{{event.price}}</b>.</p>
+                        </div>
                     </div>
                     <div class="col-6">
                         <p class="mb-0"><strong class="font-weight-extra-bold">Información General: </strong>
-                            <a href={{event.infoFile}} target="_blank" download> Descargar PDF</a>
+                            <a href={{event.infoFile}} target="_blank" download style="color: #F38832"> Descargar aquí
+                                el PDF</a>
                         </p>
                     </div>
                     <div class="col-6">
                         <p><strong class="font-weight-extra-bold">Información Adicional:</strong>
-                            <a href={{event.genFile}} target="_blank" download> Descargar PDF</a>
+                            <a href={{event.genFile}} target="_blank" download style="color: #F38832"> Descargar aquí el
+                                PDF</a>
                         </p>
                     </div>
                 </div>
@@ -43,7 +46,7 @@
                 </div>
 
                 <form role="form" class="needs-validation">
-                    <div class="row" style="margin-top: -20px;">
+                    <div class="row" style="margin-top: 10px;">
                         <div class="form-group col-lg-3">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Modalidad</label>
                             <select id="modality" name="modality" class="form-control" size="0"
@@ -215,10 +218,7 @@
                         </div>
                     </div>-->
 
-                    <div class="overflow-hidden">
-                        <p>Para el día <b>{{currentDate}}</b>, el precio actual de inscripción es de
-                            <b>{{event.price}}</b>.</p>
-                    </div>
+
                     <div class="form-group row">
                         <div class="form-group col-lg-9">
                         </div>

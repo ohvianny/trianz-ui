@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 
 import { EventService } from '../../_services/event.service';
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,7 @@ import { Event } from '../../_models/event.model';
 export class HeaderComponent implements OnInit {
 
   @Input() item: string;
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
 
   constructor(private eventService: EventService) { }
 

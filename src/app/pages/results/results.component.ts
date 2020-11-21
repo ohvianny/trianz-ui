@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 
 import { Time } from '../../_models/time.model';
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 import { Enrollment } from '../../_models/enrollment.model';
 import { EventService } from '../../_services/event.service';
 import { EnrollmentService } from '../../_services/enrollment.service';
+import { UploadService } from '../../_services/upload.service';
 
 @Component({
   selector: 'app-results',
@@ -16,29 +18,53 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ResultsComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
+  events: Eventt[];
   enrollments = [];
+  enrollmentsW = [];
   enrollmentId = '';
+  modalityId = '';
+  eventId = '';
   dni = '';
   showModal = true;
+  enableOnSave = false;
   duatlon = 'Triatlon';
   time = new Time('', '', '', '', '', '', '', '', '', '', '', '');
   validateTime = true;
+  file1Obj: File;
+  file2Obj: File;
+  file3Obj: File;
 
-  constructor(private router: Router, private enrollmentService: EnrollmentService, private eventService: EventService) { }
+  constructor(private router: Router, private enrollmentService: EnrollmentService,
+    private eventService: EventService, private uploadService: UploadService) { }
 
   ngOnInit(): void {
-    this.getLastEvent();
+    this.getEvents();
   }
 
-  getLastEvent(): void {
-    this.eventService.getLastEvent()
+  getEvents(): void {
+    this.eventService.getEventList()
       .subscribe(
         data => {
-          this.event = data.event;
-          if (this.event.state != 'Resultado') this.router.navigate(['/']);
+          this.events = data.data;
         },
         error => {
+          console.log(error);
+        }
+      );
+  }
+
+  onSearchEvent(): void {
+    this.event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
+    this.eventService.getEventState(this.eventId)
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.event = response.data;
+          }
+        },
+        error => {
+          this.enrollments = [];
           console.log(error);
         }
       );
@@ -62,11 +88,41 @@ export class ResultsComponent implements OnInit {
       );
   }
 
+  onSearchModality(): void {
+    this.enrollments = [];
+    this.enrollmentsW = [];
+    this.eventService.getEventModality(this.eventId, this.modalityId, 'Masculino')
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollments = response.data;
+          }
+        },
+        error => {
+          this.enrollments = [];
+          console.log(error);
+        }
+      );
+    this.eventService.getEventModality(this.eventId, this.modalityId, 'Femenino')
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollmentsW = response.data;
+          }
+        },
+        error => {
+          this.enrollmentsW = [];
+          console.log(error);
+        }
+      );
+  }
+
   onRegisterTime(): void {
     this.enrollmentId = '';
     this.dni = '';
     this.showModal = false;
     this.time = new Time('', '', '', '', '', '', '', '', '', '', '', '');
+    this.enableOnSave = false;
   }
 
   onBlur(): void {
@@ -86,6 +142,7 @@ export class ResultsComponent implements OnInit {
   }
 
   onSaveRegisterTime(): void {
+    this.enableOnSave = true;
     let validations = true;
 
     this.validate(this.enrollmentId, 'enrollmentId');
@@ -108,6 +165,10 @@ export class ResultsComponent implements OnInit {
       this.validateTime = validations;
 
       if (validations == true) {
+        this.uploadService.fileUpload(this.file1Obj, this.enrollmentId + "-file1");
+        this.uploadService.fileUpload(this.file2Obj, this.enrollmentId + "-file2");
+        this.uploadService.fileUpload(this.file3Obj, this.enrollmentId + "-file3");
+
         this.time.t11 = this.padLeadingZeros(this.time.t11);
         this.time.t12 = this.padLeadingZeros(this.time.t12);
         this.time.t13 = this.padLeadingZeros(this.time.t13);
@@ -149,6 +210,8 @@ export class ResultsComponent implements OnInit {
                 Swal.fire('Error', error.error.message, 'error');
               }
             });
+      } else {
+        this.enableOnSave = false;
       }
     }
   }
@@ -210,5 +273,123 @@ export class ResultsComponent implements OnInit {
   closeModal(): void {
     this.showModal = true;
   }
+
+  onFile1Picked(event: Event): void {
+    const FILE = (event.target as HTMLInputElement).files[0];
+    this.file1Obj = FILE;
+  }
+
+  onFile2Picked(event: Event): void {
+    const FILE = (event.target as HTMLInputElement).files[0];
+    this.file2Obj = FILE;
+  }
+
+  onFile3Picked(event: Event): void {
+    const FILE = (event.target as HTMLInputElement).files[0];
+    this.file3Obj = FILE;
+  }
+
+
+
+
+  generatePDF() { }
+
+  /*async generatePDF() {
+
+    let docDefinition = {
+      background: {
+        image: await this.getBase64ImageFromURL(),
+        width: 500
+      },
+      pageSize: { width: 500, height: 580 },
+      content: [
+        {
+          text: "VIANNY MOLERO",
+          absolutePosition: { x: 160, y: 300 },
+          style: 'atlete'
+        },
+        {
+          text: "1° TRICHALLENGE VIRTUAL",
+          absolutePosition: { x: 90, y: 90 },
+          style: 'title'
+        },
+        {
+          text: "DUATLON - FEMENINO",
+          absolutePosition: { x: 150, y: 330 },
+          style: 'modality'
+        },
+        {
+          text: "08:10:15",
+          absolutePosition: { x: 215, y: 405 },
+          style: 'ttime'
+        },
+        {
+          text: "NATACION",
+          absolutePosition: { x: 50, y: 450 },
+          style: 't1title'
+        },
+        {
+          text: "01:10:10",
+          absolutePosition: { x: 55, y: 480 },
+          style: 'ttime'
+        },
+        {
+          text: "01:10:10",
+          absolutePosition: { x: 200, y: 480 },
+          style: 'ttime'
+        },
+        {
+          text: "01:10:10",
+          absolutePosition: { x: 370, y: 480 },
+          style: 'ttime'
+        }
+      ],
+      styles: {
+        atlete: {
+          fontSize: 22,
+          color: '#F38832',
+          bold: true
+        },
+        title: {
+          bold: true,
+          fontSize: 26,
+        },
+        modality: {
+          fontSize: 20,
+        },
+        t1title: {
+          fontSize: 16,
+          bold: true,
+        },
+        ttime: {
+          fontSize: 16,
+          bold: true,
+        }
+      }
+    };
+
+    pdfMake.createPdf(docDefinition).open();
+  }
+
+  getBase64ImageFromURL() {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL);
+      };
+      img.onerror = error => {
+        reject(error);
+      };
+      img.src = 'https://trianz-doc.s3-sa-east-1.amazonaws.com/template1.jpg';
+    });
+  }*/
+
 
 }
