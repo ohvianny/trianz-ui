@@ -22,8 +22,7 @@
                     <option *ngFor="let event1 of events" [ngValue]="event1._id">{{event1.title}}</option>
                 </select>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="event.state != '' or event.state == 'Resultado'"
-                style="margin-top: 22px;">
+            <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="event.state == 'Resultado'" style="margin-top: 22px;">
                 <div class="form-group">
                     <button type="button" class="btn btn-primary btn-modern" (click)="onRegisterTime()">
                         Registrar Nuevo Tiempo

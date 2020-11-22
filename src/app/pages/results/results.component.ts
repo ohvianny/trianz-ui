@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
@@ -407,118 +408,17 @@ export class ResultsComponent implements OnInit {
     this.file3Obj = FILE;
   }
 
-  onSearchCerticiate(enrollmentId: string): void {
-    this.enrollmentService.getCertificate(this.enrollmentId)
-      .subscribe(
-        response => {
+  onSearchCerticiate(dorsal: string): void {
+    let url = environment.baseUrl + '/enrollments/certificate/' + dorsal;
+    let pdfName = 'certificado-' + dorsal + '.pdf';
 
-        },
-        error => {
-          this.enrollments = [];
-          console.log(error);
-        }
-      );
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', url);
+    link.setAttribute('download', pdfName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
-
-
-  generatePDF() { }
-
-  /*async generatePDF() {
-
-    let docDefinition = {
-      background: {
-        image: await this.getBase64ImageFromURL(),
-        width: 500
-      },
-      pageSize: { width: 500, height: 580 },
-      content: [
-        {
-          text: "VIANNY MOLERO",
-          absolutePosition: { x: 160, y: 300 },
-          style: 'atlete'
-        },
-        {
-          text: "1° TRICHALLENGE VIRTUAL",
-          absolutePosition: { x: 90, y: 90 },
-          style: 'title'
-        },
-        {
-          text: "DUATLON - FEMENINO",
-          absolutePosition: { x: 150, y: 330 },
-          style: 'modality'
-        },
-        {
-          text: "08:10:15",
-          absolutePosition: { x: 215, y: 405 },
-          style: 'ttime'
-        },
-        {
-          text: "NATACION",
-          absolutePosition: { x: 50, y: 450 },
-          style: 't1title'
-        },
-        {
-          text: "01:10:10",
-          absolutePosition: { x: 55, y: 480 },
-          style: 'ttime'
-        },
-        {
-          text: "01:10:10",
-          absolutePosition: { x: 200, y: 480 },
-          style: 'ttime'
-        },
-        {
-          text: "01:10:10",
-          absolutePosition: { x: 370, y: 480 },
-          style: 'ttime'
-        }
-      ],
-      styles: {
-        atlete: {
-          fontSize: 22,
-          color: '#F38832',
-          bold: true
-        },
-        title: {
-          bold: true,
-          fontSize: 26,
-        },
-        modality: {
-          fontSize: 20,
-        },
-        t1title: {
-          fontSize: 16,
-          bold: true,
-        },
-        ttime: {
-          fontSize: 16,
-          bold: true,
-        }
-      }
-    };
-
-    pdfMake.createPdf(docDefinition).open();
-  }
-
-  getBase64ImageFromURL() {
-    return new Promise((resolve, reject) => {
-      var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
-      img.onload = () => {
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        resolve(dataURL);
-      };
-      img.onerror = error => {
-        reject(error);
-      };
-      img.src = 'https://trianz-doc.s3-sa-east-1.amazonaws.com/template1.jpg';
-    });
-  }*/
-
 
 }
