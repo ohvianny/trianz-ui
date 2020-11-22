@@ -40,6 +40,14 @@ export class EventService {
         return this.http.get<any>(this.baseUrl + '/modality/' + eventId + '/' + mod + '/' + sex);
     }
 
+    getEventType(eventId: string, mod: string, type: string, sex: string) {
+        return this.http.get<any>(this.baseUrl + '/modality/' + eventId + '/' + mod + '/' + type + '/' + sex);
+    }
+
+    getEventCategory(eventId: string, mod: string, type: string, sex: string, cat: string) {
+        return this.http.get<any>(this.baseUrl + '/modality/cat/' + eventId + '/' + mod + '/' + type + '/' + sex + '/' + cat);
+    }
+
     constructor(private http: HttpClient) { }
 
 }

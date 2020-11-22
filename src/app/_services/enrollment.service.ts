@@ -52,6 +52,10 @@ export class EnrollmentService {
         return this.http.post(this.baseUrl + '/register/time', enrollment);
     }
 
+    getCertificate(enrollmentId: string) {
+        return this.http.get<any>(this.baseUrl + '/certificate/' + enrollmentId);
+    }
+
     constructor(private http: HttpClient) { }
 
 }

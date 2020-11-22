@@ -12,7 +12,7 @@
     <div class="container py-2">
 
         <div class="row mt-3">
-            <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12 offset-md-2 offset-sm-0">
                 <div class="overflow-hidden">
                     <h5>Buscar evento</h5>
                 </div>
@@ -33,7 +33,7 @@
         </div>
 
         <div class="row mt-2" *ngIf="event.state != ''">
-            <div class="col-lg-2 col-md-2 col-sm-4">
+            <div class="col-lg-2 col-md-2 col-sm-4 offset-md-2 offset-sm-0">
                 <div class="form-group">
                     <label class="font-weight-bold text-dark text-2 mb-0">MODALIDAD</label>
                     <select id="category" name="category" class="form-control" size="0"
@@ -48,9 +48,9 @@
 
             <div class="form-group col-lg-2 col-md-2 col-sm-4">
                 <label class="font-weight-bold text-dark text-2 mb-0">TIPO</label>
-                <select id="category" name="category" class="form-control" size="0"
-                    style="height: calc(1.5em + .75rem + 2px);">
-                    <option value="">Seleccionar</option>
+                <select id="type" name="type" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);"
+                    [disabled]="enableType" [(ngModel)]="typeId" (change)="onSearchType()">
+                    <option value="-">Seleccionar</option>
                     <option value="Sprint">Sprint</option>
                     <option value="Olimpico">Olímpico</option>
                     <option value="Por Equipo">Por Equipo</option>
@@ -60,8 +60,9 @@
             <div class="form-group col-lg-2 col-md-2 col-sm-4">
                 <label class="font-weight-bold text-dark text-2 mb-0">CATEGORIA</label>
                 <select id="category" name="category" class="form-control" size="0"
-                    style="height: calc(1.5em + .75rem + 2px);">
-                    <option value="">Seleccionar</option>
+                    style="height: calc(1.5em + .75rem + 2px);" [disabled]="enableCategory" [(ngModel)]="categoryId"
+                    (change)="onSearchCategory()">
+                    <option value="-">Seleccionar</option>
                     <option value="all">Todas</option>
                     <option value="Juvenil">Juvenil</option>
                     <option value="Por Edades 18 - 24">Por Edades 18 - 24</option>
@@ -80,11 +81,14 @@
                         <label class="font-weight-bold text-dark text-2 mb-0"
                             style="color: #F38832 !important;">DORSAL</label>
                         <input type="text" maxlength="7" class="form-control" [(ngModel)]="enrollmentId"
-                            [ngModelOptions]="{standalone: true}" (click)="onSearchEnrollment()" style="height: 35px;">
+                            [ngModelOptions]="{standalone: true}" (ngModelChange)="onSearchEnrollment()"
+                            style="height: 35px;">
                     </div>
                 </form>
             </div>
         </div>
+
+        <br>
 
         <div class="row" *ngIf="enrollmentsW.length !== 0">
             <div class="col-md-12 mt-4">
@@ -93,7 +97,8 @@
                         style="text-align: center;">
                         Resultados <span style="color: #F38832;">FEMENINO</span> </h4>
                 </div>
-                <table class="table table-striped fix-table" style="display: block;overflow: auto;">
+                <table id="enrollmentsW" class="table table-striped fix-table"
+                    style="display: block;overflow: auto;font-size: 12px;margin-bottom: 0px;">
                     <thead>
                         <tr>
                             <th>Cert.</th>
@@ -102,7 +107,7 @@
                             <th>Dorsal</th>
                             <th>Nombre</th>
                             <th>Modalidad</th>
-                            <th *ngIf="modalityId == 'Triatlon'">Tipo</th>
+                            <th>Tipo</th>
                             <th>Categoría</th>
                             <th>T. Total</th>
                             <th>T. Natación</th>
@@ -111,17 +116,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let enrollment of enrollmentsW">
+                        <tr *ngFor="let enrollment of enrollmentsW | slice: lowValueW : highValueW">
                             <td>
                                 <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
-                                    style="height: 24px;">
+                                    style="height: 24px;cursor: pointer;"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
                             </td>
                             <td>{{enrollment.posGen}}</td>
                             <td>{{enrollment.posCat}}</td>
                             <td>{{enrollment.enrollmentId}}</td>
                             <td>{{enrollment.name}} {{enrollment.lastname}}</td>
                             <td>{{enrollment.modality | modalityFormatPipe}}</td>
-                            <td *ngIf="modalityId == 'Triatlon'">{{enrollment.type | categoryFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
                             <td>{{enrollment.category}}</td>
                             <td>{{enrollment.totalTime | timeFormatPipe }}</td>
                             <td style="width: 103px;">{{enrollment.swimmingTime}}
@@ -148,6 +154,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <mat-paginator [length]="enrollmentsW.length" [pageSize]="10"
+                    (page)="pageEventW = getPaginatorDataW($event)">
+                </mat-paginator>
             </div>
         </div>
 
@@ -156,9 +165,11 @@
                 <div class="overflow-hidden mb-1">
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">
-                        Resultados <span style="color: #51a7af;">MASCULINO</span> </h4>
+                        Resultados <span style="color: #51a7af;" *ngIf="enrollmentId.length !== 4">MASCULINO</span>
+                    </h4>
                 </div>
-                <table class="table table-striped fix-table" style="display: block;overflow: auto;">
+                <table id="enrollments" class="table table-striped fix-table"
+                    style="display: block;overflow: auto;font-size: 12px;margin-bottom: 0px;">
                     <thead>
                         <tr>
                             <th>Cert.</th>
@@ -167,7 +178,7 @@
                             <th>Dorsal</th>
                             <th>Nombre</th>
                             <th>Modalidad</th>
-                            <th *ngIf="modalityId == 'Triatlon'">Tipo</th>
+                            <th>Tipo</th>
                             <th>Categoría</th>
                             <th>T. Total</th>
                             <th>T. Natación</th>
@@ -176,7 +187,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let enrollment of enrollments">
+                        <tr *ngFor="let enrollment of enrollments | slice: lowValue : highValue">
                             <td>
                                 <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
                                     style="height: 24px;">
@@ -186,7 +197,7 @@
                             <td>{{enrollment.enrollmentId}}</td>
                             <td>{{enrollment.name}} {{enrollment.lastname}}</td>
                             <td>{{enrollment.modality | modalityFormatPipe}}</td>
-                            <td *ngIf="modalityId == 'Triatlon'">{{enrollment.type | categoryFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
                             <td>{{enrollment.category}}</td>
                             <td>{{enrollment.totalTime | timeFormatPipe }}</td>
                             <td style="width: 103px;">{{enrollment.swimmingTime}}
@@ -213,6 +224,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <mat-paginator [length]="enrollments.length" [pageSize]="10"
+                    (page)="pageEvent = getPaginatorData($event)">
+                </mat-paginator>
             </div>
         </div>
 

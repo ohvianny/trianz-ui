@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +27,7 @@ import { ResultsComponent } from './pages/results/results.component';
 import { ExcelService } from './_shared/excel.service';
 import { TimeFormatPipe } from './_shared/time-format.pipe';
 import { ModalityFormatPipe } from './_shared/modality-format.pipe';
-import { CategoryFormatPipe } from './_shared/category-format.pipe';
+import { TypeFormatPipe } from './_shared/type-format.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { CategoryFormatPipe } from './_shared/category-format.pipe';
     ResultsComponent,
     TimeFormatPipe,
     ModalityFormatPipe,
-    CategoryFormatPipe
+    TypeFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -57,7 +58,8 @@ import { CategoryFormatPipe } from './_shared/category-format.pipe';
     MatDatepickerModule,
     BrowserAnimationsModule,
     MatMomentDateModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   providers: [ExcelService],
   bootstrap: [AppComponent]

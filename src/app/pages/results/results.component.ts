@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
@@ -26,6 +27,8 @@ export class ResultsComponent implements OnInit {
   modalityId = '';
   eventId = '';
   dni = '';
+  typeId = '-';
+  categoryId = '-';
   showModal = true;
   enableOnSave = false;
   duatlon = 'Triatlon';
@@ -34,12 +37,42 @@ export class ResultsComponent implements OnInit {
   file1Obj: File;
   file2Obj: File;
   file3Obj: File;
+  enableCategory = true;
+  enableType = true;
+
+  // MatPaginator Inputs
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  lowValue: number = 0;
+  highValue: number = 10;
+
+  // MatPaginator Inputs
+  pageIndexW: number = 0;
+  pageSizeW: number = 10;
+  lowValueW: number = 0;
+  highValueW: number = 10;
+
+  // MatPaginator Output
+  pageEvent: PageEvent;
+  pageEventW: PageEvent;
 
   constructor(private router: Router, private enrollmentService: EnrollmentService,
     private eventService: EventService, private uploadService: UploadService) { }
 
   ngOnInit(): void {
     this.getEvents();
+  }
+
+  public getPaginatorData(event: PageEvent): PageEvent {
+    this.lowValue = event.pageIndex * event.pageSize;
+    this.highValue = this.lowValue + event.pageSize;
+    return event;
+  }
+
+  public getPaginatorDataW(event: PageEvent): PageEvent {
+    this.lowValueW = event.pageIndex * event.pageSize;
+    this.highValueW = this.lowValueW + event.pageSize;
+    return event;
   }
 
   getEvents(): void {
@@ -61,6 +94,10 @@ export class ResultsComponent implements OnInit {
         response => {
           if (response.data != null) {
             this.event = response.data;
+            this.categoryId = '-';
+            this.typeId = '-';
+            this.modalityId = '';
+            this.enrollmentId = '';
           }
         },
         error => {
@@ -71,26 +108,37 @@ export class ResultsComponent implements OnInit {
   }
 
   onSearchEnrollment(): void {
-    this.enrollments = [];
-    this.enrollmentService.getEnrollment(this.enrollmentId)
-      .subscribe(
-        response => {
-          if (response.data != null) {
-            this.enrollments.push(response.data);
-          } else {
-
+    if (this.enrollmentId.length == 4) {
+      this.enrollments = [];
+      this.enrollmentsW = [];
+      this.enrollmentService.getEnrollment(this.enrollmentId)
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollments.push(response.data);
+              this.categoryId = '-';
+              this.typeId = '-';
+              this.modalityId = '';
+            } else {
+              Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+              this.enrollmentId = '';
+              this.enrollments = [];
+            }
+          },
+          error => {
+            this.enrollments = [];
+            Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+            this.enrollmentId = '';
+            this.enrollments = [];
           }
-        },
-        error => {
-          this.enrollments = [];
-          console.log(error);
-        }
-      );
+        );
+    }
   }
 
   onSearchModality(): void {
     this.enrollments = [];
     this.enrollmentsW = [];
+    this.enrollmentId = '';
     this.eventService.getEventModality(this.eventId, this.modalityId, 'Masculino')
       .subscribe(
         response => {
@@ -104,6 +152,76 @@ export class ResultsComponent implements OnInit {
         }
       );
     this.eventService.getEventModality(this.eventId, this.modalityId, 'Femenino')
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollmentsW = response.data;
+          }
+        },
+        error => {
+          this.enrollmentsW = [];
+          console.log(error);
+        }
+      );
+    this.enableType = (this.modalityId == 'Triatlon') ? false : true;
+    this.categoryId = '-';
+    this.typeId = '-';
+    this.enableCategory = false;
+  }
+
+  onSearchType(): void {
+    this.enrollments = [];
+    this.enrollmentsW = [];
+    this.enrollmentId = '';
+    if (this.categoryId != '') {
+      this.eventService.getEventType(this.eventId, this.modalityId, this.typeId, 'Masculino')
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollments = response.data;
+            }
+          },
+          error => {
+            this.enrollments = [];
+            console.log(error);
+          }
+        );
+      this.eventService.getEventType(this.eventId, this.modalityId, this.typeId, 'Femenino')
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollmentsW = response.data;
+            }
+          },
+          error => {
+            this.enrollmentsW = [];
+            console.log(error);
+          }
+        );
+    } else {
+      this.onSearchCategory();
+    }
+  }
+
+  onSearchCategory(): void {
+    this.enrollments = [];
+    this.enrollmentsW = [];
+    this.enrollmentId = '';
+    if (this.typeId == '') this.typeId = '-';
+    if (this.categoryId == '') this.categoryId = '-';
+    this.eventService.getEventCategory(this.eventId, this.modalityId, this.typeId, 'Masculino', this.categoryId)
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollments = response.data;
+          }
+        },
+        error => {
+          this.enrollments = [];
+          console.log(error);
+        }
+      );
+    this.eventService.getEventCategory(this.eventId, this.modalityId, this.typeId, 'Femenino', this.categoryId)
       .subscribe(
         response => {
           if (response.data != null) {
@@ -289,7 +407,18 @@ export class ResultsComponent implements OnInit {
     this.file3Obj = FILE;
   }
 
+  onSearchCerticiate(enrollmentId: string): void {
+    this.enrollmentService.getCertificate(this.enrollmentId)
+      .subscribe(
+        response => {
 
+        },
+        error => {
+          this.enrollments = [];
+          console.log(error);
+        }
+      );
+  }
 
 
   generatePDF() { }
