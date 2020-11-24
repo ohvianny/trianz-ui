@@ -25,7 +25,8 @@ export class Enrollment {
         public shirtSize: string,
         public modality: string,
         public paymentDate: string,
-        public paymentType: string
+        public paymentType: string,
+        public code: string
     ) { }
 
 }

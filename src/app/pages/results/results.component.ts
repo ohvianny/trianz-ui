@@ -312,7 +312,7 @@ export class ResultsComponent implements OnInit {
           this.padLeadingZeros(hrs) + this.padLeadingZeros(mins) + this.padLeadingZeros(segs),
           this.time.t11 + ":" + this.time.t12 + ":" + this.time.t13,
           this.time.t21 + ":" + this.time.t22 + ":" + this.time.t23,
-          this.time.t31 + ":" + this.time.t32 + ":" + this.time.t33, '', '', '', '');
+          this.time.t31 + ":" + this.time.t32 + ":" + this.time.t33, '', '', '', '', '');
 
         this.enrollmentService.postEnrollTime(enrollTime)
           .pipe()
