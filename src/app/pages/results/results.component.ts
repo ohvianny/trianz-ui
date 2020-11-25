@@ -24,6 +24,7 @@ export class ResultsComponent implements OnInit {
   events: Eventt[];
   enrollments = [];
   enrollmentsW = [];
+  enrollmentIndividual = [];
   enrollmentId = '';
   modalityId = '';
   eventId = '';
@@ -99,6 +100,9 @@ export class ResultsComponent implements OnInit {
             this.typeId = '-';
             this.modalityId = '';
             this.enrollmentId = '';
+            this.enrollmentIndividual = [];
+            this.enrollments = [];
+            this.enrollmentsW = [];
           }
         },
         error => {
@@ -112,11 +116,12 @@ export class ResultsComponent implements OnInit {
     if (this.enrollmentId.length == 4) {
       this.enrollments = [];
       this.enrollmentsW = [];
+      this.enrollmentIndividual = [];
       this.enrollmentService.getEnrollment(this.enrollmentId)
         .subscribe(
           response => {
             if (response.data != null) {
-              this.enrollments.push(response.data);
+              this.enrollmentIndividual.push(response.data);
               this.categoryId = '-';
               this.typeId = '-';
               this.modalityId = '';
@@ -139,6 +144,7 @@ export class ResultsComponent implements OnInit {
   onSearchModality(): void {
     this.enrollments = [];
     this.enrollmentsW = [];
+    this.enrollmentIndividual = [];
     this.enrollmentId = '';
     this.eventService.getEventModality(this.eventId, this.modalityId, 'Masculino')
       .subscribe(
@@ -173,6 +179,7 @@ export class ResultsComponent implements OnInit {
   onSearchType(): void {
     this.enrollments = [];
     this.enrollmentsW = [];
+    this.enrollmentIndividual = [];
     this.enrollmentId = '';
     if (this.categoryId != '') {
       this.eventService.getEventType(this.eventId, this.modalityId, this.typeId, 'Masculino')
@@ -207,6 +214,7 @@ export class ResultsComponent implements OnInit {
   onSearchCategory(): void {
     this.enrollments = [];
     this.enrollmentsW = [];
+    this.enrollmentIndividual = [];
     this.enrollmentId = '';
     if (this.typeId == '') this.typeId = '-';
     if (this.categoryId == '') this.categoryId = '-';

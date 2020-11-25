@@ -219,11 +219,9 @@ export class EnrollmentComponent implements OnInit {
                     response => {
                       Swal.fire('success', 'Inscripción realizada con éxito. Le llegará un correo electrónico con su confirmación', 'success');
                       this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-
                     },
                     error => {
                       this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-
                       if (error.statusText === 'Unknown Error') {
                         Swal.fire('Error', 'No se puede realizar inscripción. Intente más tarde', 'error');
                       } else {

@@ -164,7 +164,7 @@
                 <div class="overflow-hidden mb-1">
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">
-                        Resultados <span style="color: #51a7af;" *ngIf="enrollmentId.length !== 4">MASCULINO</span>
+                        Resultados <span style="color: #51a7af;">MASCULINO</span>
                     </h4>
                 </div>
                 <table id="enrollments" class="table table-striped fix-table"
@@ -189,7 +189,81 @@
                         <tr *ngFor="let enrollment of enrollments | slice: lowValue : highValue">
                             <td>
                                 <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
-                                    style="height: 24px;">
+                                    style="height: 24px;cursor: pointer;"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
+                            <td>{{enrollment.posGen}}</td>
+                            <td>{{enrollment.posCat}}</td>
+                            <td>{{enrollment.enrollmentId}}</td>
+                            <td>{{enrollment.name}} {{enrollment.lastname}}</td>
+                            <td>{{enrollment.modality | modalityFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
+                            <td>{{enrollment.category}}</td>
+                            <td>{{enrollment.totalTime | timeFormatPipe }}</td>
+                            <td style="width: 103px;">{{enrollment.swimmingTime}}
+                                <a *ngIf="enrollment.swimmingTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file1.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.bikeTime}}
+                                <a *ngIf="enrollment.bikeTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file2.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.walkTime}}
+                                <a *ngIf="enrollment.walkTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file3.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="enrollments.length" [pageSize]="10"
+                    (page)="pageEvent = getPaginatorData($event)">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="enrollmentIndividual.length !== 0">
+            <div class="col-md-12 mt-4">
+                <div class="overflow-hidden mb-1">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">
+                        Resultado
+                    </h4>
+                </div>
+                <table id="enrollments" class="table table-striped fix-table"
+                    style="display: block;overflow: auto;font-size: 12px;margin-bottom: 0px;">
+                    <thead>
+                        <tr>
+                            <th>Cert.</th>
+                            <th>Pos. Gen.</th>
+                            <th>Pos. Cat.</th>
+                            <th>Dorsal</th>
+                            <th>Nombre</th>
+                            <th>Modalidad</th>
+                            <th>Tipo</th>
+                            <th>Categoría</th>
+                            <th>T. Total</th>
+                            <th>T. Natación</th>
+                            <th>T. Ciclismo</th>
+                            <th>T. Carrera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrollment of enrollmentIndividual | slice: lowValue : highValue">
+                            <td>
+                                <span *ngIf="enrollment.totalTime == ''">
+                                    <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;"
+                                        (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                                </span>
                             </td>
                             <td>{{enrollment.posGen}}</td>
                             <td>{{enrollment.posCat}}</td>
