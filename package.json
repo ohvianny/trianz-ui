@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "build:stats": "webpack-bundle-analyzer dist/trianz-ui/stats-es2015.json",
+    "stats": "ng build --prod --statsJson=true"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +22,7 @@
     "@angular/platform-browser": "~9.0.3",
     "@angular/platform-browser-dynamic": "~9.0.3",
     "@angular/router": "~9.0.3",
+    "aws-sdk": "^2.792.0",
     "file-saver": "^2.0.2",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
@@ -33,9 +36,9 @@
     "@angular-devkit/build-angular": "~0.900.4",
     "@angular/cli": "~9.0.4",
     "@angular/compiler-cli": "~9.0.3",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -47,6 +50,7 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "webpack-bundle-analyzer": "^4.1.0"
   }
 }

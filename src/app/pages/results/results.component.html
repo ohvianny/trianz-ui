@@ -2,121 +2,111 @@
 
 <div role="main" class="main">
 
-    <section class="page-header page-header-classic page-header-sm" style="margin: 0px;background-color: #F38832;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-                    <h1 data-title-border>Resultados</h1>
-                </div>
-            </div>
+    <section class="page-header page-header-classic" style="margin: 0px;background-color: #F38832;padding: 0px;">
+        <div class="cropped">
+            <img src="../../../assets/img/121.jpg" class="img-fluid border-radius-0"
+                style="width: 100%; height: 190px;object-fit: cover;">
         </div>
     </section>
 
     <div class="container py-2">
 
-        <div class="row">
-            <div class="col-md-8 offset-md-4">
-                <div class="overflow-hidden mb-1">
-                    <h2 class="font-weight-normal text-7 mb-0">{{event.title}}</h2>
+        <div class="row mt-3">
+            <div class="col-lg-6 col-md-6 col-sm-12 offset-md-2 offset-sm-0">
+                <div class="overflow-hidden">
+                    <h5>Buscar evento</h5>
                 </div>
-                <div class="overflow-hidden mb-3">
-                    <p>Tendrás hasta el día {{event.date2 | date:'dd/MM/yyyy' }} para registrar tus tiempos</p>
+                <select class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);"
+                    (change)="onSearchEvent()" [(ngModel)]="eventId">
+                    <option value="">Seleccionar</option>
+                    <option *ngFor="let event1 of events" [ngValue]="event1._id">{{event1.title}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="event.state == 'Resultado'" style="margin-top: 22px;">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-modern" (click)="onRegisterTime()">
+                        Registrar Nuevo Tiempo
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="overflow-hidden">
-                            <h5 style="text-align: center;">Búsqueda General</h5>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-10">
-                        <label class="font-weight-bold text-dark text-2 mb-0">Modalidad</label>
-                        <select id="category" name="category" class="form-control" size="0"
-                            style="height: calc(1.5em + .75rem + 2px);">
-                            <option value="">Seleccionar</option>
-                            <option value="all">Duatlon</option>
-                            <option value="Elite Femenino">Triatlon</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-md-10">
-                        <label class="font-weight-bold text-dark text-2 mb-0">Categoría</label>
-                        <select id="category" name="category" class="form-control" size="0"
-                            style="height: calc(1.5em + .75rem + 2px);">
-                            <option value="">Seleccionar</option>
-                            <option value="all">Todas</option>
-                            <option value="Elite Femenino">Elite Femenino</option>
-                            <option value="Elite Masculino">Elite Masculino</option>
-                            <option value="Categoria">Categoría </option>
-                        </select>
-                    </div>
+        <div class="row mt-2" *ngIf="event.state != ''">
+            <div class="col-lg-2 col-md-2 col-sm-4 offset-md-2 offset-sm-0">
+                <div class="form-group">
+                    <label class="font-weight-bold text-dark text-2 mb-0">MODALIDAD</label>
+                    <select id="category" name="category" class="form-control" size="0"
+                        style="height: calc(1.5em + .75rem + 2px);" (change)="onSearchModality()"
+                        [(ngModel)]="modalityId">
+                        <option value="">Seleccionar</option>
+                        <option value="Duatlon">Duatlón</option>
+                        <option value="Triatlon">Triatlón</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="col-md-1" style="border-left: 2px solid #9999;"></div>
+            <div class="form-group col-lg-2 col-md-2 col-sm-4">
+                <label class="font-weight-bold text-dark text-2 mb-0">TIPO</label>
+                <select id="type" name="type" class="form-control" size="0" style="height: calc(1.5em + .75rem + 2px);"
+                    [disabled]="enableType" [(ngModel)]="typeId" (change)="onSearchType()">
+                    <option value="-">Seleccionar</option>
+                    <option value="Sprint">Sprint</option>
+                    <option value="Olimpico">Olímpico</option>
+                    <option value="Por Equipo">Por Equipo</option>
+                </select>
+            </div>
 
-            <div class="col-md-4">
+            <div class="form-group col-lg-2 col-md-2 col-sm-4">
+                <label class="font-weight-bold text-dark text-2 mb-0">CATEGORIA</label>
+                <select id="category" name="category" class="form-control" size="0"
+                    style="height: calc(1.5em + .75rem + 2px);" [disabled]="enableCategory" [(ngModel)]="categoryId"
+                    (change)="onSearchCategory()">
+                    <option value="-">Seleccionar</option>
+                    <option value="all">Todas</option>
+                    <option value="Juvenil">Juvenil</option>
+                    <option value="Por Edades 18 - 24">Por Edades 18 - 24</option>
+                    <option value="Por Edades 25 - 29">Por Edades 25 - 29</option>
+                    <option value="Por Edades 30 - 34">Por Edades 30 - 34</option>
+                    <option value="Por Edades 35 - 39">Por Edades 35 - 39</option>
+                    <option value="Por Edades 40 - 44">Por Edades 40 - 44</option>
+                    <option value="Por Edades 45 - 49">Por Edades 45 - 49</option>
+                    <option value="Por Edades 50+">Por Edades 50+</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-4">
                 <form role="form">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="overflow-hidden">
-                                <h5 style="text-align: center;">Búsqueda individual</h5>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label class="font-weight-bold text-dark text-2 mb-0">Dorsal</label>
-                            <input type="text" maxlength="7" class="form-control" [(ngModel)]="enrollmentId"
-                                [ngModelOptions]="{standalone: true}">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <button type="button" class="btn btn-primary btn-modern" (click)="onSearchEnrollment()"
-                                style="margin-top: 20px;">
-                                Buscar
-                            </button>
-                        </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold text-dark text-2 mb-0"
+                            style="color: #F38832 !important;">DORSAL</label>
+                        <input type="text" maxlength="7" class="form-control" [(ngModel)]="enrollmentId"
+                            [ngModelOptions]="{standalone: true}" (ngModelChange)="onSearchEnrollment()"
+                            style="height: 35px;">
                     </div>
                 </form>
             </div>
-
-            <div class="col-md-1" style="border-left: 2px solid #9999;"></div>
-
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="overflow-hidden">
-                            <h5 style="text-align: center;">Registrar tiempo</h5>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        <button type="button" class="btn btn-primary btn-modern" style="margin-top: 15px;"
-                            (click)="onRegisterTime()">
-                            Registrar Nuevo Tiempo
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div class="row" *ngIf="enrollments.length !== 0">
+        <br>
+
+        <div class="row" *ngIf="enrollmentsW.length !== 0">
             <div class="col-md-12 mt-4">
                 <div class="overflow-hidden mb-1">
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">
-                        Lista de Resultados </h4>
+                        Resultados <span style="color: #F38832;">FEMENINO</span> </h4>
                 </div>
-                <table id="tenrollments" class="table table-striped" style="display: block;overflow: scroll;">
+                <table id="enrollmentsW" class="table table-striped fix-table"
+                    style="display: block;overflow: auto;font-size: 12px;margin-bottom: 0px;">
                     <thead>
                         <tr>
-                            <th>Certificado</th>
+                            <th>Cert.</th>
                             <th>Pos. Gen.</th>
                             <th>Pos. Cat.</th>
                             <th>Dorsal</th>
                             <th>Nombre</th>
+                            <th>Modalidad</th>
+                            <th>Tipo</th>
                             <th>Categoría</th>
                             <th>T. Total</th>
                             <th>T. Natación</th>
@@ -125,20 +115,191 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let enrollment of enrollments">
-                            <td>-</td>
+                        <tr *ngFor="let enrollment of enrollmentsW | slice: lowValueW : highValueW">
+                            <td>
+                                <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                    style="height: 24px;cursor: pointer;"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
                             <td>{{enrollment.posGen}}</td>
                             <td>{{enrollment.posCat}}</td>
                             <td>{{enrollment.enrollmentId}}</td>
                             <td>{{enrollment.name}} {{enrollment.lastname}}</td>
+                            <td>{{enrollment.modality | modalityFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
                             <td>{{enrollment.category}}</td>
-                            <td>{{enrollment.totalTime}}</td>
-                            <td>{{enrollment.swimmingTime}}</td>
-                            <td>{{enrollment.bikeTime}}</td>
-                            <td>{{enrollment.walkTime}}</td>
+                            <td>{{enrollment.totalTime | timeFormatPipe }}</td>
+                            <td style="width: 103px;">{{enrollment.swimmingTime}}
+                                <a *ngIf="enrollment.swimmingTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file1.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.bikeTime}}
+                                <a *ngIf="enrollment.bikeTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file2.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.walkTime}}
+                                <a *ngIf="enrollment.walkTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file3.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+                <mat-paginator [length]="enrollmentsW.length" [pageSize]="10"
+                    (page)="pageEventW = getPaginatorDataW($event)">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="enrollments.length !== 0">
+            <div class="col-md-12 mt-4">
+                <div class="overflow-hidden mb-1">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">
+                        Resultados <span style="color: #51a7af;">MASCULINO</span>
+                    </h4>
+                </div>
+                <table id="enrollments" class="table table-striped fix-table"
+                    style="display: block;overflow: auto;font-size: 12px;margin-bottom: 0px;">
+                    <thead>
+                        <tr>
+                            <th>Cert.</th>
+                            <th>Pos. Gen.</th>
+                            <th>Pos. Cat.</th>
+                            <th>Dorsal</th>
+                            <th>Nombre</th>
+                            <th>Modalidad</th>
+                            <th>Tipo</th>
+                            <th>Categoría</th>
+                            <th>T. Total</th>
+                            <th>T. Natación</th>
+                            <th>T. Ciclismo</th>
+                            <th>T. Carrera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrollment of enrollments | slice: lowValue : highValue">
+                            <td>
+                                <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                    style="height: 24px;cursor: pointer;"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
+                            <td>{{enrollment.posGen}}</td>
+                            <td>{{enrollment.posCat}}</td>
+                            <td>{{enrollment.enrollmentId}}</td>
+                            <td>{{enrollment.name}} {{enrollment.lastname}}</td>
+                            <td>{{enrollment.modality | modalityFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
+                            <td>{{enrollment.category}}</td>
+                            <td>{{enrollment.totalTime | timeFormatPipe }}</td>
+                            <td style="width: 103px;">{{enrollment.swimmingTime}}
+                                <a *ngIf="enrollment.swimmingTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file1.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.bikeTime}}
+                                <a *ngIf="enrollment.bikeTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file2.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.walkTime}}
+                                <a *ngIf="enrollment.walkTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file3.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="enrollments.length" [pageSize]="10"
+                    (page)="pageEvent = getPaginatorData($event)">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="enrollmentIndividual.length !== 0">
+            <div class="col-md-12 mt-4">
+                <div class="overflow-hidden mb-1">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">
+                        Resultado
+                    </h4>
+                </div>
+                <table id="enrollments" class="table table-striped fix-table"
+                    style="display: block;overflow: auto;font-size: 12px;margin-bottom: 0px;">
+                    <thead>
+                        <tr>
+                            <th>Cert.</th>
+                            <th>Pos. Gen.</th>
+                            <th>Pos. Cat.</th>
+                            <th>Dorsal</th>
+                            <th>Nombre</th>
+                            <th>Modalidad</th>
+                            <th>Tipo</th>
+                            <th>Categoría</th>
+                            <th>T. Total</th>
+                            <th>T. Natación</th>
+                            <th>T. Ciclismo</th>
+                            <th>T. Carrera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrollment of enrollmentIndividual | slice: lowValue : highValue">
+                            <td>
+                                <span *ngIf="enrollment.totalTime == ''">
+                                    <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;"
+                                        (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                                </span>
+                            </td>
+                            <td>{{enrollment.posGen}}</td>
+                            <td>{{enrollment.posCat}}</td>
+                            <td>{{enrollment.enrollmentId}}</td>
+                            <td>{{enrollment.name}} {{enrollment.lastname}}</td>
+                            <td>{{enrollment.modality | modalityFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
+                            <td>{{enrollment.category}}</td>
+                            <td>{{enrollment.totalTime | timeFormatPipe }}</td>
+                            <td style="width: 103px;">{{enrollment.swimmingTime}}
+                                <a *ngIf="enrollment.swimmingTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file1.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.bikeTime}}
+                                <a *ngIf="enrollment.bikeTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file2.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.walkTime}}
+                                <a *ngIf="enrollment.walkTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file3.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="enrollments.length" [pageSize]="10"
+                    (page)="pageEvent = getPaginatorData($event)">
+                </mat-paginator>
             </div>
         </div>
 
@@ -170,8 +331,8 @@
                                 últimos dígitos de tu DNI</label>
                         </div>
                         <div class="form-group col-md-12">
-                            <table id="tenrollments" class="table table-striped mt-3"
-                                style="font-size: 14px;font-weight: 400; display: block;overflow: scroll;">
+                            <table id="tenrollments" class="table table-striped mt-3 fix-table"
+                                style="font-size: 14px;font-weight: 400;">
                                 <thead>
                                     <tr>
                                         <th>Tiempo</th>
@@ -192,8 +353,8 @@
                                         <td><input type="number" id="t13" min="0" max="59" class="form-control"
                                                 [(ngModel)]="time.t13"></td>
                                         <td>
-                                            <input type="file" id="t1file" name="myfile"
-                                                style="font-size: xx-small;overflow: auto;" [(ngModel)]="time.t1file">
+                                            <input type="file" id="t1file" style="font-size: xx-small;overflow: auto;"
+                                                [(ngModel)]="time.t1file" (change)="onFile1Picked($event)">
                                         </td>
                                     </tr>
                                     <tr>
@@ -205,8 +366,8 @@
                                         <td><input type="number" id="t23" min="0" max="59" class="form-control"
                                                 [(ngModel)]="time.t23"></td>
                                         <td>
-                                            <input type="file" id="t2file" name="myfile"
-                                                style="font-size: xx-small;overflow: auto;" [(ngModel)]="time.t2file">
+                                            <input type="file" id="t2file" style="font-size: xx-small;overflow: auto;"
+                                                [(ngModel)]="time.t2file" (change)="onFile2Picked($event)">
                                         </td>
                                     </tr>
                                     <tr>
@@ -218,8 +379,8 @@
                                         <td><input type="number" id="t33" min="0" max="59" class="form-control"
                                                 [(ngModel)]="time.t33"></td>
                                         <td>
-                                            <input type="file" id="t3file" name="myfile"
-                                                style="font-size: xx-small;overflow: auto;" [(ngModel)]="time.t3file">
+                                            <input type="file" id="t3file" style="font-size: xx-small;overflow: auto;"
+                                                [(ngModel)]="time.t3file" (change)="onFile3Picked($event)">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -239,7 +400,7 @@
 
                 <div class="swal01-actions">
                     <button type="button" class="btn btn-primary btn-modern" style="margin-right: 15px;"
-                        (click)="onSaveRegisterTime()">Guardar</button>
+                        (click)="onSaveRegisterTime()" [disabled]="enableOnSave">Guardar</button>
                     <button type="button" class="btn btn-secondary btn-modern" (click)="closeModal()">Cancelar</button>
                 </div>
             </div>

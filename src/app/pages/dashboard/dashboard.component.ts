@@ -4,10 +4,10 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import Swal from 'sweetalert2';
 import * as $ from 'jquery';
 
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 import { EventService } from '../../_services/event.service';
 import { EnrollmentService } from '../../_services/enrollment.service';
-import { ExcelService } from '../../shared/excel.service';
+import { ExcelService } from '../../_shared/excel.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,8 +28,8 @@ export class DashboardComponent implements OnInit {
   title = 'exportExcelInAngular';
   data: any = [];
 
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
-  events: Event[];
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
+  events: Eventt[];
   confirmEnrollment: string;
   enrollmentInProgress: string;
   totalEnrollment: string;

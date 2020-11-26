@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 
 import { Time } from '../../_models/time.model';
-import { Event } from '../../_models/event.model';
+import { Eventt } from '../../_models/eventt.model';
 import { Enrollment } from '../../_models/enrollment.model';
 import { EventService } from '../../_services/event.service';
 import { EnrollmentService } from '../../_services/enrollment.service';
+import { UploadService } from '../../_services/upload.service';
 
 @Component({
   selector: 'app-results',
@@ -16,27 +20,68 @@ import { EnrollmentService } from '../../_services/enrollment.service';
 })
 export class ResultsComponent implements OnInit {
 
-  event = new Event('', '', '', '', '', '', '', '', '', '', '');
+  event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
+  events: Eventt[];
   enrollments = [];
+  enrollmentsW = [];
+  enrollmentIndividual = [];
   enrollmentId = '';
+  modalityId = '';
+  eventId = '';
   dni = '';
+  typeId = '-';
+  categoryId = '-';
   showModal = true;
+  enableOnSave = false;
   duatlon = 'Triatlon';
   time = new Time('', '', '', '', '', '', '', '', '', '', '', '');
   validateTime = true;
+  file1Obj: File;
+  file2Obj: File;
+  file3Obj: File;
+  enableCategory = true;
+  enableType = true;
 
-  constructor(private router: Router, private enrollmentService: EnrollmentService, private eventService: EventService) { }
+  // MatPaginator Inputs
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  lowValue: number = 0;
+  highValue: number = 10;
+
+  // MatPaginator Inputs
+  pageIndexW: number = 0;
+  pageSizeW: number = 10;
+  lowValueW: number = 0;
+  highValueW: number = 10;
+
+  // MatPaginator Output
+  pageEvent: PageEvent;
+  pageEventW: PageEvent;
+
+  constructor(private router: Router, private enrollmentService: EnrollmentService,
+    private eventService: EventService, private uploadService: UploadService) { }
 
   ngOnInit(): void {
-    this.getLastEvent();
+    this.getEvents();
   }
 
-  getLastEvent(): void {
-    this.eventService.getLastEvent()
+  public getPaginatorData(event: PageEvent): PageEvent {
+    this.lowValue = event.pageIndex * event.pageSize;
+    this.highValue = this.lowValue + event.pageSize;
+    return event;
+  }
+
+  public getPaginatorDataW(event: PageEvent): PageEvent {
+    this.lowValueW = event.pageIndex * event.pageSize;
+    this.highValueW = this.lowValueW + event.pageSize;
+    return event;
+  }
+
+  getEvents(): void {
+    this.eventService.getEventList()
       .subscribe(
         data => {
-          this.event = data.event;
-          if (this.event.state != 'Resultado') this.router.navigate(['/']);
+          this.events = data.data;
         },
         error => {
           console.log(error);
@@ -44,19 +89,156 @@ export class ResultsComponent implements OnInit {
       );
   }
 
-  onSearchEnrollment(): void {
-    this.enrollments = [];
-    this.enrollmentService.getEnrollment(this.enrollmentId)
+  onSearchEvent(): void {
+    this.event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
+    this.eventService.getEventState(this.eventId)
       .subscribe(
         response => {
           if (response.data != null) {
-            this.enrollments.push(response.data);
-          } else {
-
+            this.event = response.data;
+            this.categoryId = '-';
+            this.typeId = '-';
+            this.modalityId = '';
+            this.enrollmentId = '';
+            this.enrollmentIndividual = [];
+            this.enrollments = [];
+            this.enrollmentsW = [];
           }
         },
         error => {
           this.enrollments = [];
+          console.log(error);
+        }
+      );
+  }
+
+  onSearchEnrollment(): void {
+    if (this.enrollmentId.length == 4) {
+      this.enrollments = [];
+      this.enrollmentsW = [];
+      this.enrollmentIndividual = [];
+      this.enrollmentService.getEnrollment(this.enrollmentId)
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollmentIndividual.push(response.data);
+              this.categoryId = '-';
+              this.typeId = '-';
+              this.modalityId = '';
+            } else {
+              Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+              this.enrollmentId = '';
+              this.enrollments = [];
+            }
+          },
+          error => {
+            this.enrollments = [];
+            Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+            this.enrollmentId = '';
+            this.enrollments = [];
+          }
+        );
+    }
+  }
+
+  onSearchModality(): void {
+    this.enrollments = [];
+    this.enrollmentsW = [];
+    this.enrollmentIndividual = [];
+    this.enrollmentId = '';
+    this.eventService.getEventModality(this.eventId, this.modalityId, 'Masculino')
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollments = response.data;
+          }
+        },
+        error => {
+          this.enrollments = [];
+          console.log(error);
+        }
+      );
+    this.eventService.getEventModality(this.eventId, this.modalityId, 'Femenino')
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollmentsW = response.data;
+          }
+        },
+        error => {
+          this.enrollmentsW = [];
+          console.log(error);
+        }
+      );
+    this.enableType = (this.modalityId == 'Triatlon') ? false : true;
+    this.categoryId = '-';
+    this.typeId = '-';
+    this.enableCategory = false;
+  }
+
+  onSearchType(): void {
+    this.enrollments = [];
+    this.enrollmentsW = [];
+    this.enrollmentIndividual = [];
+    this.enrollmentId = '';
+    if (this.categoryId != '') {
+      this.eventService.getEventType(this.eventId, this.modalityId, this.typeId, 'Masculino')
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollments = response.data;
+            }
+          },
+          error => {
+            this.enrollments = [];
+            console.log(error);
+          }
+        );
+      this.eventService.getEventType(this.eventId, this.modalityId, this.typeId, 'Femenino')
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollmentsW = response.data;
+            }
+          },
+          error => {
+            this.enrollmentsW = [];
+            console.log(error);
+          }
+        );
+    } else {
+      this.onSearchCategory();
+    }
+  }
+
+  onSearchCategory(): void {
+    this.enrollments = [];
+    this.enrollmentsW = [];
+    this.enrollmentIndividual = [];
+    this.enrollmentId = '';
+    if (this.typeId == '') this.typeId = '-';
+    if (this.categoryId == '') this.categoryId = '-';
+    this.eventService.getEventCategory(this.eventId, this.modalityId, this.typeId, 'Masculino', this.categoryId)
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollments = response.data;
+          }
+        },
+        error => {
+          this.enrollments = [];
+          console.log(error);
+        }
+      );
+    this.eventService.getEventCategory(this.eventId, this.modalityId, this.typeId, 'Femenino', this.categoryId)
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollmentsW = response.data;
+          }
+        },
+        error => {
+          this.enrollmentsW = [];
           console.log(error);
         }
       );
@@ -67,6 +249,7 @@ export class ResultsComponent implements OnInit {
     this.dni = '';
     this.showModal = false;
     this.time = new Time('', '', '', '', '', '', '', '', '', '', '', '');
+    this.enableOnSave = false;
   }
 
   onBlur(): void {
@@ -86,6 +269,7 @@ export class ResultsComponent implements OnInit {
   }
 
   onSaveRegisterTime(): void {
+    this.enableOnSave = true;
     let validations = true;
 
     this.validate(this.enrollmentId, 'enrollmentId');
@@ -108,6 +292,10 @@ export class ResultsComponent implements OnInit {
       this.validateTime = validations;
 
       if (validations == true) {
+        this.uploadService.fileUpload(this.file1Obj, this.enrollmentId + "-file1");
+        this.uploadService.fileUpload(this.file2Obj, this.enrollmentId + "-file2");
+        this.uploadService.fileUpload(this.file3Obj, this.enrollmentId + "-file3");
+
         this.time.t11 = this.padLeadingZeros(this.time.t11);
         this.time.t12 = this.padLeadingZeros(this.time.t12);
         this.time.t13 = this.padLeadingZeros(this.time.t13);
@@ -132,7 +320,7 @@ export class ResultsComponent implements OnInit {
           this.padLeadingZeros(hrs) + this.padLeadingZeros(mins) + this.padLeadingZeros(segs),
           this.time.t11 + ":" + this.time.t12 + ":" + this.time.t13,
           this.time.t21 + ":" + this.time.t22 + ":" + this.time.t23,
-          this.time.t31 + ":" + this.time.t32 + ":" + this.time.t33, '', '', '', '');
+          this.time.t31 + ":" + this.time.t32 + ":" + this.time.t33, '', '', '', '', '');
 
         this.enrollmentService.postEnrollTime(enrollTime)
           .pipe()
@@ -149,6 +337,8 @@ export class ResultsComponent implements OnInit {
                 Swal.fire('Error', error.error.message, 'error');
               }
             });
+      } else {
+        this.enableOnSave = false;
       }
     }
   }
@@ -209,6 +399,34 @@ export class ResultsComponent implements OnInit {
 
   closeModal(): void {
     this.showModal = true;
+  }
+
+  onFile1Picked(event: Event): void {
+    const FILE = (event.target as HTMLInputElement).files[0];
+    this.file1Obj = FILE;
+  }
+
+  onFile2Picked(event: Event): void {
+    const FILE = (event.target as HTMLInputElement).files[0];
+    this.file2Obj = FILE;
+  }
+
+  onFile3Picked(event: Event): void {
+    const FILE = (event.target as HTMLInputElement).files[0];
+    this.file3Obj = FILE;
+  }
+
+  onSearchCerticiate(dorsal: string): void {
+    let url = environment.baseUrl + '/enrollments/certificate/' + dorsal;
+    let pdfName = 'certificado-' + dorsal + '.pdf';
+
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', url);
+    link.setAttribute('download', pdfName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 
 }
