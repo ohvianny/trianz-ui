@@ -22,7 +22,7 @@ export class EnrollmentComponent implements OnInit {
   currentDate: string;
   sex: string;
   category: string;
-  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
   modalities = [{ value: '', name: 'Seleccionar' }, { value: 'Triatlon', name: 'Triatlón' }];
 
@@ -103,6 +103,15 @@ export class EnrollmentComponent implements OnInit {
 
   onSaveForm(): void {
     let validations = true;
+
+    if (this.enrollment.type == 'Equipo') {
+      this.validate(this.enrollment.swimmingName, 'swimmingName');
+      this.validate(this.enrollment.bikeName, 'bikeName');
+      this.validate(this.enrollment.walkName, 'walkName');
+      if (this.enrollment.swimmingName === '' || this.enrollment.bikeName === '' || this.enrollment.walkName === '') {
+        validations = false;
+      }
+    }
     if (this.enrollment.code == '') {
       this.validate(this.enrollment.modality, 'modality');
       this.validate(this.enrollment.paymentType, 'paymentType');
@@ -121,8 +130,7 @@ export class EnrollmentComponent implements OnInit {
 
       if (this.enrollment.name === '' || this.enrollment.lastname === '' || this.enrollment.dni === '' ||
         this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
-        this.enrollment.category === '' || this.enrollment.paymentDate === '' ||
-        this.enrollment.bankNumber === '' || this.enrollment.amount === '' || this.enrollment.cityName === '' ||
+        this.enrollment.category === '' || this.enrollment.bankNumber === '' || this.enrollment.amount === '' || this.enrollment.cityName === '' ||
         this.enrollment.birthdate === '' || this.enrollment.modality === '' || this.enrollment.paymentType === '') {
         validations = false;
       }
@@ -167,79 +175,83 @@ export class EnrollmentComponent implements OnInit {
                 Swal.fire('Error', error.error.message, 'error');
               }
             });
-        this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+        this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
       } else {
         Swal.fire('Error', 'Debe completar todos los campos', 'error');
       }
     } else {
-      this.validate(this.enrollment.modality, 'modality');
-      this.validate(this.enrollment.name, 'name');
-      this.validate(this.enrollment.lastname, 'lastname');
-      this.validate(this.enrollment.dni, 'dni');
-      this.validate(this.enrollment.email, 'email');
-      this.validate(this.enrollment.telephone, 'telephone');
-      this.validate(this.enrollment.sex, 'sex');
-      this.validate(this.enrollment.cityName, 'cityName');
-      this.validate(this.enrollment.category, 'category');
-      this.validate(this.enrollment.birthdate, 'birthdate');
-      this.validate(this.enrollment.code, 'code');
 
-      if (this.enrollment.name === '' || this.enrollment.lastname === '' || this.enrollment.dni === '' ||
-        this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
-        this.enrollment.category === '' || this.enrollment.cityName === '' || this.enrollment.birthdate === '' ||
-        this.enrollment.modality === '' || this.enrollment.code === '') {
-        validations = false;
-      }
+      if (this.enrollment.amount === '' || this.enrollment.paymentType === '' || this.enrollment.bankNumber === '') {
+        this.validate(this.enrollment.modality, 'modality');
+        this.validate(this.enrollment.name, 'name');
+        this.validate(this.enrollment.lastname, 'lastname');
+        this.validate(this.enrollment.dni, 'dni');
+        this.validate(this.enrollment.email, 'email');
+        this.validate(this.enrollment.telephone, 'telephone');
+        this.validate(this.enrollment.sex, 'sex');
+        this.validate(this.enrollment.cityName, 'cityName');
+        this.validate(this.enrollment.category, 'category');
+        this.validate(this.enrollment.birthdate, 'birthdate');
+        this.validate(this.enrollment.code, 'code');
 
-      if (this.enrollment.type === '' && this.enrollment.modality !== 'Duatlon') {
-        this.validate(this.enrollment.type, 'type');
-        validations = false;
-      }
-      if (this.event.type != 'Virtual') {
-        this.validate(this.enrollment.shirtSize, 'shirtSize');
-        if (this.enrollment.shirtSize === '') {
+        if (this.enrollment.name === '' || this.enrollment.lastname === '' || this.enrollment.dni === '' ||
+          this.enrollment.email === '' || this.enrollment.telephone === '' || this.enrollment.sex === '' ||
+          this.enrollment.category === '' || this.enrollment.cityName === '' || this.enrollment.birthdate === '' ||
+          this.enrollment.modality === '' || this.enrollment.code === '') {
           validations = false;
         }
-      }
 
-      if (validations === true) {
-        if (this.enrollment.category !== 'Elite') {
-          this.enrollment.category = this.enrollment.category + ' ' + this.category;
+        if (this.enrollment.type === '' && this.enrollment.modality !== 'Duatlon') {
+          this.validate(this.enrollment.type, 'type');
+          validations = false;
         }
-        this.enrollment.trianzEvent = this.event._id;
-        this.enrollment.code = this.enrollment.code.toLowerCase();
-        this.codeService.getValidCode(this.enrollment.code, this.event._id)
-          .pipe()
-          .subscribe(
-            response => {
-              if (response.data == false) {
-                this.enrollmentService.postEnrollment(this.enrollment)
-                  .pipe()
-                  .subscribe(
-                    response => {
-                      Swal.fire('success', 'Inscripción realizada con éxito. Le llegará un correo electrónico con su confirmación', 'success');
-                      this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-                    },
-                    error => {
-                      this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-                      if (error.statusText === 'Unknown Error') {
-                        Swal.fire('Error', 'No se puede realizar inscripción. Intente más tarde', 'error');
-                      } else {
-                        Swal.fire('Error', error.error.message, 'error');
-                      }
-                    });
-              } else {
-                Swal.fire('Error', 'Código no disponible, contacte a los organizadores', 'error');
-              }
-            },
-            error => {
-              Swal.fire('Error', 'Error en procesar su código, contacte a los organizadores', 'error');
-            });
+        if (this.event.type != 'Virtual') {
+          this.validate(this.enrollment.shirtSize, 'shirtSize');
+          if (this.enrollment.shirtSize === '') {
+            validations = false;
+          }
+        }
+
+        if (validations === true) {
+          if (this.enrollment.category !== 'Elite') {
+            this.enrollment.category = this.enrollment.category + ' ' + this.category;
+          }
+          this.enrollment.trianzEvent = this.event._id;
+          this.enrollment.code = this.enrollment.code.toLowerCase();
+          this.codeService.getValidCode(this.enrollment.code, this.event._id)
+            .pipe()
+            .subscribe(
+              response => {
+                if (response.data == false) {
+                  this.enrollmentService.postEnrollment(this.enrollment)
+                    .pipe()
+                    .subscribe(
+                      response => {
+                        Swal.fire('success', 'Inscripción realizada con éxito. Le llegará un correo electrónico con su confirmación', 'success');
+                        this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+                      },
+                      error => {
+                        this.enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+                        if (error.statusText === 'Unknown Error') {
+                          Swal.fire('Error', 'No se puede realizar inscripción. Intente más tarde', 'error');
+                        } else {
+                          Swal.fire('Error', error.error.message, 'error');
+                        }
+                      });
+                } else {
+                  Swal.fire('Error', 'Código no disponible, contacte a los organizadores', 'error');
+                }
+              },
+              error => {
+                Swal.fire('Error', 'Error en procesar su código, contacte a los organizadores', 'error');
+              });
+        } else {
+          Swal.fire('Error', 'Debe completar todos los campos', 'error');
+        }
       } else {
-        Swal.fire('Error', 'Debe completar todos los campos', 'error');
+        Swal.fire('Error', 'Si tienes un código promocional no debes llenar los campos de pagos', 'error');
       }
     }
-
   }
 
   resetModality(): void {

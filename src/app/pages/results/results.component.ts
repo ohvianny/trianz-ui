@@ -32,6 +32,8 @@ export class ResultsComponent implements OnInit {
   typeId = '-';
   categoryId = '-';
   showModal = true;
+  showMessage = false;
+  showModalFinisher = true;
   enableOnSave = false;
   duatlon = 'Triatlon';
   time = new Time('', '', '', '', '', '', '', '', '', '', '', '');
@@ -41,6 +43,9 @@ export class ResultsComponent implements OnInit {
   file3Obj: File;
   enableCategory = true;
   enableType = true;
+  enrollmentName = '';
+  enrollmentMod = '';
+  totalTime2 = '';
 
   // MatPaginator Inputs
   pageIndex: number = 0;
@@ -181,6 +186,7 @@ export class ResultsComponent implements OnInit {
     this.enrollmentsW = [];
     this.enrollmentIndividual = [];
     this.enrollmentId = '';
+    if (this.typeId == '') this.typeId = '-';
     if (this.categoryId != '') {
       this.eventService.getEventType(this.eventId, this.modalityId, this.typeId, 'Masculino')
         .subscribe(
@@ -248,6 +254,11 @@ export class ResultsComponent implements OnInit {
     this.enrollmentId = '';
     this.dni = '';
     this.showModal = false;
+    this.showMessage = false;
+    this.showModalFinisher = true;
+    this.enrollmentName = '';
+    this.enrollmentMod = '';
+    this.totalTime2 = '';
     this.time = new Time('', '', '', '', '', '', '', '', '', '', '', '');
     this.enableOnSave = false;
   }
@@ -320,14 +331,29 @@ export class ResultsComponent implements OnInit {
           this.padLeadingZeros(hrs) + this.padLeadingZeros(mins) + this.padLeadingZeros(segs),
           this.time.t11 + ":" + this.time.t12 + ":" + this.time.t13,
           this.time.t21 + ":" + this.time.t22 + ":" + this.time.t23,
-          this.time.t31 + ":" + this.time.t32 + ":" + this.time.t33, '', '', '', '', '');
+          this.time.t31 + ":" + this.time.t32 + ":" + this.time.t33, '', '', '', '', '', '', '', '');
 
         this.enrollmentService.postEnrollTime(enrollTime)
           .pipe()
           .subscribe(
             response => {
               this.showModal = true;
-              Swal.fire('success', 'Resultado enviado con éxito', 'success');
+              this.showModalFinisher = false;
+              this.enrollmentService.getEnrollment(this.enrollmentId)
+                .subscribe(
+                  response => {
+                    if (response.data != null) {
+                      this.enrollmentName = response.data.name + ' ' + response.data.lastname;
+                      this.enrollmentMod = response.data.modality + ' ' + response.data.type;
+                      this.totalTime2 = response.data.totalTime;
+                    } else {
+                      Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+                    }
+                  },
+                  error => {
+                    Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+                  }
+                );
             },
             error => {
               this.showModal = true;
@@ -339,7 +365,11 @@ export class ResultsComponent implements OnInit {
             });
       } else {
         this.enableOnSave = false;
+        Swal.fire('Error', 'Debe completar los campos', 'error');
       }
+    } else {
+      this.enableOnSave = false;
+      Swal.fire('Error', 'Debe completar los campos', 'error');
     }
   }
 
@@ -401,19 +431,37 @@ export class ResultsComponent implements OnInit {
     this.showModal = true;
   }
 
+  closeModalFinisher(): void {
+    this.showModalFinisher = true;
+  }
+
+  validateSizeFile(file: string): void {
+    let fileInput = $('#' + file);
+    var maxSize = fileInput.data('max-size');
+    if (fileInput.get(0).files.length) {
+      var fileSize = fileInput.get(0).files[0].size; // in bytes
+      if (fileSize > maxSize) {
+        this.showMessage = true;
+      }
+    }
+  }
+
   onFile1Picked(event: Event): void {
     const FILE = (event.target as HTMLInputElement).files[0];
     this.file1Obj = FILE;
+    this.validateSizeFile("t1file");
   }
 
   onFile2Picked(event: Event): void {
     const FILE = (event.target as HTMLInputElement).files[0];
     this.file2Obj = FILE;
+    this.validateSizeFile("t2file");
   }
 
   onFile3Picked(event: Event): void {
     const FILE = (event.target as HTMLInputElement).files[0];
     this.file3Obj = FILE;
+    this.validateSizeFile("t3file");
   }
 
   onSearchCerticiate(dorsal: string): void {
