@@ -264,8 +264,8 @@ export class ResultsComponent implements OnInit {
   }
 
   onBlur(): void {
-    if (this.enrollmentId != '' && this.dni != '') {
-      this.enrollmentService.getEnrollmentByIdAndDni(this.enrollmentId, this.dni)
+    if (this.enrollmentId != '') {
+      this.enrollmentService.getEnrollmentDuatlonById(this.enrollmentId)
         .subscribe(
           response => {
             if (response.data != null)
@@ -283,6 +283,9 @@ export class ResultsComponent implements OnInit {
     this.enableOnSave = true;
     let validations = true;
 
+    if (this.time.t11 == null) this.time.t11 = '';
+    if (this.time.t21 == null) this.time.t21 = '';
+    if (this.time.t31 == null) this.time.t31 = '';
     this.validate(this.enrollmentId, 'enrollmentId');
     this.validate(this.dni, 'dni');
     this.validate(this.time.t12, 't12');
@@ -295,9 +298,9 @@ export class ResultsComponent implements OnInit {
     this.validate(this.time.t2file, 't2file');
     this.validate(this.time.t3file, 't3file');
 
-    if (this.enrollmentId != '' && this.dni != '' && this.time.t12 != '' && this.time.t13 != ''
-      && this.time.t1file != '' && this.time.t22 != '' && this.time.t23 != '' && this.time.t32 != ''
-      && this.time.t33 != '' && this.time.t2file != '' && this.time.t3file != '') {
+    if (this.enrollmentId != '' && this.dni != '' && parseInt(this.time.t12) >= 0 && parseInt(this.time.t13) >= 0
+      && this.time.t1file != '' && parseInt(this.time.t22) >= 0 && parseInt(this.time.t23) >= 0 && parseInt(this.time.t32) >= 0
+      && parseInt(this.time.t33) >= 0 && this.time.t2file != '' && this.time.t3file != '') {
 
       validations = this.validateNumbers(this.time);
       this.validateTime = validations;
@@ -337,23 +340,28 @@ export class ResultsComponent implements OnInit {
           .pipe()
           .subscribe(
             response => {
-              this.showModal = true;
-              this.showModalFinisher = false;
-              this.enrollmentService.getEnrollment(this.enrollmentId)
-                .subscribe(
-                  response => {
-                    if (response.data != null) {
-                      this.enrollmentName = response.data.name + ' ' + response.data.lastname;
-                      this.enrollmentMod = response.data.modality + ' ' + response.data.type;
-                      this.totalTime2 = response.data.totalTime;
-                    } else {
+              if (response.success == true) {
+                this.showModal = true;
+                this.showModalFinisher = false;
+                this.enrollmentService.getEnrollment(this.enrollmentId)
+                  .subscribe(
+                    response => {
+                      if (response.data != null) {
+                        this.enrollmentName = response.data.name + ' ' + response.data.lastname;
+                        this.enrollmentMod = response.data.modality + ' ' + response.data.type;
+                        this.totalTime2 = response.data.totalTime;
+                      } else {
+                        Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
+                      }
+                    },
+                    error => {
                       Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
                     }
-                  },
-                  error => {
-                    Swal.fire('Error', 'No se encuentra dorsal en este evento', 'error');
-                  }
-                );
+                  );
+              } else {
+                this.enableOnSave = false;
+                Swal.fire('Error', 'Su documento de identidad no coincide con su dorsal', 'error');
+              }
             },
             error => {
               this.showModal = true;
@@ -422,6 +430,7 @@ export class ResultsComponent implements OnInit {
   }
 
   padLeadingZeros(num) {
+    console.log(num);
     var s = num + "";
     while (s.length < 2) s = "0" + s;
     return s;
@@ -475,6 +484,13 @@ export class ResultsComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     link.remove();
+  }
+
+  onSearchMedal(enrollment: Enrollment): void {
+    this.showModalFinisher = false;
+    this.enrollmentName = enrollment.name.toLocaleUpperCase() + ' ' + enrollment.lastname.toLocaleUpperCase();
+    this.enrollmentMod = enrollment.modality + ' ' + enrollment.type;
+    this.totalTime2 = enrollment.totalTime;
   }
 
 }

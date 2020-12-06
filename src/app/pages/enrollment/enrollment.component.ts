@@ -54,24 +54,25 @@ export class EnrollmentComponent implements OnInit {
         this.category = '50+';
         break;
       case (birthYear >= (currentYear - 49) && birthYear <= (currentYear - 45)):
-        this.category = '45 - 49';
+        this.category = '45-49';
         break;
       case (birthYear >= (currentYear - 44) && birthYear <= (currentYear - 40)):
-        this.category = '40 - 44';
+        this.category = '40-44';
         break;
       case (birthYear >= (currentYear - 39) && birthYear <= (currentYear - 35)):
-        this.category = '35 - 39';
+        this.category = '35-39';
         break;
       case (birthYear >= (currentYear - 34) && birthYear <= (currentYear - 30)):
-        this.category = '30 - 34';
+        this.category = '30-34';
         break;
       case (birthYear >= (currentYear - 29) && birthYear <= (currentYear - 25)):
-        this.category = '25 - 29';
+        this.category = '25-29';
         break;
       case (birthYear >= (currentYear - 24) && birthYear <= (currentYear - 18)):
-        this.category = '18 - 24';
+        this.category = '18-24';
         break;
       default:
+        this.category = 'Juvenil';
         console.log('invalid numbers');
     }
   }

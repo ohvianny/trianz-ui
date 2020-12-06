@@ -101,6 +101,7 @@
                     <thead>
                         <tr>
                             <th>Cert.</th>
+                            <th>Med.</th>
                             <th>Pos. Gen.</th>
                             <th>Pos. Cat.</th>
                             <th>Dorsal</th>
@@ -117,22 +118,27 @@
                     <tbody>
                         <tr *ngFor="let enrollment of enrollmentsW | slice: lowValueW : highValueW">
                             <td>
-                                <img src="../../../assets/img/medals/1.svg" class="img-fluid border-radius-0"
+                                <img src="../../../assets/img/medals/cert.svg" class="img-fluid border-radius-0"
                                     style="height: 24px;cursor: pointer;"
                                     (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen == 1">
-                                <img src="../../../assets/img/medals/2.svg" class="img-fluid border-radius-0"
-                                    style="height: 24px;cursor: pointer;"
-                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen == 2">
-                                <img src="../../../assets/img/medals/3.svg" class="img-fluid border-radius-0"
-                                    style="height: 24px;cursor: pointer;"
-                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen == 3">
-                                <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
-                                    style="height: 24px;cursor: pointer;"
-                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen >= 4 || enrollment.posGen == ''">
+                                    *ngIf="enrollment.totalTime != undefined"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
+                            <td>
+                                <span *ngIf="enrollment.totalTime != ''">
+                                    <img src="../../../assets/img/medals/1.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 1">
+                                    <img src="../../../assets/img/medals/2.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 2">
+                                    <img src="../../../assets/img/medals/3.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 3">
+                                    <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen >= 4 || enrollment.posGen == ''">
+                                </span>
                             </td>
                             <td>{{enrollment.posGen}}</td>
                             <td>{{enrollment.posCat}}</td>
@@ -185,6 +191,7 @@
                     <thead>
                         <tr>
                             <th>Cert.</th>
+                            <th>Med.</th>
                             <th>Pos. Gen.</th>
                             <th>Pos. Cat.</th>
                             <th>Dorsal</th>
@@ -201,22 +208,27 @@
                     <tbody>
                         <tr *ngFor="let enrollment of enrollments | slice: lowValue : highValue">
                             <td>
-                                <img src="../../../assets/img/medals/1.svg" class="img-fluid border-radius-0"
+                                <img src="../../../assets/img/medals/cert.svg" class="img-fluid border-radius-0"
                                     style="height: 24px;cursor: pointer;"
                                     (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen == 1">
-                                <img src="../../../assets/img/medals/2.svg" class="img-fluid border-radius-0"
-                                    style="height: 24px;cursor: pointer;"
-                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen == 2">
-                                <img src="../../../assets/img/medals/3.svg" class="img-fluid border-radius-0"
-                                    style="height: 24px;cursor: pointer;"
-                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen == 3">
-                                <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
-                                    style="height: 24px;cursor: pointer;"
-                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
-                                    *ngIf="enrollment.posGen >= 4 || enrollment.posGen == ''">
+                                    *ngIf="enrollment.totalTime != undefined"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
+                            <td>
+                                <span *ngIf="enrollment.totalTime != ''">
+                                    <img src="../../../assets/img/medals/1.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 1">
+                                    <img src="../../../assets/img/medals/2.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 2">
+                                    <img src="../../../assets/img/medals/3.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 3">
+                                    <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen >= 4 || enrollment.posGen == ''">
+                                </span>
                             </td>
                             <td>{{enrollment.posGen}}</td>
                             <td>{{enrollment.posCat}}</td>
@@ -269,6 +281,7 @@
                     <thead>
                         <tr>
                             <th>Cert.</th>
+                            <th>Med.</th>
                             <th>Pos. Gen.</th>
                             <th>Pos. Cat.</th>
                             <th>Dorsal</th>
@@ -285,22 +298,25 @@
                     <tbody>
                         <tr *ngFor="let enrollment of enrollmentIndividual | slice: lowValue : highValue">
                             <td>
+                                <img src="../../../assets/img/medals/cert.svg" class="img-fluid border-radius-0"
+                                    style="height: 24px;cursor: pointer;"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
+                                    *ngIf="enrollment.totalTime != undefined"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
+                            <td>
                                 <span *ngIf="enrollment.totalTime != ''">
                                     <img src="../../../assets/img/medals/1.svg" class="img-fluid border-radius-0"
-                                        style="height: 24px;cursor: pointer;"
-                                        (click)="onSearchCerticiate(enrollment.enrollmentId)"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
                                         *ngIf="enrollment.posGen == 1">
                                     <img src="../../../assets/img/medals/2.svg" class="img-fluid border-radius-0"
-                                        style="height: 24px;cursor: pointer;"
-                                        (click)="onSearchCerticiate(enrollment.enrollmentId)"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
                                         *ngIf="enrollment.posGen == 2">
                                     <img src="../../../assets/img/medals/3.svg" class="img-fluid border-radius-0"
-                                        style="height: 24px;cursor: pointer;"
-                                        (click)="onSearchCerticiate(enrollment.enrollmentId)"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
                                         *ngIf="enrollment.posGen == 3">
                                     <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
-                                        style="height: 24px;cursor: pointer;"
-                                        (click)="onSearchCerticiate(enrollment.enrollmentId)"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
                                         *ngIf="enrollment.posGen >= 4 || enrollment.posGen == ''">
                                 </span>
                             </td>
@@ -389,11 +405,11 @@
                                         <td *ngIf="duatlon == 'Duatlon'">Carrera</td>
                                         <td *ngIf="duatlon === 'Triatlon'">Natación</td>
                                         <td><input type="number" id="t11" min="0" max="15" class="form-control"
-                                                [(ngModel)]="time.t11"></td>
+                                                [(ngModel)]="time.t11" style="width: 45px;"></td>
                                         <td><input type="number" id="t12" min="0" max="59" class="form-control"
-                                                [(ngModel)]="time.t12"></td>
+                                                [(ngModel)]="time.t12" style="width: 45px;"></td>
                                         <td><input type="number" id="t13" min="0" max="59" class="form-control"
-                                                [(ngModel)]="time.t13"></td>
+                                                [(ngModel)]="time.t13" style="width: 45px;"></td>
                                         <td>
                                             <input type="file" id="t1file" style="font-size: xx-small;overflow: auto;"
                                                 [(ngModel)]="time.t1file" (change)="onFile1Picked($event)"
@@ -403,11 +419,11 @@
                                     <tr>
                                         <td>Ciclismo</td>
                                         <td><input type="number" id="t21" min="0" max="15" class="form-control"
-                                                [(ngModel)]="time.t21"></td>
+                                                [(ngModel)]="time.t21" style="width: 45px;"></td>
                                         <td><input type="number" id="t22" min="0" max="59" class="form-control"
-                                                [(ngModel)]="time.t22"></td>
+                                                [(ngModel)]="time.t22" style="width: 45px;"></td>
                                         <td><input type="number" id="t23" min="0" max="59" class="form-control"
-                                                [(ngModel)]="time.t23"></td>
+                                                [(ngModel)]="time.t23" style="width: 45px;"></td>
                                         <td>
                                             <input type="file" id="t2file" style="font-size: xx-small;overflow: auto;"
                                                 [(ngModel)]="time.t2file" (change)="onFile2Picked($event)"
@@ -417,11 +433,11 @@
                                     <tr>
                                         <td>Carrera</td>
                                         <td><input type="number" id="t31" min="0" max="15" class="form-control"
-                                                [(ngModel)]="time.t31"></td>
+                                                [(ngModel)]="time.t31" style="width: 45px;"></td>
                                         <td><input type="number" id="t32" min="0" max="59" class="form-control"
-                                                [(ngModel)]="time.t32"></td>
+                                                [(ngModel)]="time.t32" style="width: 45px;"></td>
                                         <td><input type="number" id="t33" min="0" max="59" class="form-control"
-                                                [(ngModel)]="time.t33"></td>
+                                                [(ngModel)]="time.t33" style="width: 45px;"></td>
                                         <td>
                                             <input type="file" id="t3file" style="font-size: xx-small;overflow: auto;"
                                                 [(ngModel)]="time.t3file" (change)="onFile3Picked($event)"
@@ -463,11 +479,15 @@
                         <div class="col-12">
                             <h1 class="font-weight-bold text-gray mb-0"
                                 style="font-size: 20px;background-color: #F38832;color:white !important;">
-                                TIEMPO TOTAL <span style="margin-left:15px">{{totalTime2 | timeFormatPipe}}</span>
+                                TIEMPO TOTAL
+                                <span style="margin-left:15px">
+                                    <!-- 10:10:10 -->
+                                    {{totalTime2 | timeFormatPipe}}
+                                </span>
                             </h1>
                         </div>
                         <div class="col-4 offset-4">
-                            <img src="../../../assets/img/medals/finisher.png" class="img-fluid border-radius-0">
+                            <img src="../../../assets/img/medals/1-2.png" class="img-fluid border-radius-0">
                         </div>
                         <div class="col-12">
                             <div class="form-group ">
@@ -482,6 +502,9 @@
                                     <!-- TRIATLON SPRINT -->
                                 </h2>
                             </div>
+                            <h2 class="font-weight-bold mb-0" style="font-size: 12px;margin: 10px 0px;color: gray;">
+                                Gracias por tu excelente participación
+                            </h2>
                         </div>
                     </div>
                 </div>
