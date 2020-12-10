@@ -26,7 +26,10 @@ export class Enrollment {
         public modality: string,
         public paymentDate: string,
         public paymentType: string,
-        public code: string
+        public code: string,
+        public swimmingName: string,
+        public bikeName: string,
+        public walkName: string
     ) { }
 
 }

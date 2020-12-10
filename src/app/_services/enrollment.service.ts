@@ -40,8 +40,8 @@ export class EnrollmentService {
         return this.http.get<any>(this.baseUrl + '/' + enrollmentId, { headers: this.httpHeaders });
     }
 
-    getEnrollmentByIdAndDni(enrollmentId: string, dni: string) {
-        return this.http.get<any>(this.baseUrl + '/' + enrollmentId + '/' + dni, { headers: this.httpHeaders });
+    getEnrollmentDuatlonById(enrollmentId: string) {
+        return this.http.get<any>(this.baseUrl + '/duatlon/' + enrollmentId, { headers: this.httpHeaders });
     }
 
     updateEnrollmentTime(enrollment: Enrollment) {
@@ -49,7 +49,7 @@ export class EnrollmentService {
     }
 
     postEnrollTime(enrollment: Enrollment) {
-        return this.http.post(this.baseUrl + '/register/time', enrollment);
+        return this.http.post<any>(this.baseUrl + '/register/time', enrollment);
     }
 
     constructor(private http: HttpClient) { }
