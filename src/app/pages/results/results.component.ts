@@ -25,6 +25,7 @@ export class ResultsComponent implements OnInit {
   enrollments = [];
   enrollmentsW = [];
   enrollmentIndividual = [];
+  enrollmentTeam = [];
   enrollmentId = '';
   modalityId = '';
   eventId = '';
@@ -46,22 +47,30 @@ export class ResultsComponent implements OnInit {
   enrollmentName = '';
   enrollmentMod = '';
   totalTime2 = '';
+  posGen = '';
 
-  // MatPaginator Inputs
+  // MatPaginator Inputs Men
   pageIndex: number = 0;
   pageSize: number = 10;
   lowValue: number = 0;
   highValue: number = 10;
 
-  // MatPaginator Inputs
+  // MatPaginator Inputs Women
   pageIndexW: number = 0;
   pageSizeW: number = 10;
   lowValueW: number = 0;
   highValueW: number = 10;
 
+  // MatPaginator Inputs
+  pageIndexPE: number = 0;
+  pageSizePE: number = 10;
+  lowValuePE: number = 0;
+  highValuePE: number = 10;
+
   // MatPaginator Output
   pageEvent: PageEvent;
   pageEventW: PageEvent;
+  pageEventPE: PageEvent;
 
   constructor(private router: Router, private enrollmentService: EnrollmentService,
     private eventService: EventService, private uploadService: UploadService) { }
@@ -79,6 +88,12 @@ export class ResultsComponent implements OnInit {
   public getPaginatorDataW(event: PageEvent): PageEvent {
     this.lowValueW = event.pageIndex * event.pageSize;
     this.highValueW = this.lowValueW + event.pageSize;
+    return event;
+  }
+
+  public getPaginatorDataPE(event: PageEvent): PageEvent {
+    this.lowValuePE = event.pageIndex * event.pageSize;
+    this.highValuePE = this.lowValuePE + event.pageSize;
     return event;
   }
 
@@ -106,6 +121,7 @@ export class ResultsComponent implements OnInit {
             this.modalityId = '';
             this.enrollmentId = '';
             this.enrollmentIndividual = [];
+            this.enrollmentTeam = [];
             this.enrollments = [];
             this.enrollmentsW = [];
           }
@@ -122,6 +138,7 @@ export class ResultsComponent implements OnInit {
       this.enrollments = [];
       this.enrollmentsW = [];
       this.enrollmentIndividual = [];
+      this.enrollmentTeam = [];
       this.enrollmentService.getEnrollment(this.enrollmentId)
         .subscribe(
           response => {
@@ -150,6 +167,7 @@ export class ResultsComponent implements OnInit {
     this.enrollments = [];
     this.enrollmentsW = [];
     this.enrollmentIndividual = [];
+    this.enrollmentTeam = [];
     this.enrollmentId = '';
     this.eventService.getEventModality(this.eventId, this.modalityId, 'Masculino')
       .subscribe(
@@ -175,6 +193,18 @@ export class ResultsComponent implements OnInit {
           console.log(error);
         }
       );
+    this.eventService.getEventModality(this.eventId, this.modalityId, 'Mixto')
+      .subscribe(
+        response => {
+          if (response.data != null) {
+            this.enrollmentTeam = response.data;
+          }
+        },
+        error => {
+          this.enrollmentTeam = [];
+          console.log(error);
+        }
+      );
     this.enableType = (this.modalityId == 'Triatlon') ? false : true;
     this.categoryId = '-';
     this.typeId = '-';
@@ -185,6 +215,7 @@ export class ResultsComponent implements OnInit {
     this.enrollments = [];
     this.enrollmentsW = [];
     this.enrollmentIndividual = [];
+    this.enrollmentTeam = [];
     this.enrollmentId = '';
     if (this.typeId == '') this.typeId = '-';
     if (this.categoryId != '') {
@@ -212,6 +243,33 @@ export class ResultsComponent implements OnInit {
             console.log(error);
           }
         );
+      this.eventService.getEventModality(this.eventId, this.modalityId, 'Mixto')
+        .subscribe(
+          response => {
+            if (response.data != null) {
+              this.enrollmentTeam = response.data;
+            }
+          },
+          error => {
+            this.enrollmentsW = [];
+            console.log(error);
+          }
+        );
+      if (this.typeId == 'Por Equipo') {
+        this.eventService.getEventModality(this.eventId, this.modalityId, 'Mixto')
+          .subscribe(
+            response => {
+              if (response.data != null) {
+                this.enrollmentTeam = response.data;
+              }
+            },
+            error => {
+              this.enrollmentsW = [];
+              console.log(error);
+            }
+          );
+      }
+
     } else {
       this.onSearchCategory();
     }
@@ -253,6 +311,7 @@ export class ResultsComponent implements OnInit {
   onRegisterTime(): void {
     this.enrollmentId = '';
     this.dni = '';
+    this.posGen = '';
     this.showModal = false;
     this.showMessage = false;
     this.showModalFinisher = true;
@@ -488,9 +547,13 @@ export class ResultsComponent implements OnInit {
 
   onSearchMedal(enrollment: Enrollment): void {
     this.showModalFinisher = false;
+    this.posGen = enrollment.posGen;
     this.enrollmentName = enrollment.name.toLocaleUpperCase() + ' ' + enrollment.lastname.toLocaleUpperCase();
     this.enrollmentMod = enrollment.modality + ' ' + enrollment.type;
     this.totalTime2 = enrollment.totalTime;
   }
 
+  calculateMedal(posGen: string): any {
+    return (parseInt(posGen) >= 4) ? true : false;
+  }
 }

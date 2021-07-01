@@ -26,7 +26,8 @@
                         <div class="overflow-hidden">
                             <p style="text-align: center;">Para el día <b>{{currentDate}}</b>, el precio actual de
                                 inscripción es de
-                                <b>{{event.price}}</b>.</p>
+                                <b>{{event.price}}</b>.
+                            </p>
                         </div>
                     </div>
                     <div class="col-6">
@@ -91,7 +92,7 @@
                             <label class="required font-weight-bold text-dark text-2 mb-0">Fecha de
                                 Nacimiento </label>
                             <input type="date" name="birthdate" id="birthdate" max="2010-12-31" min="1900-01-01"
-                                class="form-control" [(ngModel)]="enrollment.birthdate" (change)="onChangeDate()">
+                                class="form-control" [(ngModel)]="enrollment.birthdate">
                         </div>
                         <div class="form-group col-lg-3">
                             <label class="required font-weight-bold text-dark text-2 mb-0">Sexo</label>
@@ -110,13 +111,7 @@
                                 *ngIf="event.type != 'Virtual'">
                                 <option value="">Seleccionar</option>
                                 <option value="Elite">Elite {{sex}}</option>
-                                <option value="Por Edades">Por Edades {{category}}</option>
-                            </select>
-                            <select id="category" name="category" class="form-control" size="0"
-                                style="height: calc(1.5em + .75rem + 2px);" [(ngModel)]="enrollment.category"
-                                *ngIf="event.type == 'Virtual'">
-                                <option value="">Seleccionar</option>
-                                <option value="Por Edades">Por Edades {{category}}</option>
+                                <option value="Por Edades">Por Edades</option>
                             </select>
                         </div>
                     </div>

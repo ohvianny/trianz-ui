@@ -236,7 +236,7 @@
                             <td>{{enrollment.name | uppercase}} {{enrollment.lastname | uppercase}}</td>
                             <td>{{enrollment.modality | modalityFormatPipe}}</td>
                             <td>{{enrollment.type | typeformatPipe}}</td>
-                            <td>{{enrollment.category}}</td>
+                            <td style="width: 124px;">{{enrollment.category}}</td>
                             <td>{{enrollment.totalTime | timeFormatPipe }}</td>
                             <td style="width: 103px;">{{enrollment.swimmingTime}}
                                 <a *ngIf="enrollment.swimmingTime != undefined"
@@ -273,7 +273,7 @@
                 <div class="overflow-hidden mb-1">
                     <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
                         style="text-align: center;">
-                        Resultado
+                        Resultados
                     </h4>
                 </div>
                 <table id="enrollments" class="table table-striped fix-table"
@@ -326,7 +326,7 @@
                             <td>{{enrollment.name | uppercase}} {{enrollment.lastname | uppercase}}</td>
                             <td>{{enrollment.modality | modalityFormatPipe}}</td>
                             <td>{{enrollment.type | typeformatPipe}}</td>
-                            <td>{{enrollment.category}}</td>
+                            <td style="width: 124px;">{{enrollment.category}}</td>
                             <td>{{enrollment.totalTime | timeFormatPipe }}</td>
                             <td style="width: 103px;">{{enrollment.swimmingTime}}
                                 <a *ngIf="enrollment.swimmingTime != undefined"
@@ -354,6 +354,92 @@
                 </table>
                 <mat-paginator [length]="enrollments.length" [pageSize]="10"
                     (page)="pageEvent = getPaginatorData($event)">
+                </mat-paginator>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="enrollmentTeam.length !== 0">
+            <div class="col-md-12 mt-4">
+                <div class="overflow-hidden mb-1">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3"
+                        style="text-align: center;">
+                        Resultados Por Equipo
+                    </h4>
+                </div>
+                <table id="enrollments" class="table table-striped fix-table"
+                    style="overflow: auto;font-size: 12px;margin-bottom: 0px;text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>Cert.</th>
+                            <th>Med.</th>
+                            <th>Pos. Gen.</th>
+                            <th>Dorsal</th>
+                            <th>Nombre</th>
+                            <th>Modalidad</th>
+                            <th>Tipo</th>
+                            <th>T. Total</th>
+                            <th>T. Natación</th>
+                            <th>T. Ciclismo</th>
+                            <th>T. Carrera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let enrollment of enrollmentTeam | slice: lowValuePE : highValuePE">
+                            <td>
+                                <img src="../../../assets/img/medals/cert.svg" class="img-fluid border-radius-0"
+                                    style="height: 24px;cursor: pointer;"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)"
+                                    *ngIf="enrollment.totalTime != undefined"
+                                    (click)="onSearchCerticiate(enrollment.enrollmentId)">
+                            </td>
+                            <td>
+                                <span *ngIf="enrollment.totalTime != ''">
+                                    <img src="../../../assets/img/medals/1.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 1">
+                                    <img src="../../../assets/img/medals/2.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 2">
+                                    <img src="../../../assets/img/medals/3.svg" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen == 3">
+                                    <img src="../../../assets/img/cert.png" class="img-fluid border-radius-0"
+                                        style="height: 24px;cursor: pointer;" (click)="onSearchMedal(enrollment)"
+                                        *ngIf="enrollment.posGen >= 4 || enrollment.posGen == ''">
+                                </span>
+                            </td>
+                            <td>{{enrollment.posGen}}</td>
+                            <td>{{enrollment.enrollmentId}}</td>
+                            <td>{{enrollment.name | uppercase}} {{enrollment.lastname | uppercase}}</td>
+                            <td>{{enrollment.modality | modalityFormatPipe}}</td>
+                            <td>{{enrollment.type | typeformatPipe}}</td>
+                            <td>{{enrollment.totalTime | timeFormatPipe }}</td>
+                            <td style="width: 103px;">{{enrollment.swimmingTime}}
+                                <a *ngIf="enrollment.swimmingTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file1.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.bikeTime}}
+                                <a *ngIf="enrollment.bikeTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file2.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                            <td style="width: 103px;">{{enrollment.walkTime}}
+                                <a *ngIf="enrollment.walkTime != undefined"
+                                    href="https://clubtrianz.s3-sa-east-1.amazonaws.com/{{enrollment.enrollmentId}}-file3.jpg"
+                                    target="_blank" download style="color: #F38832 !important; margin-left: 5px;">
+                                    <i class="icon-cloud-download icons"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <mat-paginator [length]="enrollmentTeam.length" [pageSize]="10"
+                    (page)="pageEvent = getPaginatorDataPE($event)">
                 </mat-paginator>
             </div>
         </div>
@@ -471,7 +557,7 @@
         <div class="swal01-container swal2-center swal01-backdrop-show" *ngIf="!showModalFinisher">
             <div class="swal01-popup swal01-modal" role="dialog" style="display: flex;">
                 <div class="swal01-header">
-                    <h2 class="swal01-title">FELICITACIONES FINISHER</h2>
+                    <h2 class="swal01-title"> FINISHER</h2>
                 </div>
                 <br>
                 <div class="swal01-content">
@@ -487,7 +573,16 @@
                             </h1>
                         </div>
                         <div class="col-4 offset-4">
-                            <img src="../../../assets/img/medals/1-2.png" class="img-fluid border-radius-0">
+                            <img src="../../../assets/img/medals/1-1.png" class="img-fluid border-radius-0"
+                                *ngIf="posGen == '1'">
+                            <img src="../../../assets/img/medals/1-2.png" class="img-fluid border-radius-0"
+                                *ngIf="posGen == '2'">
+                            <img src="../../../assets/img/medals/1-3.png" class="img-fluid border-radius-0"
+                                *ngIf="posGen == '3'">
+                            <img src="../../../assets/img/medals/1-2.png" class="img-fluid border-radius-0"
+                                *ngIf="posGen == ''">
+                            <img src="../../../assets/img/medals/1-2.png" class="img-fluid border-radius-0"
+                                *ngIf="calculateMedal(posGen)">
                         </div>
                         <div class="col-12">
                             <div class="form-group ">

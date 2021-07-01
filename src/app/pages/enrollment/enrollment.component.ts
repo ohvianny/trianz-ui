@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
 
 import { CodeService } from '../../_services/code.service';
 import { EnrollmentService } from '../../_services/enrollment.service';
@@ -18,12 +18,9 @@ import { Eventt } from '../../_models/eventt.model';
 export class EnrollmentComponent implements OnInit {
 
   event = new Eventt('', '', '', '', '', '', '', '', '', '', '');
-  terms: boolean = false;
+  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
   currentDate: string;
   sex: string;
-  category: string;
-  enrollment = new Enrollment('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-
   modalities = [{ value: '', name: 'Seleccionar' }, { value: 'Triatlon', name: 'Triatlón' }];
 
   constructor(private router: Router, private enrollmentService: EnrollmentService,
@@ -31,7 +28,6 @@ export class EnrollmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.sex = '';
-    this.category = '';
     this.getLastEvent();
     const dd = new Date();
     this.currentDate = dd.getDate() + '/' + (dd.getMonth() + 1) + '/' + dd.getFullYear();
@@ -45,53 +41,19 @@ export class EnrollmentComponent implements OnInit {
     }
   }
 
-  onChangeDate(): void {
-    const currentYear = new Date().getFullYear();
-    const birthYear = $('#birthdate').val().split('-')[0];
-
-    switch (true) {
-      case (birthYear <= (currentYear - 50)):
-        this.category = '50+';
-        break;
-      case (birthYear >= (currentYear - 49) && birthYear <= (currentYear - 45)):
-        this.category = '45-49';
-        break;
-      case (birthYear >= (currentYear - 44) && birthYear <= (currentYear - 40)):
-        this.category = '40-44';
-        break;
-      case (birthYear >= (currentYear - 39) && birthYear <= (currentYear - 35)):
-        this.category = '35-39';
-        break;
-      case (birthYear >= (currentYear - 34) && birthYear <= (currentYear - 30)):
-        this.category = '30-34';
-        break;
-      case (birthYear >= (currentYear - 29) && birthYear <= (currentYear - 25)):
-        this.category = '25-29';
-        break;
-      case (birthYear >= (currentYear - 24) && birthYear <= (currentYear - 18)):
-        this.category = '18-24';
-        break;
-      default:
-        this.category = 'Juvenil';
-        console.log('invalid numbers');
-    }
-  }
-
   getLastEvent(): void {
-    this.eventService.getLastEvent()
-      .subscribe(
-        data => {
-          this.event = data.event;
-          if (this.event.type === 'Virtual') this.modalities.push({ value: 'Duatlon', name: 'Duatlón' });
-          if (this.event.state == 'Activo' || this.event.state == 'Resultado') {
-          } else {
-            this.router.navigate(['/']);
-          }
-        },
-        error => {
-          console.log(error);
+    this.eventService.getLastEvent().subscribe(
+      response => {
+        this.event = response.data;
+        if (this.event.type === 'Virtual') this.modalities.push({ value: 'Duatlon', name: 'Duatlón' });
+        if (this.event.state == 'Activo' || this.event.state == 'Resultado') {
+        } else {
+          this.router.navigate(['/']);
         }
-      );
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
   validate(field: string, id: string): void {
@@ -105,10 +67,8 @@ export class EnrollmentComponent implements OnInit {
   onSaveForm(): void {
     let validations = true;
 
-    if (this.enrollment.type == 'Equipo') {
+    if (this.enrollment.type == 'Por Equipo') {
       this.validate(this.enrollment.swimmingName, 'swimmingName');
-      this.validate(this.enrollment.bikeName, 'bikeName');
-      this.validate(this.enrollment.walkName, 'walkName');
       if (this.enrollment.swimmingName === '' || this.enrollment.bikeName === '' || this.enrollment.walkName === '') {
         validations = false;
       }
@@ -145,11 +105,6 @@ export class EnrollmentComponent implements OnInit {
         this.validate(this.enrollment.type, 'type');
         validations = false;
       }
-      // if (this.terms == false && validations == true) {
-      //   validations = false;
-      //   Swal.fire('Error', 'Debe aceptar los Términos y Condiciones', 'error');
-      //   this.validate(this.enrollment.shirtSize, 'shirtSize');
-      // }
 
       if (this.event.type != 'Virtual') {
         this.validate(this.enrollment.shirtSize, 'shirtSize');
@@ -160,7 +115,7 @@ export class EnrollmentComponent implements OnInit {
 
       if (validations === true) {
         if (this.enrollment.category !== 'Elite') {
-          this.enrollment.category = this.enrollment.category + ' ' + this.category;
+          this.enrollment.category = this.enrollment.category;
         }
         this.enrollment.trianzEvent = this.event._id;
         this.enrollmentService.postEnrollment(this.enrollment)
@@ -215,7 +170,7 @@ export class EnrollmentComponent implements OnInit {
 
         if (validations === true) {
           if (this.enrollment.category !== 'Elite') {
-            this.enrollment.category = this.enrollment.category + ' ' + this.category;
+            this.enrollment.category = this.enrollment.category;
           }
           this.enrollment.trianzEvent = this.event._id;
           this.enrollment.code = this.enrollment.code.toLowerCase();
