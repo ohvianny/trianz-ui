@@ -17,15 +17,11 @@ export class EventService {
     }
 
     getEventList() {
-        return this.http.get<any>(this.baseUrl + '/list');
+        return this.http.get<any>(this.baseUrl);
     }
 
     getEventState(eventId: string) {
-        return this.http.get<any>(this.baseUrl + '/state/' + eventId);
-    }
-
-    getEvents() {
-        return this.http.get<any>(this.baseUrl + '/', { headers: this.httpHeaders });
+        return this.http.get<any>(this.baseUrl + '/' + eventId);
     }
 
     saveEvent(event: Eventt) {

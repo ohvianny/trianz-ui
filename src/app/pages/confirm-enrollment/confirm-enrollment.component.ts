@@ -27,7 +27,7 @@ export class ConfirmEnrollmentComponent implements OnInit {
     this.eventService.getLastEvent()
       .subscribe(
         data => {
-          this.event = data.event;
+          this.event = data.data;
           this.getEnrollmentsByEventId();
         },
         error => {

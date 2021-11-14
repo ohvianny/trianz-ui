@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     this.eventService.getLastEvent()
       .subscribe(
         data => {
-          this.event = data.event;
+          this.event = data.data;
         },
         error => {
           console.log(error);

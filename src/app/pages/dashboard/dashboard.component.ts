@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
     this.eventService.getLastEvent()
       .subscribe(
         data => {
-          this.event = data.event;
+          this.event = data.data;
           this.getConfirmEnrollments();
           this.getEnrollmentsInProgress();
           this.getTotalEnrollments();
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getEvents(): void {
-    this.eventService.getEvents()
+    this.eventService.getEventList()
       .subscribe(
         response => {
           this.events = response.data;

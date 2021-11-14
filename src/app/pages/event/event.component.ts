@@ -22,7 +22,7 @@ export class EventComponent implements OnInit {
   }
 
   getEvents(): void {
-    this.eventService.getEvents()
+    this.eventService.getEventList()
       .subscribe(
         response => {
           this.events = response.data;
